@@ -384,7 +384,7 @@ const THEMES = [
         ],
       },
       {
-        id: 'random-event',
+        id: 'random-event-1',
         type: 'random',
       },
       {
@@ -439,6 +439,7 @@ const THEMES = [
           },
         ],
       },
+      
     ],
     randomEvents: [
       {
@@ -1162,6 +1163,52 @@ const THEMES = [
         ],
       },
       {
+        id: 'matchmaking',
+        title: 'Organisation des combats',
+        tags: ['Valeur perçue', 'Actionnaires'],
+        text:
+          'Tu dois créer la première carte de combats. Les actionnaires veulent du spectacle rentable.',
+        choices: [
+          {
+            id: 'fair-card',
+            label: 'Combats équilibrés + respect sportif.',
+            consequence:
+              'Le public respecte la salle, la crédibilité monte.',
+            effects: { perceived: 8, stakeholder: 4, cash: 2 },
+            verdict: 'Tu joues propre.',
+          },
+          {
+            id: 'easy-win',
+            label: 'Adversaires faciles pour assurer la victoire du champion.',
+            consequence:
+              'Victoire facile, mais le public n’est pas dupe.',
+            effects: { perceived: -6, cash: 4, shareholder: 4 },
+            verdict: 'Tu protèges l’image court terme.',
+            bad: true,
+          },
+          {
+            id: 'trash-card',
+            label: 'Trash-talk officiel + adversaire controversé.',
+            consequence:
+              'Le buzz monte… et les risques aussi.',
+            effects: { perceived: 4, stakeholder: -4, cash: 4 },
+            verdict: 'Tu cherches le buzz.',
+            bad: true,
+            branchId: 'mediaHeat',
+          },
+          {
+            id: 'arranged-card',
+            label: 'Scénario “contrôlé” pour booster les paris.',
+            consequence:
+              'Tu gagnes du cash, mais tu joues sale.',
+            effects: { cash: 8, shareholder: 6, perceived: -10 },
+            verdict: 'Tu glisses vers la magouille.',
+            bad: true,
+            branchId: 'fixFight',
+          },
+        ],
+      },
+      {
         id: 'measure',
         title: 'Mesure de la valeur perçue',
         tags: ['Valeur perçue', 'Mesure'],
@@ -1375,7 +1422,11 @@ const THEMES = [
         ],
       },
       {
-        id: 'random-event',
+        id: 'random-event-1',
+        type: 'random',
+      },
+      {
+        id: 'random-event-2',
         type: 'random',
       },
       {
@@ -1455,6 +1506,119 @@ const THEMES = [
             verdict: 'Tu joues avec la sécurité.',
             bad: true,
             branchId: 'mediaHeat',
+          },
+        ],
+      },
+      {
+        id: 'viral-clip',
+        title: "Et là, c'est le drame : vidéo virale",
+        tags: ['Réputation', 'Valeur perçue'],
+        text:
+          'Une vidéo montre un sparring jugé trop violent. Elle tourne partout.',
+        choices: [
+          {
+            id: 'context',
+            label: 'Tu expliques le cadre et renforces la sécurité.',
+            consequence:
+              'La polémique retombe partiellement.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Tu reprends la main.',
+          },
+          {
+            id: 'ignore',
+            label: 'Tu ignores.',
+            consequence:
+              'Le clip devient un symbole négatif.',
+            effects: { perceived: -10, stakeholder: -6 },
+            verdict: 'Tu laisses la vague grossir.',
+            bad: true,
+            branchId: 'mediaHeat',
+          },
+          {
+            id: 'attack',
+            label: 'Tu attaques la personne qui a filmé.',
+            consequence:
+              'Effet Streisand immédiat.',
+            effects: { perceived: -14, stakeholder: -8 },
+            verdict: 'Tu empirer tout.',
+            bad: true,
+            branchId: 'mediaHeat',
+          },
+        ],
+      },
+      {
+        id: 'betting-spike',
+        title: "Et là, c'est le drame : paris suspects",
+        tags: ['Actionnaires', 'Éthique'],
+        text:
+          'Les bookmakers signalent un afflux massif de paris contre ton champion.',
+        choices: [
+          {
+            id: 'report',
+            label: 'Tu signales immédiatement à la fédération.',
+            consequence:
+              'Tu te protèges, mais les actionnaires se crispent.',
+            effects: { perceived: 6, stakeholder: 4, shareholder: -8 },
+            verdict: 'Tu coupes court.',
+          },
+          {
+            id: 'ignore',
+            label: 'Tu laisses faire.',
+            consequence:
+              'Les rumeurs explosent.',
+            effects: { perceived: -12, stakeholder: -6 },
+            verdict: 'Tu perds le contrôle.',
+            bad: true,
+            branchId: 'fixFight',
+          },
+          {
+            id: 'profit',
+            label: 'Tu profites discrètement.',
+            consequence:
+              'Gros cash, gros risque.',
+            effects: { cash: 10, shareholder: 8, perceived: -12 },
+            verdict: 'Tu plonges dans la magouille.',
+            bad: true,
+            flags: ['illegal'],
+            branchId: 'fixFight',
+          },
+        ],
+      },
+      {
+        id: 'sponsor-leak',
+        title: "Et là, c'est le drame : sponsor en crise",
+        tags: ['Réputation', 'Partenaires'],
+        text:
+          'Ton sponsor est éclaboussé par un scandale public. Ton logo est partout.',
+        choices: [
+          {
+            id: 'drop',
+            label: 'Tu romps le contrat publiquement.',
+            consequence:
+              'Tu perds du cash, mais tu protèges l’image.',
+            effects: { cash: -10, perceived: 8, stakeholder: 6 },
+            verdict: 'Tu sauves la réputation.',
+            branchId: 'sponsorScandal',
+          },
+          {
+            id: 'silence',
+            label: 'Tu restes silencieux.',
+            consequence:
+              'Les critiques montent.',
+            effects: { perceived: -10, stakeholder: -6, cash: 4 },
+            verdict: 'Tu t’enfonces.',
+            bad: true,
+            branchId: 'sponsorScandal',
+          },
+          {
+            id: 'defend',
+            label: 'Tu défends le sponsor.',
+            consequence:
+              'Tu prends la foudre avec lui.',
+            effects: { perceived: -14, stakeholder: -10 },
+            verdict: 'Tu coules avec.',
+            bad: true,
+            branchId: 'sponsorScandal',
           },
         ],
       },
@@ -2376,6 +2540,7 @@ function App() {
   const [lastNewsAt, setLastNewsAt] = useState(-10)
   const [shake, setShake] = useState(false)
   const [helpOpen, setHelpOpen] = useState(false)
+  const [usedRandomIds, setUsedRandomIds] = useState([])
 
   const theme = useMemo(
     () => THEMES.find((item) => item.id === themeId),
@@ -2386,9 +2551,16 @@ function App() {
     if (screen !== 'game' || branchState) return
     const step = theme?.scenes?.[stepIndex]
     if (step?.type === 'random' && !activeEvent) {
-      setActiveEvent(pickRandom(theme.randomEvents))
+      const pool = theme?.randomEvents || []
+      const available = pool.filter((event) => !usedRandomIds.includes(event.id))
+      const picked = pickRandom(available.length > 0 ? available : pool)
+      if (!picked) return
+      setActiveEvent(picked)
+      setUsedRandomIds((prev) =>
+        prev.includes(picked.id) ? prev : [...prev, picked.id]
+      )
     }
-  }, [screen, stepIndex, theme, activeEvent, branchState])
+  }, [screen, stepIndex, theme, activeEvent, branchState, usedRandomIds])
 
   const isBranch = Boolean(branchState)
   const currentStep = isBranch
@@ -2418,6 +2590,7 @@ function App() {
     setLastNewsAt(-10)
     setShake(false)
     setHelpOpen(false)
+    setUsedRandomIds([])
     setStepIndex(0)
     setScreen('game')
   }
@@ -2436,6 +2609,7 @@ function App() {
     setLastNewsAt(-10)
     setShake(false)
     setHelpOpen(false)
+    setUsedRandomIds([])
     setStepIndex(0)
     setScreen('game')
   }
