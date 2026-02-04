@@ -89,6 +89,49 @@ h2 {
   margin-bottom: 6px;
 }
 
+.stat-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-info {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #d9c8b5;
+  color: #3a281d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  position: relative;
+  cursor: help;
+}
+
+.stat-info::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 140%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2a1a12;
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  width: 200px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 20;
+}
+
+.stat-info:hover::after {
+  opacity: 1;
+}
+
 .stat-value {
   display: flex;
   align-items: center;
@@ -234,6 +277,12 @@ h2 {
   background: var(--coffee-700);
   color: #fff4e6;
   box-shadow: var(--shadow);
+}
+
+.ghost.small,
+.primary.small {
+  padding: 8px 12px;
+  font-size: 12px;
 }
 
 .primary:disabled {
@@ -489,6 +538,73 @@ h2 {
   width: 100%;
   height: auto;
   border-radius: 18px;
+}
+
+.topbar-actions {
+  margin-top: 12px;
+}
+
+.lexicon-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 10, 6, 0.35);
+  z-index: 30;
+}
+
+.lexicon-panel {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: min(360px, 90vw);
+  background: #fff7ed;
+  box-shadow: 12px 0 28px rgba(26, 16, 10, 0.25);
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+}
+
+.lexicon-panel.open {
+  transform: translateX(0);
+}
+
+.lexicon-header {
+  padding: 18px;
+  border-bottom: 1px solid #e8d7c4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lexicon-content {
+  padding: 18px;
+  overflow-y: auto;
+  display: grid;
+  gap: 16px;
+}
+
+.lexicon-item {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 10px 20px rgba(26, 16, 10, 0.08);
+}
+
+.lexicon-item h4 {
+  margin: 0 0 6px;
+}
+
+.lexicon-example {
+  font-weight: 600;
+  margin: 8px 0 0;
+}
+
+.lexicon-context {
+  margin: 6px 0 0;
+  color: #4b3b33;
 }
 
 @media (max-width: 980px) {

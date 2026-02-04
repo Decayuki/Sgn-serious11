@@ -2,11 +2,35 @@ import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 const STAT_META = {
-  perceived: { label: 'Valeur perçue', tone: 'mint' },
-  valueAdded: { label: 'Valeur ajoutée', tone: 'gold' },
-  stakeholder: { label: 'Valeur partenariale', tone: 'sky' },
-  shareholder: { label: 'Valeur actionnariale', tone: 'rose' },
-  cash: { label: 'Trésorerie', tone: 'coffee' },
+  perceived: {
+    label: 'Valeur perçue',
+    tone: 'mint',
+    help:
+      'Valeur ressentie par le client (qualité, marque, prix, expérience). Ex: déco premium + latte art = VP en hausse.',
+  },
+  valueAdded: {
+    label: 'Valeur ajoutée',
+    tone: 'gold',
+    help:
+      'Richesse créée = CA - consommations intermédiaires. Ex: 210k - 130k = 80k.',
+  },
+  stakeholder: {
+    label: 'Valeur partenariale',
+    tone: 'sky',
+    help:
+      'Valeur pour salariés, clients, fournisseurs, État. Ex: salaires corrects + relation fournisseur solide.',
+  },
+  shareholder: {
+    label: 'Valeur actionnariale',
+    tone: 'rose',
+    help: 'Valeur pour actionnaires (dividendes, valorisation).',
+  },
+  cash: {
+    label: 'Trésorerie',
+    tone: 'coffee',
+    help:
+      'Cash dispo pour payer loyers/salaires. Bas = risque de fermeture.',
+  },
 }
 
 const INITIAL_STATS = {
@@ -1089,6 +1113,86 @@ const EPILOGUES_POS = [
 
 const BAD_THRESHOLD = 2
 
+const LEXICON = [
+  {
+    term: 'Valeur perçue',
+    definition:
+      'Valeur subjective attribuée par le client (qualité, marque, prix, expérience).',
+    example:
+      'Ex: latte art + déco premium = perception haut de gamme.',
+    context:
+      'Si elle baisse, les clients désertent même si tu es “rentable”.',
+  },
+  {
+    term: 'Valeur ajoutée',
+    definition:
+      'Richesse créée par l’entreprise: CA - consommations intermédiaires.',
+    example: 'Ex: CA 210k - CI 130k = 80k.',
+    context:
+      'C’est la base pour payer salaires, impôts, dividendes, réinvestir.',
+  },
+  {
+    term: 'Consommations intermédiaires',
+    definition:
+      'Achats nécessaires à la production (café, lait, services externes).',
+    example: 'Ex: fournitures + maintenance machines.',
+    context: 'Trop élevé = valeur ajoutée qui s’écrase.',
+  },
+  {
+    term: 'Facteurs de production',
+    definition: 'Travail (humain) + capital (matériel, équipements).',
+    example: 'Ex: baristas formés + machines premium.',
+    context:
+      'Les deux comptent: réduire trop l’un fragilise la qualité.',
+  },
+  {
+    term: 'Valeur partenariale',
+    definition:
+      'Valeur créée pour toutes les parties prenantes: salariés, clients, fournisseurs, État.',
+    example: 'Ex: salaires justes + relation fournisseur stable.',
+    context:
+      'Si elle chute, conflits et productivité en baisse.',
+  },
+  {
+    term: 'Valeur actionnariale',
+    definition:
+      'Valeur créée pour les actionnaires (dividendes, valorisation).',
+    example: 'Ex: dividendes élevés pour rassurer les investisseurs.',
+    context:
+      'Trop privilégier = tensions sociales et réputation abîmée.',
+  },
+  {
+    term: 'Parties prenantes',
+    definition:
+      'Tous les acteurs concernés par l’entreprise (salariés, clients, fournisseurs, État, actionnaires).',
+    example: 'Ex: staff + clients + investisseurs.',
+    context:
+      'Ils peuvent soutenir ou bloquer la réussite du café.',
+  },
+  {
+    term: 'Gouvernance',
+    definition:
+      'La façon dont l’entreprise est dirigée et décide (actionnariale ou partenariale).',
+    example: 'Ex: comité mixte vs décisions 100% actionnaires.',
+    context:
+      'Une mauvaise gouvernance déclenche des crises parallèles.',
+  },
+  {
+    term: 'Trésorerie',
+    definition: 'Cash disponible pour payer charges et salaires.',
+    example: 'Ex: trésorerie basse = risques de fermeture.',
+    context:
+      'Si elle tombe sous 20, tu entres en zone rouge.',
+  },
+  {
+    term: 'Dividendes',
+    definition: 'Part des bénéfices versée aux actionnaires.',
+    example: 'Ex: dividendes élevés pour rassurer.',
+    context:
+      'Trop = frustration du staff et sous-investissement.',
+  },
+]
+
 const PROF_COMMENTS = [
   'Avis de ton super prof : Non sérieux, t’as cru que ça allait passer inaperçu ?',
   'Avis de ton super prof : Là tu joues avec les allumettes, tu t’étonnes de la fumée.',
@@ -1259,11 +1363,16 @@ function pickRandom(list) {
   return list[Math.floor(Math.random() * list.length)]
 }
 
-function StatBar({ label, value, tone, delta }) {
+function StatBar({ label, value, tone, delta, help }) {
   return (
     <div className={`stat stat-${tone}`}>
       <div className="stat-label">
-        <span>{label}</span>
+        <span className="stat-title">
+          {label}
+          <span className="stat-info" data-tooltip={help} aria-hidden>
+            i
+          </span>
+        </span>
         <div className="stat-value">
           <strong>{value}</strong>
           {typeof delta === 'number' && delta !== 0 && (
@@ -1358,6 +1467,7 @@ function App() {
   const [lastNews, setLastNews] = useState(null)
   const [lastNewsAt, setLastNewsAt] = useState(-10)
   const [shake, setShake] = useState(false)
+  const [helpOpen, setHelpOpen] = useState(false)
 
   const theme = useMemo(
     () => THEMES.find((item) => item.id === themeId),
@@ -1399,6 +1509,7 @@ function App() {
     setLastNews(null)
     setLastNewsAt(-10)
     setShake(false)
+    setHelpOpen(false)
     setStepIndex(0)
     setScreen('game')
   }
@@ -1416,13 +1527,15 @@ function App() {
     setLastNews(null)
     setLastNewsAt(-10)
     setShake(false)
+    setHelpOpen(false)
     setStepIndex(0)
     setScreen('game')
   }
 
   function buildNewsFlash(effects, choice, prevStats, nextStats, stepNumber) {
     if (!effects) return null
-    const severeDrop = Object.values(effects).some((value) => value <= -10)
+    const severeDrop = Object.values(effects).some((value) => value <= -12)
+    const moderateDrop = Object.values(effects).some((value) => value <= -8)
     const crossesAlert =
       prevStats &&
       nextStats &&
@@ -1430,41 +1543,81 @@ function App() {
         (key) => prevStats[key] > 20 && nextStats[key] <= 20
       )
     const shouldShow =
-      severeDrop || choice?.bad || choice?.branchId || crossesAlert
+      severeDrop || crossesAlert || choice?.branchId || (choice?.bad && moderateDrop)
 
     const cooldownOk = stepNumber - lastNewsAt >= 2
     if (!shouldShow || !cooldownOk) return null
 
-    if (effects.perceived <= -10 || nextStats?.perceived <= 20) {
+    if (choice?.branchId === 'supplierBetrayal') {
+      return {
+        label: 'FOURNISSEUR',
+        message: 'Des clients remarquent un goût différent. Les doutes montent.',
+      }
+    }
+    if (choice?.branchId === 'brandBacklash') {
       return {
         label: 'RÉSEAUX',
-        message: 'RS en feu: “Starbuck Orion perd son aura, les clients fuient.”',
+        message: 'Des posts critiques circulent. L’image se fragilise.',
       }
     }
-    if (effects.stakeholder <= -10 || nextStats?.stakeholder <= 20) {
+    if (choice?.branchId === 'staffCrisis') {
       return {
         label: 'INTERNE',
-        message: 'Le staff craque: “Ambiance toxique et équipe à bout.”',
+        message: 'L’équipe rumine. L’ambiance se tend.',
       }
     }
-    if (effects.cash <= -10 || nextStats?.cash <= 20) {
+    if (choice?.branchId === 'investorCoup') {
       return {
-        label: 'BANQUE',
-        message: 'La banque vous appelle.',
+        label: 'ACTIONNAIRES',
+        message: 'Les investisseurs veulent un point immédiat.',
       }
     }
-    if (effects.valueAdded <= -10 || nextStats?.valueAdded <= 20) {
+    if (choice?.branchId === 'spiral') {
       return {
-        label: 'COMPTA',
-        message: 'Le comptable vous alerte: la valeur ajoutée ne couvre plus les charges.',
+        label: 'CRISE',
+        message: 'Accumulation d’erreurs: la situation se dégrade vite.',
       }
     }
-    if (choice?.branchId) {
+
+    const entries = Object.entries(effects).filter(([, value]) => value < 0)
+    const [worstKey, worstValue] = entries.sort((a, b) => a[1] - b[1])[0] || []
+    const critical =
+      (worstValue ?? 0) <= -12 ||
+      (worstKey && nextStats?.[worstKey] <= 20)
+
+    const messages = {
+      perceived: critical
+        ? 'Les avis chutent. La réputation décroche.'
+        : 'Des habitués commencent à douter de la qualité.',
+      stakeholder: critical
+        ? 'Conflit social: l’équipe ne suit plus.'
+        : 'Des tensions internes apparaissent.',
+      cash: critical
+        ? 'La banque vous appelle.'
+        : 'Trésorerie sous pression ce mois-ci.',
+      valueAdded: critical
+        ? 'Le comptable alerte: la valeur ajoutée ne couvre plus les charges.'
+        : 'La marge se resserre dangereusement.',
+      shareholder: critical
+        ? 'Les actionnaires exigent des résultats.'
+        : 'Les actionnaires s’impatientent.',
+    }
+
+    const labels = {
+      perceived: 'CLIENTS',
+      stakeholder: 'INTERNE',
+      cash: 'BANQUE',
+      valueAdded: 'COMPTA',
+      shareholder: 'ACTIONNAIRES',
+    }
+
+    if (worstKey && messages[worstKey]) {
       return {
-        label: 'RUMEUR',
-        message: 'Un drame se prépare en coulisse. Ça va sortir très vite.',
+        label: labels[worstKey],
+        message: messages[worstKey],
       }
     }
+
     return {
       label: 'RUMEURS',
       message: 'Des rumeurs circulent. L’image du café commence à se fissurer.',
@@ -1633,6 +1786,14 @@ function App() {
             Choisis ta stratégie, encaisse les conséquences. Ici, les erreurs ne
             pardonnent pas.
           </p>
+          <div className="topbar-actions">
+            <button
+              className="ghost small"
+              onClick={() => setHelpOpen((prev) => !prev)}
+            >
+              Lexique
+            </button>
+          </div>
         </div>
         <div className="stats-panel">
           {Object.entries(STAT_META).map(([key, meta]) => (
@@ -1642,6 +1803,7 @@ function App() {
               value={stats[key]}
               tone={meta.tone}
               delta={lastEffects?.[key]}
+              help={meta.help}
             />
           ))}
         </div>
@@ -1853,6 +2015,34 @@ function App() {
           </div>
         </main>
       )}
+
+      {helpOpen && (
+        <div
+          className="lexicon-overlay"
+          onClick={() => setHelpOpen(false)}
+        />
+      )}
+      <aside className={`lexicon-panel ${helpOpen ? 'open' : ''}`}>
+        <div className="lexicon-header">
+          <div>
+            <p className="eyebrow">Aide rapide</p>
+            <h3>Lexique du jeu</h3>
+          </div>
+          <button className="ghost small" onClick={() => setHelpOpen(false)}>
+            Fermer
+          </button>
+        </div>
+        <div className="lexicon-content">
+          {LEXICON.map((item) => (
+            <div key={item.term} className="lexicon-item">
+              <h4>{item.term}</h4>
+              <p>{item.definition}</p>
+              <p className="lexicon-example">{item.example}</p>
+              <p className="lexicon-context">{item.context}</p>
+            </div>
+          ))}
+        </div>
+      </aside>
     </div>
   )
 }
