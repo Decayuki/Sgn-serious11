@@ -1356,6 +1356,7 @@ function App() {
   const [branchQueue, setBranchQueue] = useState([])
   const [lastEffects, setLastEffects] = useState(null)
   const [lastNews, setLastNews] = useState(null)
+  const [lastNewsAt, setLastNewsAt] = useState(-10)
   const [shake, setShake] = useState(false)
 
   const theme = useMemo(
@@ -1396,6 +1397,7 @@ function App() {
     setBranchQueue([])
     setLastEffects(null)
     setLastNews(null)
+    setLastNewsAt(-10)
     setShake(false)
     setStepIndex(0)
     setScreen('game')
@@ -1412,25 +1414,37 @@ function App() {
     setBranchQueue([])
     setLastEffects(null)
     setLastNews(null)
+    setLastNewsAt(-10)
     setShake(false)
     setStepIndex(0)
     setScreen('game')
   }
 
-  function buildNewsFlash(effects, choice) {
+  function buildNewsFlash(effects, choice, prevStats, nextStats, stepNumber) {
     if (!effects) return null
-    const negative = Object.entries(effects).filter(([, value]) => value < 0)
-    if (negative.length === 0 && !choice?.bad) return null
-    if (effects.perceived <= -8) {
+    const severeDrop = Object.values(effects).some((value) => value <= -10)
+    const crossesAlert =
+      prevStats &&
+      nextStats &&
+      (['cash', 'perceived', 'stakeholder', 'valueAdded', 'shareholder']).some(
+        (key) => prevStats[key] > 20 && nextStats[key] <= 20
+      )
+    const shouldShow =
+      severeDrop || choice?.bad || choice?.branchId || crossesAlert
+
+    const cooldownOk = stepNumber - lastNewsAt >= 2
+    if (!shouldShow || !cooldownOk) return null
+
+    if (effects.perceived <= -10 || nextStats?.perceived <= 20) {
       return 'Drame au café: “Starbuck Orion perd son aura, les clients fuient.”'
     }
-    if (effects.stakeholder <= -8) {
+    if (effects.stakeholder <= -10 || nextStats?.stakeholder <= 20) {
       return 'RS en feu: “Ambiance toxique et staff à bout.”'
     }
-    if (effects.cash <= -8) {
+    if (effects.cash <= -10 || nextStats?.cash <= 20) {
       return 'La banque appelle: “Votre trésorerie décroche dangereusement.”'
     }
-    if (effects.valueAdded <= -8) {
+    if (effects.valueAdded <= -10 || nextStats?.valueAdded <= 20) {
       return 'Le comptable alerte: “La valeur ajoutée ne couvre plus les charges.”'
     }
     if (choice?.branchId) {
@@ -1479,9 +1493,20 @@ function App() {
     const shouldTriggerSpiral =
       nextBadCount >= BAD_THRESHOLD && !flags.has('spiral-triggered')
 
-    setStats((prev) => applyEffects(prev, computedEffects))
+    const nextStats = applyEffects(stats, computedEffects)
+    setStats(nextStats)
     setLastEffects(computedEffects || null)
-    setLastNews(buildNewsFlash(computedEffects, choice))
+    const news = buildNewsFlash(
+      computedEffects,
+      choice,
+      stats,
+      nextStats,
+      history.length
+    )
+    setLastNews(news)
+    if (news) {
+      setLastNewsAt(history.length)
+    }
     if (computedEffects) {
       const hasNegative = Object.values(computedEffects).some(
         (value) => value < 0
