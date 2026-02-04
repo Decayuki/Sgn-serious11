@@ -51,6 +51,13 @@ const THEMES = [
       'Tu pilotes un nouveau café “Starbuck” en centre-ville. Tout le monde attend des résultats. Mais tout n’est pas si simple.',
     intro:
       'Tu reprends un café Starbuck flambant neuf. Loyer haut, staff jeune, investisseurs impatients. Objectif: créer de la valeur perçue sans flinguer la valeur ajoutée ni allumer la guerre des parties prenantes.',
+    branchPool: [
+      'staffCrisis',
+      'brandBacklash',
+      'supplierBetrayal',
+      'investorCoup',
+      'spiral',
+    ],
     scenes: [
       {
         id: 'briefing',
@@ -1050,11 +1057,723 @@ const THEMES = [
   },
   {
     id: 'cosmetic',
-    name: 'Cosmétique',
+    name: 'Cosmétique: Aura Skin',
     subtitle: 'Lancement d’une marque',
-    status: 'Bientôt',
-    description: 'À venir: même mécanique, autre univers.',
-    locked: true,
+    status: 'Disponible',
+    description:
+      'Tu lances une marque skincare. Entre image “clean”, coûts réels et pression des investisseurs, chaque choix compte.',
+    intro:
+      'Aura Skin arrive sur le marché. Clients exigeants, influenceurs imprévisibles, fournisseurs à surveiller. Objectif: créer de la valeur perçue sans sacrifier la valeur ajoutée ni déclencher un scandale.',
+    branchPool: [
+      'influencerBacklash',
+      'ingredientRecall',
+      'staffCrisis',
+      'investorCoup',
+      'spiral',
+    ],
+    scenes: [
+      {
+        id: 'brand-briefing',
+        title: "Briefing d'ouverture",
+        tags: ['Valeur perçue', 'Positionnement'],
+        text:
+          'Tu fixes l’identité de ta marque. Tu veux être perçue comment ?',
+        choices: [
+          {
+            id: 'clean-premium',
+            label: 'Skincare premium: ingrédients clean + transparence totale.',
+            consequence:
+              'La valeur perçue monte, mais les coûts aussi.',
+            effects: { perceived: 14, stakeholder: 6, cash: -8, valueAdded: 4 },
+            verdict: 'Tu poses une base solide.',
+          },
+          {
+            id: 'mass-cheap',
+            label: 'Positionnement prix bas pour le volume.',
+            consequence:
+              'Le volume monte, l’image se fragilise.',
+            effects: { perceived: -8, cash: 8, stakeholder: -4 },
+            verdict: 'Tu joues le volume.',
+            bad: true,
+          },
+          {
+            id: 'claims-hype',
+            label: 'Promesses “miracles” pour créer un buzz immédiat.',
+            consequence:
+              'Le buzz explose… et le risque aussi.',
+            effects: { perceived: 6, stakeholder: -6, cash: 4 },
+            verdict: 'Tu allumes la mèche.',
+            bad: true,
+            branchId: 'influencerBacklash',
+          },
+          {
+            id: 'derma-partner',
+            label: 'Partenariat labo dermato + preuves cliniques.',
+            consequence:
+              'Crédibilité forte, croissance plus lente.',
+            effects: { perceived: 10, stakeholder: 8, cash: -6 },
+            verdict: 'Tu gagnes en sérieux.',
+          },
+        ],
+      },
+      {
+        id: 'pricing-brand',
+        title: 'Prix & marque',
+        tags: ['Valeur perçue', 'Prix'],
+        text:
+          'Tu fixes tes prix et ta promesse de marque.',
+        choices: [
+          {
+            id: 'premium-price',
+            label: 'Prix premium + storytelling “actifs rares”.',
+            consequence:
+              'Image haut de gamme, marge correcte.',
+            effects: { perceived: 10, cash: 6, stakeholder: -2 },
+            verdict: 'Tu assumes le premium.',
+          },
+          {
+            id: 'price-war',
+            label: 'Prix d’appel agressifs pour gagner des parts.',
+            consequence:
+              'Tu vends, mais ta VA souffre.',
+            effects: { perceived: -6, valueAdded: -8, cash: 4 },
+            verdict: 'Court terme facile.',
+            bad: true,
+          },
+          {
+            id: 'shrinkflation',
+            label: 'Même prix, flacons plus petits.',
+            consequence:
+              'Les clients le remarquent.',
+            effects: { perceived: -12, stakeholder: -6, cash: 6 },
+            verdict: 'Tu perds la confiance.',
+            bad: true,
+          },
+          {
+            id: 'subscription',
+            label: 'Box mensuelle pour fidéliser.',
+            consequence:
+              'Flux récurrent, marge fragile.',
+            effects: { perceived: 4, cash: 6, valueAdded: -6 },
+            verdict: 'Séduisant mais risqué.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'measure',
+        title: 'Mesure de la valeur perçue',
+        tags: ['Valeur perçue', 'Mesure'],
+        text:
+          'Tu veux savoir ce que les clientes perçoivent vraiment.',
+        choices: [
+          {
+            id: 'survey',
+            label: 'Enquêtes + analyse des avis clients.',
+            consequence:
+              'Tu comprends les attentes réelles.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Approche pro.',
+          },
+          {
+            id: 'market-study',
+            label: 'Étude marché + tests prix.',
+            consequence:
+              'Tu ajustes ton positionnement.',
+            effects: { perceived: 8, valueAdded: 4, cash: -4 },
+            verdict: 'Stratégique.',
+          },
+          {
+            id: 'vibes-only',
+            label: 'Au feeling et aux trends TikTok.',
+            consequence:
+              'Le feeling ne suffit pas.',
+            effects: { perceived: -6, valueAdded: -4 },
+            verdict: 'Tu pilotes dans le brouillard.',
+            bad: true,
+            branchId: 'influencerBacklash',
+          },
+        ],
+      },
+      {
+        id: 'production',
+        title: 'Facteurs de production',
+        tags: ['Travail', 'Capital'],
+        text:
+          'Tu choisis où investir: équipe R&D ou packaging.',
+        choices: [
+          {
+            id: 'lab-invest',
+            label: 'Investir dans le labo et la formulation.',
+            consequence:
+              'Qualité produit en hausse.',
+            effects: { perceived: 10, stakeholder: 8, cash: -8 },
+            verdict: 'Tu mises sur le fond.',
+          },
+          {
+            id: 'packaging',
+            label: 'Packaging premium + design signature.',
+            consequence:
+              'Image forte, qualité stable.',
+            effects: { perceived: 8, cash: -6 },
+            verdict: 'Tu joues la forme.',
+          },
+          {
+            id: 'cut-rd',
+            label: 'Réduire la R&D pour accélérer.',
+            consequence:
+              'Coûts en baisse, risques cachés.',
+            effects: { perceived: -8, stakeholder: -6, cash: 8 },
+            verdict: 'Tu fragilises la marque.',
+            bad: true,
+            branchId: 'ingredientRecall',
+          },
+        ],
+      },
+      {
+        id: 'supply',
+        title: 'Approvisionnement & consommations intermédiaires',
+        tags: ['Valeur ajoutée', 'Fournisseurs'],
+        text:
+          'Tu choisis tes fournisseurs d’ingrédients.',
+        choices: [
+          {
+            id: 'certified',
+            label: 'Ingrédients certifiés + traçabilité.',
+            consequence:
+              'Coûts plus élevés, confiance forte.',
+            effects: { perceived: 10, stakeholder: 6, cash: -8, valueAdded: 4 },
+            verdict: 'Tu sécurises la qualité.',
+          },
+          {
+            id: 'cheap-import',
+            label: 'Ingrédients low-cost pour la marge.',
+            consequence:
+              'Tu gagnes vite, l’image se voit.',
+            effects: { perceived: -10, valueAdded: 6, cash: 6, stakeholder: -4 },
+            verdict: 'Risqué pour la réputation.',
+            bad: true,
+            branchId: 'ingredientRecall',
+          },
+          {
+            id: 'grey-market',
+            label: 'Actifs “miracle” sans transparence.',
+            consequence:
+              'Tu promets plus… mais tu prends un risque légal.',
+            effects: { perceived: -8, cash: 6, stakeholder: -6 },
+            verdict: 'Tu joues avec le feu.',
+            bad: true,
+            branchId: 'ingredientRecall',
+          },
+        ],
+      },
+      {
+        id: 'value-added',
+        title: 'Calcul de la valeur ajoutée',
+        tags: ['Valeur ajoutée', 'Calcul'],
+        text:
+          'Chiffre d’affaires annuel: 480 000 €. Consommations intermédiaires: 310 000 €. Quelle est la valeur ajoutée ?',
+        choices: [
+          {
+            id: 'va-correct',
+            label: '170 000 €',
+            consequence: 'Bonne formule: VA = CA - CI.',
+            effects: { valueAdded: 14, shareholder: 4 },
+            verdict: 'Solide.',
+          },
+          {
+            id: 'va-too-high',
+            label: '790 000 €',
+            consequence: 'Tu additionnes tout. Non.',
+            effects: { valueAdded: -12, shareholder: -4 },
+            verdict: 'Tu confonds tout.',
+            bad: true,
+          },
+          {
+            id: 'va-too-low',
+            label: '120 000 €',
+            consequence: 'Tu as oublié une partie du CA.',
+            effects: { valueAdded: -10 },
+            verdict: 'Presque… mais non.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'distribution',
+        title: 'Répartition de la valeur ajoutée',
+        tags: ['Répartition', 'Conflits'],
+        text:
+          'Ta VA est là. Tu la répartis comment ?',
+        choices: [
+          {
+            id: 'balanced',
+            label:
+              'Salaires corrects + impôts à l’heure + dividendes modérés + réinvestissement.',
+            consequence:
+              'Tout le monde grogne un peu, mais personne ne te plante.',
+            effects: { stakeholder: 12, shareholder: 6, cash: -4, valueAdded: 6 },
+            verdict: 'Équilibré.',
+          },
+          {
+            id: 'dividends-max',
+            label:
+              'Priorité aux actionnaires pour accélérer.',
+            consequence:
+              'Les investisseurs kiffent. L’équipe serre les dents.',
+            effects: { shareholder: 18, stakeholder: -16, perceived: -6 },
+            verdict: 'Actionnarial pur.',
+            bad: true,
+            branchId: 'investorCoup',
+          },
+          {
+            id: 'all-staff',
+            label:
+              'Bonus R&D + primes staff.',
+            consequence:
+              'L’équipe adore, les actionnaires s’impatientent.',
+            effects: { stakeholder: 16, shareholder: -14, cash: -6 },
+            verdict: 'Partenariale forte.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'governance',
+        title: 'Gouvernance',
+        tags: ['Gouvernance', 'Parties prenantes'],
+        text:
+          'Dernière étape: comment tu gouvernes la marque ?',
+        choices: [
+          {
+            id: 'co-decision',
+            label: 'Comité mixte avec R&D, marketing et partenaires.',
+            consequence:
+              'L’équipe se sent respectée.',
+            effects: { stakeholder: 16, perceived: 6, shareholder: -6 },
+            verdict: 'Partenariale solide.',
+          },
+          {
+            id: 'shareholder-only',
+            label: 'Décisions 100% actionnaires.',
+            consequence:
+              'Rapide, mais froid. Tensions internes.',
+            effects: { shareholder: 14, stakeholder: -14, perceived: -6 },
+            verdict: 'Tu vas vers le conflit.',
+            bad: true,
+            branchId: 'investorCoup',
+          },
+          {
+            id: 'mix',
+            label: 'Mix: objectifs financiers + feedback trimestriel.',
+            consequence:
+              'Tu limites la casse des deux côtés.',
+            effects: { shareholder: 6, stakeholder: 8, valueAdded: 4 },
+            verdict: 'Réaliste.',
+          },
+        ],
+      },
+      {
+        id: 'random-event-1',
+        type: 'random',
+      },
+      {
+        id: 'random-event-2',
+        type: 'random',
+      },
+      {
+        id: 'last-push',
+        title: 'Dernier push',
+        tags: ['Communication', 'Expérience client'],
+        text:
+          'Dernière décision avant le bilan.',
+        choices: [
+          {
+            id: 'csr',
+            label: 'Programme éthique + traçabilité publique.',
+            consequence:
+              'Image solide, confiance long terme.',
+            effects: { perceived: 10, stakeholder: 8, cash: -6 },
+            verdict: 'Bonne stratégie.',
+          },
+          {
+            id: 'influencer',
+            label: 'Campagne influenceurs massive.',
+            consequence:
+              'Tu fais du bruit… si le produit suit.',
+            effects: { perceived: 6, cash: -8 },
+            verdict: 'Pari risqué.',
+            bad: true,
+            branchId: 'influencerBacklash',
+          },
+          {
+            id: 'cut-costs',
+            label: 'Couper encore dans les coûts.',
+            consequence:
+              'Marge en hausse, qualité en baisse.',
+            effects: { cash: 10, stakeholder: -10, perceived: -8 },
+            verdict: 'Tu fragilises la marque.',
+            bad: true,
+          },
+          {
+            id: 'limited-drop',
+            label: 'Édition limitée ultra premium.',
+            consequence:
+              'Buzz modéré mais marge forte.',
+            effects: { perceived: 8, cash: 6, valueAdded: 4 },
+            verdict: 'Bon levier.',
+          },
+        ],
+      },
+    ],
+    randomEvents: [
+      {
+        id: 'influencer-clip',
+        title: "Et là, c'est le drame : avis viral",
+        tags: ['Réputation', 'Valeur perçue'],
+        text:
+          'Une influenceuse dézingue ta crème en story.',
+        choices: [
+          {
+            id: 'explain',
+            label: 'Tu publies un décryptage transparent.',
+            consequence:
+              'Tu limites la casse.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Tu reprends la main.',
+          },
+          {
+            id: 'ignore',
+            label: 'Tu ignores.',
+            consequence:
+              'La critique devient un symbole.',
+            effects: { perceived: -10, stakeholder: -6 },
+            verdict: 'Tu laisses la vague grossir.',
+            bad: true,
+            branchId: 'influencerBacklash',
+          },
+          {
+            id: 'attack',
+            label: 'Tu attaques publiquement.',
+            consequence:
+              'Effet Streisand.',
+            effects: { perceived: -12, stakeholder: -6 },
+            verdict: 'Tu empirer tout.',
+            bad: true,
+            branchId: 'influencerBacklash',
+          },
+        ],
+      },
+      {
+        id: 'batch-recall',
+        title: "Et là, c'est le drame : lot problématique",
+        tags: ['Qualité', 'Risque légal'],
+        text:
+          'Plusieurs clientes signalent des irritations.',
+        choices: [
+          {
+            id: 'recall',
+            label: 'Rappel immédiat + remboursement.',
+            consequence:
+              'Coûteux, mais tu protèges l’image.',
+            effects: { perceived: 8, stakeholder: 6, cash: -10 },
+            verdict: 'Tu protèges la marque.',
+            branchId: 'ingredientRecall',
+          },
+          {
+            id: 'silence',
+            label: 'Tu minimises.',
+            consequence:
+              'La rumeur enfle.',
+            effects: { perceived: -12, stakeholder: -8 },
+            verdict: 'Tu perds le contrôle.',
+            bad: true,
+            branchId: 'ingredientRecall',
+          },
+          {
+            id: 'legal',
+            label: 'Tu bascules en mode juridique.',
+            consequence:
+              'Froid, mais cadré.',
+            effects: { shareholder: 4, perceived: -6, stakeholder: -4 },
+            verdict: 'Tu te blindes.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'inspection',
+        title: "Et là, c'est le drame : contrôle sanitaire",
+        tags: ['État', 'Confiance'],
+        text:
+          'Inspection surprise du labo.',
+        choices: [
+          {
+            id: 'clean',
+            label: 'Tu coopères, tout est carré.',
+            consequence:
+              'Aucune amende.',
+            effects: { stakeholder: 8, perceived: 6 },
+            verdict: 'Propre.',
+          },
+          {
+            id: 'rush-clean',
+            label: 'Tu caches vite des irrégularités.',
+            consequence:
+              'Ils voient tout. Amende.',
+            effects: { cash: -8, stakeholder: -8, perceived: -10 },
+            verdict: 'Tu t’es grillé.',
+            bad: true,
+          },
+          {
+            id: 'arrangement',
+            label: 'Tu proposes un arrangement discret.',
+            consequence:
+              'Ils te dénoncent.',
+            effects: { cash: -16, stakeholder: -18, perceived: -14 },
+            verdict: 'Illégal.',
+            bad: true,
+            flags: ['illegal'],
+          },
+        ],
+      },
+    ],
+    branches: {
+      influencerBacklash: {
+        label: 'Bad buzz influenceurs',
+        scenes: [
+          {
+            id: 'influencer-leak',
+            title: "Et là, c'est le drame : call-out public",
+            tags: ['Réputation', 'Valeur perçue'],
+            text:
+              'Un thread accuse ta marque de “greenwashing”.',
+            choices: [
+              {
+                id: 'audit',
+                label: 'Audit externe + transparence.',
+                consequence:
+                  'Tu limites les dégâts.',
+                effects: { perceived: 8, stakeholder: 6, cash: -8 },
+                verdict: 'Tu nettoies.',
+              },
+              {
+                id: 'deny',
+                label: 'Tu nies.',
+                consequence:
+                  'Ça se retourne contre toi.',
+                effects: { perceived: -12, stakeholder: -6 },
+                verdict: 'Tu nourris le buzz.',
+                bad: true,
+              },
+              {
+                id: 'attack',
+                label: 'Tu attaques l’influenceuse.',
+                consequence:
+                  'Effet boomerang.',
+                effects: { perceived: -14, stakeholder: -8 },
+                verdict: 'Tu empirer tout.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'boycott',
+            title: 'Voie parallèle: boycott',
+            tags: ['Communication', 'Expérience client'],
+            text:
+              'Les clientes appellent au boycott.',
+            choices: [
+              {
+                id: 'open-dialogue',
+                label: 'Dialogue public + engagement clair.',
+                consequence:
+                  'Tu récupères un peu de confiance.',
+                effects: { perceived: 6, stakeholder: 6, cash: -4 },
+                verdict: 'Tu limites la casse.',
+              },
+              {
+                id: 'ignore',
+                label: 'Ignorer.',
+                consequence:
+                  'La marque décroche.',
+                effects: { perceived: -10, cash: -8 },
+                verdict: 'Tu perds la bataille.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      ingredientRecall: {
+        label: 'Crise produit',
+        scenes: [
+          {
+            id: 'recall-start',
+            title: "Et là, c'est le drame : rappel produit",
+            tags: ['Qualité', 'Risque légal'],
+            text:
+              'Des clientes réagissent mal à un lot.',
+            choices: [
+              {
+                id: 'recall',
+                label: 'Rappel + remboursement.',
+                consequence:
+                  'Cher, mais image protégée.',
+                effects: { perceived: 8, cash: -12, stakeholder: 6 },
+                verdict: 'Tu assumes.',
+              },
+              {
+                id: 'minimize',
+                label: 'Tu minimises.',
+                consequence:
+                  'La rumeur enfle.',
+                effects: { perceived: -12, stakeholder: -8 },
+                verdict: 'Tu perds le contrôle.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'regulator',
+            title: 'Voie parallèle: enquête',
+            tags: ['État', 'Confiance'],
+            text:
+              'Les autorités ouvrent une enquête.',
+            choices: [
+              {
+                id: 'cooperate',
+                label: 'Tu coopères totalement.',
+                consequence:
+                  'Tu limites les sanctions.',
+                effects: { stakeholder: 6, perceived: 4, cash: -6 },
+                verdict: 'Tu te blindes proprement.',
+              },
+              {
+                id: 'lawyer',
+                label: 'Tu passes en mode juridique.',
+                consequence:
+                  'Image froide.',
+                effects: { perceived: -6, shareholder: 4, stakeholder: -4 },
+                verdict: 'Tu refroidis le public.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      staffCrisis: {
+        label: 'Crise équipe',
+        scenes: [
+          {
+            id: 'lab-revolt',
+            title: "Et là, c'est le drame : le labo craque",
+            tags: ['RH', 'Valeur partenariale'],
+            text:
+              'L’équipe R&D dénonce la pression et la baisse de qualité.',
+            choices: [
+              {
+                id: 'mediate',
+                label: 'Négociation + plan de qualité clair.',
+                consequence:
+                  'Tu apaises le conflit.',
+                effects: { stakeholder: 10, perceived: 4, cash: -6 },
+                verdict: 'Tu répares.',
+              },
+              {
+                id: 'delay',
+                label: 'Tu temporises.',
+                consequence:
+                  'Le conflit monte.',
+                effects: { stakeholder: -10, perceived: -6 },
+                verdict: 'Tu laisses monter.',
+                bad: true,
+              },
+              {
+                id: 'replace',
+                label: 'Tu remplaces des profils clés.',
+                consequence:
+                  'Qualité en baisse.',
+                effects: { perceived: -10, stakeholder: -12, cash: 4 },
+                verdict: 'Tu perds la crédibilité.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      investorCoup: {
+        label: 'Coup des investisseurs',
+        scenes: [
+          {
+            id: 'investor-meeting',
+            title: "Et là, c'est le drame : pression investisseurs",
+            tags: ['Valeur actionnariale', 'Gouvernance'],
+            text:
+              'Les investisseurs exigent une croissance explosive.',
+            choices: [
+              {
+                id: 'data-plan',
+                label: 'Plan chiffré + croissance maîtrisée.',
+                consequence:
+                  'Tu reprends un peu de contrôle.',
+                effects: { shareholder: 10, valueAdded: 6, cash: -4 },
+                verdict: 'Tu reprends la main.',
+              },
+              {
+                id: 'promise-cuts',
+                label: 'Couper dans la qualité pour la marge.',
+                consequence:
+                  'Investisseurs contents, clients déçus.',
+                effects: { shareholder: 12, perceived: -10, stakeholder: -6 },
+                verdict: 'Tu vends l’image.',
+                bad: true,
+              },
+              {
+                id: 'accept-dilution',
+                label: 'Tu acceptes une dilution pour gagner du temps.',
+                consequence:
+                  'Tu sauves l’entreprise, pas ton contrôle.',
+                effects: { shareholder: 4, cash: 8 },
+                verdict: 'Tu sacrifies ton pouvoir.',
+              },
+            ],
+          },
+        ],
+      },
+      spiral: {
+        label: 'Spirale de crise',
+        scenes: [
+          {
+            id: 'spiral-overflow',
+            title: "Et là, c'est le drame : accumulation d’erreurs",
+            tags: ['Gouvernance', 'Crise'],
+            text:
+              'Trop d’erreurs d’affilée. Les tensions explosent.',
+            choices: [
+              {
+                id: 'turnaround',
+                label: 'Plan de redressement + audit externe.',
+                consequence:
+                  'Tu reprends un peu la main.',
+                effects: { stakeholder: 6, perceived: 4, cash: -8 },
+                verdict: 'Tu limites la casse.',
+              },
+              {
+                id: 'scapegoat',
+                label: 'Tu désignes un responsable.',
+                consequence:
+                  'Confiance détruite.',
+                effects: { stakeholder: -10, perceived: -8, shareholder: 4 },
+                verdict: 'Tu sacrifies quelqu’un.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+    },
+    locked: false,
   },
   {
     id: 'boxing',
@@ -1065,6 +1784,14 @@ const THEMES = [
       'Tu gères une salle avec des champions. Entre performance, éthique et pression actionnariale, tout peut déraper.',
     intro:
       'La salle Black Corner monte en puissance. Sponsors, élèves et investisseurs exigent des résultats. Objectif: créer de la valeur perçue sans saboter la valeur ajoutée ni déclencher un scandale.',
+    branchPool: [
+      'fixFight',
+      'mediaHeat',
+      'staffStrike',
+      'sponsorScandal',
+      'dopingScandal',
+      'spiral',
+    ],
     scenes: [
       {
         id: 'ring-briefing',
@@ -2137,27 +2864,1798 @@ const THEMES = [
   },
   {
     id: 'football',
-    name: 'Foot & business',
-    subtitle: 'Club local en crise',
-    status: 'Bientôt',
-    description: 'À venir: transferts, sponsors, supporters, chaos.',
-    locked: true,
+    name: 'Club de foot: Atlas FC',
+    subtitle: 'Supporters, sponsors, résultats',
+    status: 'Disponible',
+    description:
+      'Tu gères un club local qui veut passer pro. Entre éthique, résultats et investisseurs, le moindre choix peut exploser.',
+    intro:
+      'Atlas FC joue sa montée. Supporters exigeants, joueurs sous pression, actionnaires impatients. Objectif: créer de la valeur perçue sans sacrifier la valeur ajoutée ni déclencher un scandale.',
+    branchPool: [
+      'fixMatch',
+      'ultraBacklash',
+      'sponsorScandal',
+      'dopingScandal',
+      'spiral',
+    ],
+    scenes: [
+      {
+        id: 'season-briefing',
+        title: "Briefing de saison",
+        tags: ['Valeur perçue', 'Positionnement'],
+        text:
+          'Tu définis l’identité du club pour cette saison.',
+        choices: [
+          {
+            id: 'academy-first',
+            label: 'Miser sur le centre de formation + jeu collectif.',
+            consequence:
+              'Image saine, progression lente.',
+            effects: { perceived: 8, stakeholder: 8, cash: -4 },
+            verdict: 'Tu construis du solide.',
+          },
+          {
+            id: 'star-signings',
+            label: 'Signer des stars pour le buzz immédiat.',
+            consequence:
+              'La hype monte, les coûts explosent.',
+            effects: { perceived: 12, cash: -12, shareholder: 4 },
+            verdict: 'Tu joues la vitrine.',
+            bad: true,
+          },
+          {
+            id: 'trash-talk',
+            label: 'Provoquer les rivaux pour créer une rivalité médiatique.',
+            consequence:
+              'Buzz rapide, tensions fortes.',
+            effects: { perceived: 6, stakeholder: -6, cash: 2 },
+            verdict: 'Tu allumes la mèche.',
+            bad: true,
+            branchId: 'ultraBacklash',
+          },
+          {
+            id: 'community',
+            label: 'Ancrage local + actions communautaires.',
+            consequence:
+              'Supporters fidèles, croissance lente.',
+            effects: { perceived: 8, stakeholder: 10, cash: -2 },
+            verdict: 'Tu renforces la base.',
+          },
+        ],
+      },
+      {
+        id: 'pricing-brand',
+        title: 'Billetterie & image',
+        tags: ['Valeur perçue', 'Prix'],
+        text:
+          'Tu fixes les prix et l’expérience stade.',
+        choices: [
+          {
+            id: 'premium-seats',
+            label: 'Tarifs premium + fan experience soignée.',
+            consequence:
+              'Image premium, mais certains râlent.',
+            effects: { perceived: 10, cash: 6, stakeholder: -2 },
+            verdict: 'Tu assumes le premium.',
+          },
+          {
+            id: 'cheap-flood',
+            label: 'Prix bas pour remplir le stade.',
+            consequence:
+              'Volume oui, marge faible.',
+            effects: { perceived: -6, valueAdded: -8, cash: 4 },
+            verdict: 'Court terme facile.',
+            bad: true,
+          },
+          {
+            id: 'hidden-fees',
+            label: 'Tarifs bas + frais cachés.',
+            consequence:
+              'Les supporters se sentent floués.',
+            effects: { perceived: -12, stakeholder: -6, cash: 6 },
+            verdict: 'Tu perds la confiance.',
+            bad: true,
+            branchId: 'ultraBacklash',
+          },
+          {
+            id: 'sponsor-pack',
+            label: 'Pack sponsor agressif pour le cash.',
+            consequence:
+              'Tu fais du cash vite… mais l’image se brouille.',
+            effects: { cash: 10, perceived: -4, stakeholder: -4 },
+            verdict: 'Tu t’exposes.',
+            bad: true,
+            branchId: 'sponsorScandal',
+          },
+        ],
+      },
+      {
+        id: 'measure',
+        title: 'Mesure de la valeur perçue',
+        tags: ['Valeur perçue', 'Mesure'],
+        text:
+          'Tu veux savoir ce que les supporters perçoivent vraiment.',
+        choices: [
+          {
+            id: 'survey',
+            label: 'Enquêtes + analyses des avis.',
+            consequence:
+              'Tu comprends les attentes.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Approche pro.',
+          },
+          {
+            id: 'market-study',
+            label: 'Étude locale + benchmark des clubs.',
+            consequence:
+              'Tu ajustes ton positionnement.',
+            effects: { perceived: 8, valueAdded: 4, cash: -4 },
+            verdict: 'Stratégique.',
+          },
+          {
+            id: 'vibes-only',
+            label: 'Au feeling + tendances réseaux.',
+            consequence:
+              'Le feeling ne suffit pas.',
+            effects: { perceived: -6, valueAdded: -4 },
+            verdict: 'Tu pilotes dans le brouillard.',
+            bad: true,
+            branchId: 'ultraBacklash',
+          },
+        ],
+      },
+      {
+        id: 'transfer',
+        title: 'Mercato & effectif',
+        tags: ['Valeur perçue', 'Actionnaires'],
+        text:
+          'Tu dois gérer le mercato.',
+        choices: [
+          {
+            id: 'balanced-team',
+            label: 'Effectif équilibré + jeunes prometteurs.',
+            consequence:
+              'Stabilité, progression.',
+            effects: { perceived: 8, stakeholder: 6, cash: -4 },
+            verdict: 'Tu sécurises le long terme.',
+          },
+          {
+            id: 'big-star',
+            label: 'Signer une star chère.',
+            consequence:
+              'Buzz immédiat, trésorerie tendue.',
+            effects: { perceived: 12, cash: -12, shareholder: 4 },
+            verdict: 'Tu joues la vitrine.',
+            bad: true,
+          },
+          {
+            id: 'agent-deal',
+            label: 'Passer par un agent douteux pour “bon prix”.',
+            consequence:
+              'Tu gagnes du temps, tu risques un scandale.',
+            effects: { perceived: -8, stakeholder: -6, cash: 4 },
+            verdict: 'Tu flirtes avec le risque.',
+            bad: true,
+            branchId: 'dopingScandal',
+          },
+        ],
+      },
+      {
+        id: 'production',
+        title: 'Facteurs de production',
+        tags: ['Travail', 'Capital'],
+        text:
+          'Tu investis dans le staff ou les infrastructures ?',
+        choices: [
+          {
+            id: 'coaching',
+            label: 'Staff technique renforcé + préparation mentale.',
+            consequence:
+              'Qualité sportive en hausse.',
+            effects: { perceived: 10, stakeholder: 10, cash: -8 },
+            verdict: 'Tu investis dans l’humain.',
+          },
+          {
+            id: 'stadium',
+            label: 'Améliorer le stade et l’expérience fan.',
+            consequence:
+              'Image en hausse, cash en baisse.',
+            effects: { perceived: 10, cash: -14, valueAdded: 4 },
+            verdict: 'Tu mises sur l’image.',
+          },
+          {
+            id: 'cut-staff',
+            label: 'Réduire le staff pour économiser.',
+            consequence:
+              'Performance en baisse, tensions.',
+            effects: { perceived: -10, stakeholder: -12, cash: 8 },
+            verdict: 'Tu fragilises l’équipe.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'supply',
+        title: 'Approvisionnement & consommations intermédiaires',
+        tags: ['Valeur ajoutée', 'Fournisseurs'],
+        text:
+          'Tu choisis équipementier et nutrition.',
+        choices: [
+          {
+            id: 'reliable-gear',
+            label: 'Équipementier fiable + nutrition contrôlée.',
+            consequence:
+              'Image pro, coûts élevés.',
+            effects: { perceived: 8, stakeholder: 6, cash: -8, valueAdded: 4 },
+            verdict: 'Tu sécurises la qualité.',
+          },
+          {
+            id: 'cheap-gear',
+            label: 'Équipement low-cost.',
+            consequence:
+              'Tu gagnes vite, la qualité se voit.',
+            effects: { perceived: -10, valueAdded: 6, cash: 6, stakeholder: -4 },
+            verdict: 'Risqué pour l’image.',
+            bad: true,
+          },
+          {
+            id: 'supplements',
+            label: 'Compléments performance peu transparents.',
+            consequence:
+              'Tu promets plus… mais tu flirtes avec le scandale.',
+            effects: { perceived: -8, cash: 6, stakeholder: -6 },
+            verdict: 'Tu joues avec le feu.',
+            bad: true,
+            branchId: 'dopingScandal',
+          },
+        ],
+      },
+      {
+        id: 'value-added',
+        title: 'Calcul de la valeur ajoutée',
+        tags: ['Valeur ajoutée', 'Calcul'],
+        text:
+          'Chiffre d’affaires annuel: 2 500 000 €. Consommations intermédiaires: 1 600 000 €. Quelle est la valeur ajoutée ?',
+        choices: [
+          {
+            id: 'va-correct',
+            label: '900 000 €',
+            consequence: 'Bonne formule: VA = CA - CI.',
+            effects: { valueAdded: 14, shareholder: 4 },
+            verdict: 'Solide.',
+          },
+          {
+            id: 'va-too-high',
+            label: '4 100 000 €',
+            consequence: 'Tu additionnes tout. Non.',
+            effects: { valueAdded: -12, shareholder: -4 },
+            verdict: 'Tu confonds tout.',
+            bad: true,
+          },
+          {
+            id: 'va-too-low',
+            label: '650 000 €',
+            consequence: 'Tu as oublié une partie du CA.',
+            effects: { valueAdded: -10 },
+            verdict: 'Presque… mais non.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'distribution',
+        title: 'Répartition de la valeur ajoutée',
+        tags: ['Répartition', 'Conflits'],
+        text:
+          'Ta VA est là. Tu la répartis comment ?',
+        choices: [
+          {
+            id: 'balanced',
+            label:
+              'Salaires corrects + impôts à l’heure + dividendes modérés + réinvestissement.',
+            consequence:
+              'Tout le monde grogne un peu, mais personne ne te plante.',
+            effects: { stakeholder: 12, shareholder: 6, cash: -4, valueAdded: 6 },
+            verdict: 'Équilibré.',
+          },
+          {
+            id: 'dividends-max',
+            label:
+              'Priorité aux actionnaires pour sécuriser leurs gains.',
+            consequence:
+              'Investisseurs heureux, staff frustré.',
+            effects: { shareholder: 18, stakeholder: -16, perceived: -6 },
+            verdict: 'Actionnarial pur.',
+            bad: true,
+            branchId: 'fixMatch',
+          },
+          {
+            id: 'all-team',
+            label:
+              'Bonus joueurs + primes staff.',
+            consequence:
+              'L’équipe adore, les actionnaires s’impatientent.',
+            effects: { stakeholder: 16, shareholder: -14, cash: -6 },
+            verdict: 'Partenariale musclée.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'governance',
+        title: 'Gouvernance',
+        tags: ['Gouvernance', 'Parties prenantes'],
+        text:
+          'Comment tu gouvernes le club ?',
+        choices: [
+          {
+            id: 'co-decision',
+            label: 'Comité mixte avec staff, supporters, sponsors.',
+            consequence:
+              'L’équipe se sent respectée.',
+            effects: { stakeholder: 16, perceived: 6, shareholder: -6 },
+            verdict: 'Partenariale solide.',
+          },
+          {
+            id: 'shareholder-only',
+            label: 'Décisions 100% actionnaires.',
+            consequence:
+              'Rapide, mais froid. Tensions internes.',
+            effects: { shareholder: 14, stakeholder: -14, perceived: -6 },
+            verdict: 'Tu vas vers le conflit.',
+            bad: true,
+            branchId: 'fixMatch',
+          },
+          {
+            id: 'mix',
+            label: 'Mix: objectifs financiers + feedback trimestriel.',
+            consequence:
+              'Tu limites la casse des deux côtés.',
+            effects: { shareholder: 6, stakeholder: 8, valueAdded: 4 },
+            verdict: 'Réaliste.',
+          },
+        ],
+      },
+      {
+        id: 'random-event-1',
+        type: 'random',
+      },
+      {
+        id: 'random-event-2',
+        type: 'random',
+      },
+      {
+        id: 'last-push',
+        title: 'Dernier match',
+        tags: ['Communication', 'Expérience fan'],
+        text:
+          'Dernière décision avant le bilan.',
+        choices: [
+          {
+            id: 'derby',
+            label: 'Derby local + fan zone encadrée.',
+            consequence:
+              'Belle visibilité, bonne ambiance.',
+            effects: { perceived: 10, stakeholder: 6, cash: 6 },
+            verdict: 'Bonne montée.',
+          },
+          {
+            id: 'underground',
+            label: 'Match “arrangé” pour le cash.',
+            consequence:
+              'Gros cash… gros risque.',
+            effects: { cash: 12, perceived: -14, stakeholder: -12 },
+            verdict: 'Tu flirtes avec le scandale.',
+            bad: true,
+            branchId: 'fixMatch',
+          },
+          {
+            id: 'prevention',
+            label: 'Programme anti-violence + sécurité renforcée.',
+            consequence:
+              'Image pro, confiance long terme.',
+            effects: { stakeholder: 10, perceived: 8, cash: -4 },
+            verdict: 'Stratégie propre.',
+          },
+          {
+            id: 'merch',
+            label: 'Merch agressif + prix élevés.',
+            consequence:
+              'Cash oui, image plus froide.',
+            effects: { cash: 8, perceived: -6 },
+            verdict: 'Rentable, mais risqué.',
+          },
+        ],
+      },
+    ],
+    randomEvents: [
+      {
+        id: 'injury',
+        title: "Et là, c'est le drame : blessure d’un leader",
+        tags: ['Sécurité', 'Valeur perçue'],
+        text:
+          'Ton joueur clé se blesse avant un match décisif.',
+        choices: [
+          {
+            id: 'rest',
+            label: 'Tu le préserves.',
+            consequence:
+              'Moins de performance, mais image saine.',
+            effects: { perceived: 6, cash: -6, stakeholder: 6 },
+            verdict: 'Tu protèges l’équipe.',
+          },
+          {
+            id: 'force',
+            label: 'Tu le fais jouer malgré tout.',
+            consequence:
+              'Risque de bad buzz.',
+            effects: { perceived: -10, stakeholder: -8, cash: 4 },
+            verdict: 'Tu joues avec la santé.',
+            bad: true,
+            branchId: 'ultraBacklash',
+          },
+        ],
+      },
+      {
+        id: 'referee',
+        title: "Et là, c'est le drame : arbitrage polémique",
+        tags: ['Réputation', 'Supporters'],
+        text:
+          'Un arbitrage douteux provoque une colère des supporters.',
+        choices: [
+          {
+            id: 'calm',
+            label: 'Tu appelles au calme publiquement.',
+            consequence:
+              'Tu limites les dégâts.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Tu éteins un feu.',
+          },
+          {
+            id: 'fuel',
+            label: 'Tu attises la colère.',
+            consequence:
+              'Bad buzz et sanctions.',
+            effects: { perceived: -10, stakeholder: -8 },
+            verdict: 'Tu nourris le chaos.',
+            bad: true,
+            branchId: 'ultraBacklash',
+          },
+        ],
+      },
+      {
+        id: 'betting-spike',
+        title: "Et là, c'est le drame : paris suspects",
+        tags: ['Actionnaires', 'Éthique'],
+        text:
+          'Les bookmakers signalent un afflux massif de paris contre ton club.',
+        choices: [
+          {
+            id: 'report',
+            label: 'Tu signales à la fédération.',
+            consequence:
+              'Tu te protèges.',
+            effects: { perceived: 6, stakeholder: 4, shareholder: -8 },
+            verdict: 'Tu coupes court.',
+          },
+          {
+            id: 'ignore',
+            label: 'Tu laisses faire.',
+            consequence:
+              'Les rumeurs explosent.',
+            effects: { perceived: -12, stakeholder: -6 },
+            verdict: 'Tu perds le contrôle.',
+            bad: true,
+            branchId: 'fixMatch',
+          },
+        ],
+      },
+      {
+        id: 'doping-test',
+        title: "Et là, c'est le drame : contrôle antidopage",
+        tags: ['Éthique', 'Réputation'],
+        text:
+          'Un contrôle surprise est annoncé.',
+        choices: [
+          {
+            id: 'cooperate',
+            label: 'Tu coopères, transparence totale.',
+            consequence:
+              'Tu sécurises l’image.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Tu joues clean.',
+          },
+          {
+            id: 'delay',
+            label: 'Tu demandes un report technique.',
+            consequence:
+              'Le doute s’installe.',
+            effects: { perceived: -8, stakeholder: -6 },
+            verdict: 'Tu crées le doute.',
+            bad: true,
+            branchId: 'dopingScandal',
+          },
+        ],
+      },
+    ],
+    branches: {
+      fixMatch: {
+        label: 'Match truqué',
+        scenes: [
+          {
+            id: 'fix-offer',
+            title: "Et là, c'est le drame : pression des actionnaires",
+            tags: ['Actionnaires', 'Éthique'],
+            text:
+              'Les actionnaires veulent que ton club perde pour miser sur la défaite.',
+            choices: [
+              {
+                id: 'refuse',
+                label: 'Refuser net.',
+                consequence:
+                  'Tu protèges l’intégrité.',
+                effects: { shareholder: -10, stakeholder: 6, perceived: 6 },
+                verdict: 'Tu tiens la ligne.',
+              },
+              {
+                id: 'accept',
+                label: 'Accepter discrètement.',
+                consequence:
+                  'Cash immédiat, risque légal énorme.',
+                effects: { cash: 12, shareholder: 10, perceived: -12 },
+                verdict: 'Tu ouvres la boîte de Pandore.',
+                bad: true,
+                flags: ['illegal'],
+              },
+              {
+                id: 'compromise',
+                label: 'Match “serré” pour brouiller les pistes.',
+                consequence:
+                  'Tu glisses vers la magouille.',
+                effects: { cash: 6, perceived: -6, shareholder: 6 },
+                verdict: 'Tu joues sale.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'fix-fallout',
+            title: 'Voie parallèle: soupçons de match truqué',
+            tags: ['Réputation', 'Risque légal'],
+            text:
+              'Les médias parlent d’un match “bizarre”.',
+            choices: [
+              {
+                id: 'audit',
+                label: 'Audit externe + transparence.',
+                consequence:
+                  'Tu limites les dégâts.',
+                effects: { perceived: 8, stakeholder: 4, cash: -6 },
+                verdict: 'Tu calmes l’incendie.',
+              },
+              {
+                id: 'deny',
+                label: 'Tu nies.',
+                consequence:
+                  'Effet boomerang.',
+                effects: { perceived: -12, stakeholder: -6 },
+                verdict: 'Tu nourris le scandale.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      ultraBacklash: {
+        label: 'Supporters en colère',
+        scenes: [
+          {
+            id: 'ultra-clash',
+            title: "Et là, c'est le drame : clash supporters",
+            tags: ['Réputation', 'Valeur perçue'],
+            text:
+              'Les ultras lancent un boycott.',
+            choices: [
+              {
+                id: 'dialogue',
+                label: 'Dialogue public + mesures concrètes.',
+                consequence:
+                  'Tu récupères un peu de confiance.',
+                effects: { perceived: 6, stakeholder: 6, cash: -4 },
+                verdict: 'Tu limites la casse.',
+              },
+              {
+                id: 'ignore',
+                label: 'Ignorer.',
+                consequence:
+                  'Le boycott s’étend.',
+                effects: { perceived: -10, cash: -8 },
+                verdict: 'Tu perds la bataille.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      sponsorScandal: {
+        label: 'Sponsor toxique',
+        scenes: [
+          {
+            id: 'sponsor-crisis',
+            title: "Et là, c'est le drame : sponsor en crise",
+            tags: ['Réputation', 'Partenaires'],
+            text:
+              'Ton sponsor est dans un scandale public.',
+            choices: [
+              {
+                id: 'drop',
+                label: 'Rompre le contrat publiquement.',
+                consequence:
+                  'Cash en baisse, image sauvée.',
+                effects: { cash: -10, perceived: 8, stakeholder: 6 },
+                verdict: 'Tu protèges la réputation.',
+              },
+              {
+                id: 'stay',
+                label: 'Rester silencieux.',
+                consequence:
+                  'Les critiques montent.',
+                effects: { perceived: -10, stakeholder: -6, cash: 4 },
+                verdict: 'Tu t’enfonces.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      dopingScandal: {
+        label: 'Dopage',
+        scenes: [
+          {
+            id: 'doping-leak',
+            title: "Et là, c'est le drame : rumeur de dopage",
+            tags: ['Éthique', 'Réputation'],
+            text:
+              'Une rumeur touche un joueur clé.',
+            choices: [
+              {
+                id: 'test',
+                label: 'Test interne + transparence.',
+                consequence:
+                  'Tu montres une ligne claire.',
+                effects: { perceived: 6, stakeholder: 4, cash: -4 },
+                verdict: 'Tu coupes court.',
+              },
+              {
+                id: 'hide',
+                label: 'Tu minimises.',
+                consequence:
+                  'La rumeur enfle.',
+                effects: { perceived: -10, stakeholder: -6 },
+                verdict: 'Tu perds le contrôle.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      spiral: {
+        label: 'Spirale de crise',
+        scenes: [
+          {
+            id: 'spiral-overflow',
+            title: "Et là, c'est le drame : accumulation d’erreurs",
+            tags: ['Gouvernance', 'Crise'],
+            text:
+              'Trop d’erreurs d’affilée. Les tensions explosent.',
+            choices: [
+              {
+                id: 'turnaround',
+                label: 'Plan de redressement + audit externe.',
+                consequence:
+                  'Tu reprends un peu la main.',
+                effects: { stakeholder: 6, perceived: 4, cash: -8 },
+                verdict: 'Tu limites la casse.',
+              },
+              {
+                id: 'scapegoat',
+                label: 'Tu désignes un responsable.',
+                consequence:
+                  'Confiance détruite.',
+                effects: { stakeholder: -10, perceived: -8, shareholder: 4 },
+                verdict: 'Tu sacrifies quelqu’un.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+    },
+    locked: false,
   },
   {
     id: 'art',
-    name: 'Art & médias',
-    subtitle: 'Studio créatif',
-    status: 'Bientôt',
-    description: 'À venir: deals, buzz, ego, réputation.',
-    locked: true,
+    name: 'Studio média: Pulse Lab',
+    subtitle: 'Contenus, sponsors, réputation',
+    status: 'Disponible',
+    description:
+      'Tu pilotes un studio de contenu. Qualité, sponsors et confiance du public s’entrechoquent.',
+    intro:
+      'Pulse Lab veut percer. Plateformes exigeantes, sponsors à risque, audience volatile. Objectif: créer de la valeur perçue sans sacrifier la valeur ajoutée.',
+    branchPool: [
+      'sponsorScandal',
+      'copyrightStrike',
+      'staffBurnout',
+      'investorCoup',
+      'spiral',
+    ],
+    scenes: [
+      {
+        id: 'studio-briefing',
+        title: 'Briefing de lancement',
+        tags: ['Valeur perçue', 'Positionnement'],
+        text:
+          'Tu fixes l’identité du studio.',
+        choices: [
+          {
+            id: 'quality-first',
+            label: 'Qualité premium + formats longs.',
+            consequence:
+              'Crédibilité forte, croissance lente.',
+            effects: { perceived: 12, stakeholder: 6, cash: -6 },
+            verdict: 'Tu poses une base solide.',
+          },
+          {
+            id: 'clickbait',
+            label: 'Clickbait + volume massif.',
+            consequence:
+              'Buzz rapide, confiance fragile.',
+            effects: { perceived: -8, cash: 8, stakeholder: -4 },
+            verdict: 'Tu joues le volume.',
+            bad: true,
+          },
+          {
+            id: 'shock-content',
+            label: 'Contenus polémiques pour le buzz.',
+            consequence:
+              'Le buzz monte… et les risques aussi.',
+            effects: { perceived: 4, stakeholder: -6, cash: 4 },
+            verdict: 'Tu allumes la mèche.',
+            bad: true,
+            branchId: 'copyrightStrike',
+          },
+        ],
+      },
+      {
+        id: 'pricing-brand',
+        title: 'Monétisation',
+        tags: ['Valeur perçue', 'Prix'],
+        text:
+          'Tu définis comment gagner de l’argent.',
+        choices: [
+          {
+            id: 'subscription',
+            label: 'Abonnements premium + contenus exclusifs.',
+            consequence:
+              'Image haut de gamme, croissance plus lente.',
+            effects: { perceived: 10, cash: 6 },
+            verdict: 'Tu assumes le premium.',
+          },
+          {
+            id: 'ads-heavy',
+            label: 'Publicité massive pour maximiser le cash.',
+            consequence:
+              'Cash oui, expérience utilisateur en baisse.',
+            effects: { perceived: -8, valueAdded: -6, cash: 8 },
+            verdict: 'Tu fragilises la marque.',
+            bad: true,
+          },
+          {
+            id: 'sponsor-deal',
+            label: 'Gros sponsor exclusif.',
+            consequence:
+              'Cash immédiat, dépendance forte.',
+            effects: { cash: 10, perceived: -4, stakeholder: -4 },
+            verdict: 'Tu t’exposes.',
+            bad: true,
+            branchId: 'sponsorScandal',
+          },
+        ],
+      },
+      {
+        id: 'measure',
+        title: 'Mesure de la valeur perçue',
+        tags: ['Valeur perçue', 'Mesure'],
+        text:
+          'Tu veux savoir ce que l’audience perçoit.',
+        choices: [
+          {
+            id: 'survey',
+            label: 'Enquêtes + analyse des commentaires.',
+            consequence:
+              'Tu comprends les attentes.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Approche pro.',
+          },
+          {
+            id: 'market-study',
+            label: 'Étude audience + benchmark.',
+            consequence:
+              'Tu ajustes ton positionnement.',
+            effects: { perceived: 8, valueAdded: 4, cash: -4 },
+            verdict: 'Stratégique.',
+          },
+          {
+            id: 'vibes-only',
+            label: 'Au feeling.',
+            consequence:
+              'Le feeling ne suffit pas.',
+            effects: { perceived: -6, valueAdded: -4 },
+            verdict: 'Tu pilotes dans le brouillard.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'production',
+        title: 'Facteurs de production',
+        tags: ['Travail', 'Capital'],
+        text:
+          'Tu investis dans l’équipe ou le matériel.',
+        choices: [
+          {
+            id: 'team-invest',
+            label: 'Recruter des talents + formation.',
+            consequence:
+              'Qualité en hausse.',
+            effects: { perceived: 10, stakeholder: 10, cash: -8 },
+            verdict: 'Tu investis dans l’humain.',
+          },
+          {
+            id: 'studio-gear',
+            label: 'Matériel haut de gamme + studio premium.',
+            consequence:
+              'Image forte, cash en baisse.',
+            effects: { perceived: 10, cash: -12, valueAdded: 4 },
+            verdict: 'Tu mises sur l’image.',
+          },
+          {
+            id: 'cut-staff',
+            label: 'Réduire l’équipe pour économiser.',
+            consequence:
+              'Production moins stable.',
+            effects: { perceived: -8, stakeholder: -12, cash: 8 },
+            verdict: 'Tu fragilises la prod.',
+            bad: true,
+            branchId: 'staffBurnout',
+          },
+        ],
+      },
+      {
+        id: 'supply',
+        title: 'Licences & consommations intermédiaires',
+        tags: ['Valeur ajoutée', 'Fournisseurs'],
+        text:
+          'Tu choisis licences et prestataires.',
+        choices: [
+          {
+            id: 'licensed',
+            label: 'Licences officielles + droits payés.',
+            consequence:
+              'Coûts élevés, sécurité juridique.',
+            effects: { perceived: 8, stakeholder: 6, cash: -8, valueAdded: 4 },
+            verdict: 'Tu sécurises le contenu.',
+          },
+          {
+            id: 'grey-content',
+            label: 'Utiliser des extraits “borderline”.',
+            consequence:
+              'Tu gagnes vite, risques juridiques.',
+            effects: { perceived: -8, valueAdded: 6, cash: 6, stakeholder: -4 },
+            verdict: 'Tu joues avec le feu.',
+            bad: true,
+            branchId: 'copyrightStrike',
+          },
+        ],
+      },
+      {
+        id: 'value-added',
+        title: 'Calcul de la valeur ajoutée',
+        tags: ['Valeur ajoutée', 'Calcul'],
+        text:
+          'Chiffre d’affaires annuel: 620 000 €. Consommations intermédiaires: 380 000 €. Quelle est la valeur ajoutée ?',
+        choices: [
+          {
+            id: 'va-correct',
+            label: '240 000 €',
+            consequence: 'Bonne formule: VA = CA - CI.',
+            effects: { valueAdded: 14, shareholder: 4 },
+            verdict: 'Solide.',
+          },
+          {
+            id: 'va-too-high',
+            label: '1 000 000 €',
+            consequence: 'Tu additionnes tout. Non.',
+            effects: { valueAdded: -12, shareholder: -4 },
+            verdict: 'Tu confonds tout.',
+            bad: true,
+          },
+          {
+            id: 'va-too-low',
+            label: '160 000 €',
+            consequence: 'Tu as oublié une partie du CA.',
+            effects: { valueAdded: -10 },
+            verdict: 'Presque… mais non.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'distribution',
+        title: 'Répartition de la valeur ajoutée',
+        tags: ['Répartition', 'Conflits'],
+        text:
+          'Ta VA est là. Tu la répartis comment ?',
+        choices: [
+          {
+            id: 'balanced',
+            label:
+              'Salaires corrects + impôts à l’heure + dividendes modérés + réinvestissement.',
+            consequence:
+              'Tout le monde grogne un peu, mais personne ne te plante.',
+            effects: { stakeholder: 12, shareholder: 6, cash: -4, valueAdded: 6 },
+            verdict: 'Équilibré.',
+          },
+          {
+            id: 'dividends-max',
+            label:
+              'Priorité aux actionnaires pour sécuriser leurs gains.',
+            consequence:
+              'Investisseurs heureux, équipe frustrée.',
+            effects: { shareholder: 18, stakeholder: -16, perceived: -6 },
+            verdict: 'Actionnarial pur.',
+            bad: true,
+            branchId: 'investorCoup',
+          },
+        ],
+      },
+      {
+        id: 'governance',
+        title: 'Gouvernance',
+        tags: ['Gouvernance', 'Parties prenantes'],
+        text:
+          'Comment tu gouvernes le studio ?',
+        choices: [
+          {
+            id: 'co-decision',
+            label: 'Comité mixte avec équipes et partenaires.',
+            consequence:
+              'L’équipe se sent respectée.',
+            effects: { stakeholder: 16, perceived: 6, shareholder: -6 },
+            verdict: 'Partenariale solide.',
+          },
+          {
+            id: 'shareholder-only',
+            label: 'Décisions 100% actionnaires.',
+            consequence:
+              'Rapide, mais froid. Tensions internes.',
+            effects: { shareholder: 14, stakeholder: -14, perceived: -6 },
+            verdict: 'Tu vas vers le conflit.',
+            bad: true,
+            branchId: 'investorCoup',
+          },
+        ],
+      },
+      {
+        id: 'random-event-1',
+        type: 'random',
+      },
+      {
+        id: 'random-event-2',
+        type: 'random',
+      },
+      {
+        id: 'last-push',
+        title: 'Dernier push',
+        tags: ['Communication', 'Expérience client'],
+        text:
+          'Dernière décision avant le bilan.',
+        choices: [
+          {
+            id: 'live-event',
+            label: 'Événement live + Q&A.',
+            consequence:
+              'Tu gagnes en proximité.',
+            effects: { perceived: 8, stakeholder: 6, cash: 4 },
+            verdict: 'Bonne montée.',
+          },
+          {
+            id: 'clickbait-push',
+            label: 'Série de contenus choc.',
+            consequence:
+              'Buzz rapide, confiance fragile.',
+            effects: { perceived: -8, cash: 6 },
+            verdict: 'Tu joues le buzz.',
+            bad: true,
+          },
+        ],
+      },
+    ],
+    randomEvents: [
+      {
+        id: 'copyright-strike',
+        title: "Et là, c'est le drame : strike copyright",
+        tags: ['Risque légal', 'Réputation'],
+        text:
+          'Une plateforme démonétise un contenu.',
+        choices: [
+          {
+            id: 'remove',
+            label: 'Tu retires et tu expliques.',
+            consequence:
+              'Tu limites les dégâts.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Tu reprends la main.',
+            branchId: 'copyrightStrike',
+          },
+          {
+            id: 'fight',
+            label: 'Tu attaques la plateforme.',
+            consequence:
+              'Le conflit s’aggrave.',
+            effects: { perceived: -10, stakeholder: -6 },
+            verdict: 'Tu nourris la crise.',
+            bad: true,
+            branchId: 'copyrightStrike',
+          },
+        ],
+      },
+      {
+        id: 'sponsor-leak',
+        title: "Et là, c'est le drame : sponsor en crise",
+        tags: ['Réputation', 'Partenaires'],
+        text:
+          'Un sponsor est éclaboussé.',
+        choices: [
+          {
+            id: 'drop',
+            label: 'Tu romps le contrat publiquement.',
+            consequence:
+              'Cash en baisse, image sauvée.',
+            effects: { cash: -10, perceived: 8, stakeholder: 6 },
+            verdict: 'Tu protèges la réputation.',
+            branchId: 'sponsorScandal',
+          },
+          {
+            id: 'silence',
+            label: 'Tu restes silencieux.',
+            consequence:
+              'Les critiques montent.',
+            effects: { perceived: -10, stakeholder: -6, cash: 4 },
+            verdict: 'Tu t’enfonces.',
+            bad: true,
+            branchId: 'sponsorScandal',
+          },
+        ],
+      },
+      {
+        id: 'algo-change',
+        title: "Et là, c'est le drame : changement d’algorithme",
+        tags: ['Valeur perçue', 'Cash'],
+        text:
+          'La plateforme réduit ta visibilité.',
+        choices: [
+          {
+            id: 'adapt',
+            label: 'Tu adaptes les formats.',
+            consequence:
+              'Tu limites la baisse.',
+            effects: { perceived: 4, cash: -4 },
+            verdict: 'Tu réagis vite.',
+          },
+          {
+            id: 'panic',
+            label: 'Tu paniques et changes tout.',
+            consequence:
+              'L’audience décroche.',
+            effects: { perceived: -8, cash: -6 },
+            verdict: 'Tu désorientes ton public.',
+            bad: true,
+          },
+        ],
+      },
+    ],
+    branches: {
+      sponsorScandal: {
+        label: 'Sponsor toxique',
+        scenes: [
+          {
+            id: 'sponsor-crisis',
+            title: "Et là, c'est le drame : sponsor en crise",
+            tags: ['Réputation', 'Partenaires'],
+            text:
+              'Ton sponsor est dans un scandale public.',
+            choices: [
+              {
+                id: 'drop',
+                label: 'Rompre le contrat publiquement.',
+                consequence:
+                  'Cash en baisse, image sauvée.',
+                effects: { cash: -10, perceived: 8, stakeholder: 6 },
+                verdict: 'Tu protèges la réputation.',
+              },
+              {
+                id: 'stay',
+                label: 'Rester silencieux.',
+                consequence:
+                  'Les critiques montent.',
+                effects: { perceived: -10, stakeholder: -6, cash: 4 },
+                verdict: 'Tu t’enfonces.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      copyrightStrike: {
+        label: 'Copyright',
+        scenes: [
+          {
+            id: 'strike',
+            title: "Et là, c'est le drame : strike copyright",
+            tags: ['Risque légal', 'Réputation'],
+            text:
+              'Tes contenus sont ciblés.',
+            choices: [
+              {
+                id: 'clean',
+                label: 'Tu nettoies tout et tu repartes propre.',
+                consequence:
+                  'Perte de cash, mais image protégée.',
+                effects: { perceived: 6, cash: -6, stakeholder: 4 },
+                verdict: 'Tu assumes.',
+              },
+              {
+                id: 'hide',
+                label: 'Tu contournes.',
+                consequence:
+                  'Risque légal énorme.',
+                effects: { perceived: -10, stakeholder: -8 },
+                verdict: 'Tu joues sale.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      staffBurnout: {
+        label: 'Burn-out',
+        scenes: [
+          {
+            id: 'burnout',
+            title: "Et là, c'est le drame : burn-out équipe",
+            tags: ['RH', 'Valeur partenariale'],
+            text:
+              'L’équipe craque sous la pression.',
+            choices: [
+              {
+                id: 'mediate',
+                label: 'Réorganisation + pauses obligatoires.',
+                consequence:
+                  'Tu stabilises.',
+                effects: { stakeholder: 10, perceived: 4, cash: -6 },
+                verdict: 'Tu répares.',
+              },
+              {
+                id: 'delay',
+                label: 'Tu temporises.',
+                consequence:
+                  'Conflit interne.',
+                effects: { stakeholder: -10, perceived: -6 },
+                verdict: 'Tu laisses monter.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      investorCoup: {
+        label: 'Coup des investisseurs',
+        scenes: [
+          {
+            id: 'investor-meeting',
+            title: "Et là, c'est le drame : pression investisseurs",
+            tags: ['Valeur actionnariale', 'Gouvernance'],
+            text:
+              'Les investisseurs exigent une croissance explosive.',
+            choices: [
+              {
+                id: 'data-plan',
+                label: 'Plan chiffré + croissance maîtrisée.',
+                consequence:
+                  'Tu reprends un peu de contrôle.',
+                effects: { shareholder: 10, valueAdded: 6, cash: -4 },
+                verdict: 'Tu reprends la main.',
+              },
+              {
+                id: 'promise-cuts',
+                label: 'Couper dans la qualité pour la marge.',
+                consequence:
+                  'Investisseurs contents, audience déçue.',
+                effects: { shareholder: 12, perceived: -10, stakeholder: -6 },
+                verdict: 'Tu vends l’image.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      spiral: {
+        label: 'Spirale de crise',
+        scenes: [
+          {
+            id: 'spiral-overflow',
+            title: "Et là, c'est le drame : accumulation d’erreurs",
+            tags: ['Gouvernance', 'Crise'],
+            text:
+              'Trop d’erreurs d’affilée. Les tensions explosent.',
+            choices: [
+              {
+                id: 'turnaround',
+                label: 'Plan de redressement + audit externe.',
+                consequence:
+                  'Tu reprends un peu la main.',
+                effects: { stakeholder: 6, perceived: 4, cash: -8 },
+                verdict: 'Tu limites la casse.',
+              },
+            ],
+          },
+        ],
+      },
+    },
+    locked: false,
   },
   {
     id: 'fashion',
-    name: 'Mode urbaine',
-    subtitle: 'Marque streetwear',
-    status: 'Bientôt',
-    description: 'À venir: drops, collabs, hype.',
-    locked: true,
+    name: 'Mode: Atelier Velvet',
+    subtitle: 'Boutique & marque',
+    status: 'Disponible',
+    description:
+      'Tu lances une marque mode. Image, production et éthique peuvent tout faire basculer.',
+    intro:
+      'Atelier Velvet veut percer. Clients exigeants, fournisseurs sensibles, investisseurs pressés. Objectif: créer de la valeur perçue sans sacrifier la valeur ajoutée.',
+    branchPool: [
+      'factoryScandal',
+      'plagiarism',
+      'influencerFallout',
+      'investorCoup',
+      'spiral',
+    ],
+    scenes: [
+      {
+        id: 'fashion-briefing',
+        title: "Briefing d'ouverture",
+        tags: ['Valeur perçue', 'Positionnement'],
+        text:
+          'Tu fixes l’identité de la marque.',
+        choices: [
+          {
+            id: 'premium-capsule',
+            label: 'Capsules premium + séries limitées.',
+            consequence:
+              'Image forte, croissance lente.',
+            effects: { perceived: 12, stakeholder: 6, cash: -6 },
+            verdict: 'Tu poses une base solide.',
+          },
+          {
+            id: 'fast-fashion',
+            label: 'Fast fashion pour le volume.',
+            consequence:
+              'Volume oui, image fragile.',
+            effects: { perceived: -8, cash: 8, stakeholder: -4 },
+            verdict: 'Tu joues le volume.',
+            bad: true,
+          },
+          {
+            id: 'trend-steal',
+            label: 'Reprendre vite les tendances sans crédit.',
+            consequence:
+              'Buzz rapide, risque légal.',
+            effects: { perceived: -6, cash: 6, stakeholder: -4 },
+            verdict: 'Tu flirtes avec le plagiat.',
+            bad: true,
+            branchId: 'plagiarism',
+          },
+        ],
+      },
+      {
+        id: 'pricing-brand',
+        title: 'Prix & marque',
+        tags: ['Valeur perçue', 'Prix'],
+        text:
+          'Tu fixes tes prix et ta promesse.',
+        choices: [
+          {
+            id: 'premium-price',
+            label: 'Prix premium + storytelling artisan.',
+            consequence:
+              'Image haut de gamme, marge correcte.',
+            effects: { perceived: 10, cash: 6 },
+            verdict: 'Tu assumes le premium.',
+          },
+          {
+            id: 'price-war',
+            label: 'Prix bas pour gagner des parts.',
+            consequence:
+              'Tu vends, mais la VA souffre.',
+            effects: { perceived: -6, valueAdded: -8, cash: 4 },
+            verdict: 'Court terme facile.',
+            bad: true,
+          },
+          {
+            id: 'hidden-costs',
+            label: 'Prix bas + frais cachés (livraison, retours).',
+            consequence:
+              'Clients mécontents.',
+            effects: { perceived: -10, stakeholder: -6, cash: 6 },
+            verdict: 'Tu perds la confiance.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'measure',
+        title: 'Mesure de la valeur perçue',
+        tags: ['Valeur perçue', 'Mesure'],
+        text:
+          'Tu veux savoir ce que les clientes perçoivent.',
+        choices: [
+          {
+            id: 'survey',
+            label: 'Enquêtes + analyse des avis.',
+            consequence:
+              'Tu comprends les attentes.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Approche pro.',
+          },
+          {
+            id: 'market-study',
+            label: 'Étude marché + benchmark.',
+            consequence:
+              'Tu ajustes ton positionnement.',
+            effects: { perceived: 8, valueAdded: 4, cash: -4 },
+            verdict: 'Stratégique.',
+          },
+          {
+            id: 'vibes-only',
+            label: 'Au feeling + trends TikTok.',
+            consequence:
+              'Le feeling ne suffit pas.',
+            effects: { perceived: -6, valueAdded: -4 },
+            verdict: 'Tu pilotes dans le brouillard.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'production',
+        title: 'Facteurs de production',
+        tags: ['Travail', 'Capital'],
+        text:
+          'Tu investis dans l’atelier ou la com ?',
+        choices: [
+          {
+            id: 'atelier',
+            label: 'Atelier local + artisans formés.',
+            consequence:
+              'Qualité en hausse.',
+            effects: { perceived: 10, stakeholder: 10, cash: -8 },
+            verdict: 'Tu investis dans l’humain.',
+          },
+          {
+            id: 'brand-studio',
+            label: 'Shooting premium + image forte.',
+            consequence:
+              'Image en hausse, cash en baisse.',
+            effects: { perceived: 10, cash: -10, valueAdded: 4 },
+            verdict: 'Tu mises sur l’image.',
+          },
+          {
+            id: 'cut-staff',
+            label: 'Réduire l’atelier pour économiser.',
+            consequence:
+              'Qualité en baisse.',
+            effects: { perceived: -8, stakeholder: -12, cash: 8 },
+            verdict: 'Tu fragilises la marque.',
+            bad: true,
+            branchId: 'factoryScandal',
+          },
+        ],
+      },
+      {
+        id: 'supply',
+        title: 'Approvisionnement & consommations intermédiaires',
+        tags: ['Valeur ajoutée', 'Fournisseurs'],
+        text:
+          'Tu choisis tes fournisseurs textiles.',
+        choices: [
+          {
+            id: 'ethical-fabric',
+            label: 'Fournisseurs éthiques + traçabilité.',
+            consequence:
+              'Coûts élevés, image solide.',
+            effects: { perceived: 10, stakeholder: 6, cash: -8, valueAdded: 4 },
+            verdict: 'Tu sécurises la qualité.',
+          },
+          {
+            id: 'cheap-fabric',
+            label: 'Textiles low-cost.',
+            consequence:
+              'Tu gagnes vite, risques réputationnels.',
+            effects: { perceived: -10, valueAdded: 6, cash: 6, stakeholder: -4 },
+            verdict: 'Risqué pour l’image.',
+            bad: true,
+            branchId: 'factoryScandal',
+          },
+        ],
+      },
+      {
+        id: 'value-added',
+        title: 'Calcul de la valeur ajoutée',
+        tags: ['Valeur ajoutée', 'Calcul'],
+        text:
+          'Chiffre d’affaires annuel: 520 000 €. Consommations intermédiaires: 340 000 €. Quelle est la valeur ajoutée ?',
+        choices: [
+          {
+            id: 'va-correct',
+            label: '180 000 €',
+            consequence: 'Bonne formule: VA = CA - CI.',
+            effects: { valueAdded: 14, shareholder: 4 },
+            verdict: 'Solide.',
+          },
+          {
+            id: 'va-too-high',
+            label: '860 000 €',
+            consequence: 'Tu additionnes tout. Non.',
+            effects: { valueAdded: -12, shareholder: -4 },
+            verdict: 'Tu confonds tout.',
+            bad: true,
+          },
+          {
+            id: 'va-too-low',
+            label: '120 000 €',
+            consequence: 'Tu as oublié une partie du CA.',
+            effects: { valueAdded: -10 },
+            verdict: 'Presque… mais non.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'distribution',
+        title: 'Répartition de la valeur ajoutée',
+        tags: ['Répartition', 'Conflits'],
+        text:
+          'Ta VA est là. Tu la répartis comment ?',
+        choices: [
+          {
+            id: 'balanced',
+            label:
+              'Salaires corrects + impôts à l’heure + dividendes modérés + réinvestissement.',
+            consequence:
+              'Tout le monde grogne un peu, mais personne ne te plante.',
+            effects: { stakeholder: 12, shareholder: 6, cash: -4, valueAdded: 6 },
+            verdict: 'Équilibré.',
+          },
+          {
+            id: 'dividends-max',
+            label:
+              'Priorité aux actionnaires.',
+            consequence:
+              'Investisseurs heureux, équipe frustrée.',
+            effects: { shareholder: 18, stakeholder: -16, perceived: -6 },
+            verdict: 'Actionnarial pur.',
+            bad: true,
+            branchId: 'investorCoup',
+          },
+        ],
+      },
+      {
+        id: 'governance',
+        title: 'Gouvernance',
+        tags: ['Gouvernance', 'Parties prenantes'],
+        text:
+          'Comment tu gouvernes la marque ?',
+        choices: [
+          {
+            id: 'co-decision',
+            label: 'Comité mixte avec atelier, designers, partenaires.',
+            consequence:
+              'L’équipe se sent respectée.',
+            effects: { stakeholder: 16, perceived: 6, shareholder: -6 },
+            verdict: 'Partenariale solide.',
+          },
+          {
+            id: 'shareholder-only',
+            label: 'Décisions 100% actionnaires.',
+            consequence:
+              'Rapide, mais froid.',
+            effects: { shareholder: 14, stakeholder: -14, perceived: -6 },
+            verdict: 'Tu vas vers le conflit.',
+            bad: true,
+            branchId: 'investorCoup',
+          },
+        ],
+      },
+      {
+        id: 'random-event-1',
+        type: 'random',
+      },
+      {
+        id: 'random-event-2',
+        type: 'random',
+      },
+      {
+        id: 'last-push',
+        title: 'Dernier push',
+        tags: ['Communication', 'Expérience client'],
+        text:
+          'Dernière décision avant le bilan.',
+        choices: [
+          {
+            id: 'limited-drop',
+            label: 'Drop limité + précommande.',
+            consequence:
+              'Buzz maîtrisé.',
+            effects: { perceived: 8, cash: 6, valueAdded: 4 },
+            verdict: 'Bon levier.',
+          },
+          {
+            id: 'influencer',
+            label: 'Campagne influenceurs massive.',
+            consequence:
+              'Tu fais du bruit… si la qualité suit.',
+            effects: { perceived: 6, cash: -8 },
+            verdict: 'Pari risqué.',
+            bad: true,
+            branchId: 'influencerFallout',
+          },
+        ],
+      },
+    ],
+    randomEvents: [
+      {
+        id: 'factory-leak',
+        title: "Et là, c'est le drame : scandale atelier",
+        tags: ['Réputation', 'Partenaires'],
+        text:
+          'Une enquête révèle des pratiques douteuses chez un fournisseur.',
+        choices: [
+          {
+            id: 'drop',
+            label: 'Tu romps le contrat.',
+            consequence:
+              'Cash en baisse, image sauvée.',
+            effects: { cash: -10, perceived: 8, stakeholder: 6 },
+            verdict: 'Tu protèges la réputation.',
+            branchId: 'factoryScandal',
+          },
+          {
+            id: 'stay',
+            label: 'Tu restes silencieux.',
+            consequence:
+              'Les critiques montent.',
+            effects: { perceived: -10, stakeholder: -6, cash: 4 },
+            verdict: 'Tu t’enfonces.',
+            bad: true,
+            branchId: 'factoryScandal',
+          },
+        ],
+      },
+      {
+        id: 'plagiarism-claim',
+        title: "Et là, c'est le drame : accusation de plagiat",
+        tags: ['Réputation', 'Risque légal'],
+        text:
+          'Une marque t’accuse d’avoir copié un design.',
+        choices: [
+          {
+            id: 'apologize',
+            label: 'Tu reconnais et corriges.',
+            consequence:
+              'Tu limites la casse.',
+            effects: { perceived: 6, stakeholder: 4, cash: -6 },
+            verdict: 'Tu assumes.',
+            branchId: 'plagiarism',
+          },
+          {
+            id: 'deny',
+            label: 'Tu nies.',
+            consequence:
+              'La polémique grossit.',
+            effects: { perceived: -10, stakeholder: -6 },
+            verdict: 'Tu nourris le buzz.',
+            bad: true,
+            branchId: 'plagiarism',
+          },
+        ],
+      },
+      {
+        id: 'trend-shift',
+        title: "Et là, c'est le drame : tendance qui change",
+        tags: ['Valeur perçue', 'Cash'],
+        text:
+          'La tendance bascule, tes stocks stagnent.',
+        choices: [
+          {
+            id: 'adapt',
+            label: 'Tu adaptes vite les collections.',
+            consequence:
+              'Tu limites la casse.',
+            effects: { perceived: 4, cash: -4 },
+            verdict: 'Tu réagis vite.',
+          },
+          {
+            id: 'panic',
+            label: 'Tu brades tout.',
+            consequence:
+              'Cash immédiat, image en baisse.',
+            effects: { perceived: -8, cash: 6 },
+            verdict: 'Tu dégrades la marque.',
+            bad: true,
+          },
+        ],
+      },
+    ],
+    branches: {
+      factoryScandal: {
+        label: 'Scandale fournisseur',
+        scenes: [
+          {
+            id: 'factory-crisis',
+            title: "Et là, c'est le drame : atelier dans la tourmente",
+            tags: ['Réputation', 'Partenaires'],
+            text:
+              'Les médias parlent de conditions douteuses.',
+            choices: [
+              {
+                id: 'audit',
+                label: 'Audit externe + transparence.',
+                consequence:
+                  'Tu limites les dégâts.',
+                effects: { perceived: 6, stakeholder: 4, cash: -6 },
+                verdict: 'Tu nettoies.',
+              },
+              {
+                id: 'deny',
+                label: 'Tu nies.',
+                consequence:
+                  'Ça se retourne contre toi.',
+                effects: { perceived: -10, stakeholder: -6 },
+                verdict: 'Tu nourris le scandale.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      plagiarism: {
+        label: 'Plagiat',
+        scenes: [
+          {
+            id: 'plagiarism-crisis',
+            title: "Et là, c'est le drame : accusation de plagiat",
+            tags: ['Réputation', 'Risque légal'],
+            text:
+              'Une marque t’accuse publiquement.',
+            choices: [
+              {
+                id: 'settle',
+                label: 'Tu règles vite et corriges.',
+                consequence:
+                  'Tu limites la casse.',
+                effects: { perceived: 6, cash: -6, stakeholder: 4 },
+                verdict: 'Tu assumes.',
+              },
+              {
+                id: 'deny',
+                label: 'Tu nies.',
+                consequence:
+                  'La polémique grossit.',
+                effects: { perceived: -10, stakeholder: -6 },
+                verdict: 'Tu perds la confiance.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      influencerFallout: {
+        label: 'Bad buzz',
+        scenes: [
+          {
+            id: 'influencer-crisis',
+            title: "Et là, c'est le drame : influenceuse en colère",
+            tags: ['Réputation', 'Valeur perçue'],
+            text:
+              'Une influenceuse dézingue ta marque.',
+            choices: [
+              {
+                id: 'explain',
+                label: 'Tu expliques et clarifies.',
+                consequence:
+                  'Tu limites la casse.',
+                effects: { perceived: 6, stakeholder: 4 },
+                verdict: 'Tu reprends la main.',
+              },
+              {
+                id: 'attack',
+                label: 'Tu attaques publiquement.',
+                consequence:
+                  'Effet boomerang.',
+                effects: { perceived: -12, stakeholder: -6 },
+                verdict: 'Tu empirer tout.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      investorCoup: {
+        label: 'Coup des investisseurs',
+        scenes: [
+          {
+            id: 'investor-meeting',
+            title: "Et là, c'est le drame : pression investisseurs",
+            tags: ['Valeur actionnariale', 'Gouvernance'],
+            text:
+              'Les investisseurs exigent une croissance explosive.',
+            choices: [
+              {
+                id: 'data-plan',
+                label: 'Plan chiffré + croissance maîtrisée.',
+                consequence:
+                  'Tu reprends un peu de contrôle.',
+                effects: { shareholder: 10, valueAdded: 6, cash: -4 },
+                verdict: 'Tu reprends la main.',
+              },
+              {
+                id: 'promise-cuts',
+                label: 'Couper dans la qualité pour la marge.',
+                consequence:
+                  'Investisseurs contents, clientes déçues.',
+                effects: { shareholder: 12, perceived: -10, stakeholder: -6 },
+                verdict: 'Tu vends l’image.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      spiral: {
+        label: 'Spirale de crise',
+        scenes: [
+          {
+            id: 'spiral-overflow',
+            title: "Et là, c'est le drame : accumulation d’erreurs",
+            tags: ['Gouvernance', 'Crise'],
+            text:
+              'Trop d’erreurs d’affilée. Les tensions explosent.',
+            choices: [
+              {
+                id: 'turnaround',
+                label: 'Plan de redressement + audit externe.',
+                consequence:
+                  'Tu reprends un peu la main.',
+                effects: { stakeholder: 6, perceived: 4, cash: -8 },
+                verdict: 'Tu limites la casse.',
+              },
+            ],
+          },
+        ],
+      },
+    },
+    locked: false,
   },
 ]
 
@@ -2184,6 +4682,7 @@ const EPILOGUES_POS = [
 ]
 
 const BAD_THRESHOLD = 2
+const FORCE_BRANCH_AFTER = 3
 
 const LEXICON = [
   {
@@ -2535,6 +5034,8 @@ function App() {
   const [activeEvent, setActiveEvent] = useState(null)
   const [branchState, setBranchState] = useState(null)
   const [branchQueue, setBranchQueue] = useState([])
+  const [usedBranchIds, setUsedBranchIds] = useState([])
+  const [forcedBranchDone, setForcedBranchDone] = useState(false)
   const [lastEffects, setLastEffects] = useState(null)
   const [lastNews, setLastNews] = useState(null)
   const [lastNewsAt, setLastNewsAt] = useState(-10)
@@ -2585,6 +5086,8 @@ function App() {
     setActiveEvent(null)
     setBranchState(null)
     setBranchQueue([])
+    setUsedBranchIds([])
+    setForcedBranchDone(false)
     setLastEffects(null)
     setLastNews(null)
     setLastNewsAt(-10)
@@ -2604,6 +5107,8 @@ function App() {
     setActiveEvent(null)
     setBranchState(null)
     setBranchQueue([])
+    setUsedBranchIds([])
+    setForcedBranchDone(false)
     setLastEffects(null)
     setLastNews(null)
     setLastNewsAt(-10)
@@ -2612,6 +5117,26 @@ function App() {
     setUsedRandomIds([])
     setStepIndex(0)
     setScreen('game')
+  }
+
+  function queueBranch(id) {
+    if (!id) return
+    if (usedBranchIds.includes(id)) return
+    setBranchQueue((prev) => (prev.includes(id) ? prev : [...prev, id]))
+  }
+
+  function startBranch(id) {
+    const branch = theme?.branches?.[id]
+    if (!branch?.scenes?.length) return false
+    setBranchState({
+      id,
+      label: branch.label,
+      scenes: branch.scenes,
+      index: 0,
+    })
+    setUsedBranchIds((prev) => (prev.includes(id) ? prev : [...prev, id]))
+    setForcedBranchDone(true)
+    return true
   }
 
   function buildNewsFlash(effects, choice, prevStats, nextStats, stepNumber) {
@@ -2664,6 +5189,66 @@ function App() {
       return {
         label: 'ANTI-DOPAGE',
         message: 'Des rumeurs de dopage circulent autour de la salle.',
+      }
+    }
+    if (choice?.branchId === 'influencerBacklash') {
+      return {
+        label: 'RÉSEAUX',
+        message: 'Une influenceuse critique la marque. Le buzz monte.',
+      }
+    }
+    if (choice?.branchId === 'ingredientRecall') {
+      return {
+        label: 'QUALITÉ',
+        message: 'Des clientes signalent des réactions. Ça peut exploser.',
+      }
+    }
+    if (choice?.branchId === 'factoryScandal') {
+      return {
+        label: 'FOURNISSEUR',
+        message: 'Un atelier pose problème. La réputation est en jeu.',
+      }
+    }
+    if (choice?.branchId === 'plagiarism') {
+      return {
+        label: 'LÉGAL',
+        message: 'Accusation de plagiat. Risque réputationnel immédiat.',
+      }
+    }
+    if (choice?.branchId === 'influencerFallout') {
+      return {
+        label: 'RÉSEAUX',
+        message: 'Une influenceuse se retourne contre ta marque.',
+      }
+    }
+    if (choice?.branchId === 'copyrightStrike') {
+      return {
+        label: 'PLATEFORME',
+        message: 'Risque de strike. Tes contenus sont surveillés.',
+      }
+    }
+    if (choice?.branchId === 'staffBurnout') {
+      return {
+        label: 'INTERNE',
+        message: 'L’équipe sature. Le burn-out approche.',
+      }
+    }
+    if (choice?.branchId === 'fixMatch') {
+      return {
+        label: 'PARIS',
+        message: 'Les bookmakers parlent d’un match suspect.',
+      }
+    }
+    if (choice?.branchId === 'ultraBacklash') {
+      return {
+        label: 'SUPPORTERS',
+        message: 'Les supporters grondent. Le boycott se prépare.',
+      }
+    }
+    if (choice?.branchId === 'investorCoup') {
+      return {
+        label: 'ACTIONNAIRES',
+        message: 'Les investisseurs veulent un point immédiat.',
       }
     }
     if (choice?.branchId === 'brandBacklash') {
@@ -2818,16 +5403,11 @@ function App() {
       })
     }
     if (choice.branchId) {
-      setBranchQueue((prev) => {
-        const next = [...prev]
-        const branchIds = Array.isArray(choice.branchId)
-          ? choice.branchId
-          : [choice.branchId]
-        branchIds.forEach((id) => {
-          if (!next.includes(id)) next.push(id)
-        })
-        return next
-      })
+      const branchIds = Array.isArray(choice.branchId)
+        ? choice.branchId
+        : [choice.branchId]
+      branchIds.forEach((id) => queueBranch(id))
+      setForcedBranchDone(true)
     }
     if (shouldTriggerSpiral) {
       setBranchQueue((prev) => {
@@ -2858,19 +5438,26 @@ function App() {
     setResult(null)
     setLastNews(null)
 
+    if (!branchState && branchQueue.length === 0 && !forcedBranchDone) {
+      if (stepIndex >= FORCE_BRANCH_AFTER && theme?.branchPool?.length) {
+        const available = theme.branchPool.filter(
+          (id) => !usedBranchIds.includes(id)
+        )
+        const forcedId = pickRandom(
+          available.length > 0 ? available : theme.branchPool
+        )
+        if (forcedId && startBranch(forcedId)) {
+          return
+        }
+      }
+    }
+
     if (branchQueue.length > 0 && !branchState) {
       const nextBranchId = branchQueue[0]
-      const branch = theme?.branches?.[nextBranchId]
-      if (branch?.scenes?.length) {
-        setBranchState({
-          id: nextBranchId,
-          label: branch.label,
-          scenes: branch.scenes,
-          index: 0,
-        })
-      }
       setBranchQueue((prev) => prev.slice(1))
-      return
+      if (startBranch(nextBranchId)) {
+        return
+      }
     }
 
     if (branchState) {
@@ -2878,6 +5465,13 @@ function App() {
         setBranchState((prev) => ({ ...prev, index: prev.index + 1 }))
       } else {
         setBranchState(null)
+        if (branchQueue.length > 0) {
+          const nextBranchId = branchQueue[0]
+          setBranchQueue((prev) => prev.slice(1))
+          if (startBranch(nextBranchId)) {
+            return
+          }
+        }
         advanceMain()
       }
       return
