@@ -395,6 +395,10 @@ const THEMES = [
         type: 'random',
       },
       {
+        id: 'random-event-2',
+        type: 'random',
+      },
+      {
         id: 'last-push',
         title: 'Dernier choix avant bilan',
         tags: ['Communication', 'Expérience client'],
@@ -1092,9 +1096,10 @@ const THEMES = [
             label: 'Positionnement prix bas pour le volume.',
             consequence:
               'Le volume monte, l’image se fragilise.',
-            effects: { perceived: -8, cash: 8, stakeholder: -4 },
+            effects: { perceived: -10, cash: 8, stakeholder: -6 },
             verdict: 'Tu joues le volume.',
             bad: true,
+            branchId: 'investorCoup',
           },
           {
             id: 'claims-hype',
@@ -1136,9 +1141,10 @@ const THEMES = [
             label: 'Prix d’appel agressifs pour gagner des parts.',
             consequence:
               'Tu vends, mais ta VA souffre.',
-            effects: { perceived: -6, valueAdded: -8, cash: 4 },
+            effects: { perceived: -10, valueAdded: -10, cash: 4 },
             verdict: 'Court terme facile.',
             bad: true,
+            branchId: 'investorCoup',
           },
           {
             id: 'shrinkflation',
@@ -1148,6 +1154,7 @@ const THEMES = [
             effects: { perceived: -12, stakeholder: -6, cash: 6 },
             verdict: 'Tu perds la confiance.',
             bad: true,
+            branchId: 'influencerBacklash',
           },
           {
             id: 'subscription',
@@ -2902,6 +2909,7 @@ const THEMES = [
             effects: { perceived: 12, cash: -12, shareholder: 4 },
             verdict: 'Tu joues la vitrine.',
             bad: true,
+            branchId: 'ultraBacklash',
           },
           {
             id: 'trash-talk',
@@ -2946,6 +2954,7 @@ const THEMES = [
             effects: { perceived: -6, valueAdded: -8, cash: 4 },
             verdict: 'Court terme facile.',
             bad: true,
+            branchId: 'ultraBacklash',
           },
           {
             id: 'hidden-fees',
@@ -3027,6 +3036,7 @@ const THEMES = [
             effects: { perceived: 12, cash: -12, shareholder: 4 },
             verdict: 'Tu joues la vitrine.',
             bad: true,
+            branchId: 'sponsorScandal',
           },
           {
             id: 'agent-deal',
@@ -4155,6 +4165,7 @@ const THEMES = [
             effects: { perceived: -8, cash: 8, stakeholder: -4 },
             verdict: 'Tu joues le volume.',
             bad: true,
+            branchId: 'factoryScandal',
           },
           {
             id: 'trend-steal',
@@ -4191,6 +4202,7 @@ const THEMES = [
             effects: { perceived: -6, valueAdded: -8, cash: 4 },
             verdict: 'Court terme facile.',
             bad: true,
+            branchId: 'factoryScandal',
           },
           {
             id: 'hidden-costs',
@@ -4200,6 +4212,7 @@ const THEMES = [
             effects: { perceived: -10, stakeholder: -6, cash: 6 },
             verdict: 'Tu perds la confiance.',
             bad: true,
+            branchId: 'influencerFallout',
           },
         ],
       },
@@ -4764,6 +4777,310 @@ const LEXICON = [
   },
 ]
 
+const GAME_MODES = [
+  {
+    id: 'classic',
+    label: 'Mode classique',
+    description: 'Joue librement sans objectifs supplémentaires.',
+  },
+  {
+    id: 'challenge',
+    label: 'Mode défis',
+    description: 'Des objectifs bonus suivent ta progression.',
+  },
+]
+
+const OBJECTIVES = {
+  cafe: {
+    primary: [
+      {
+        id: 'vp',
+        type: 'stat',
+        stat: 'perceived',
+        target: 65,
+        label: 'Valeur perçue ≥ 65',
+      },
+      {
+        id: 'va',
+        type: 'stat',
+        stat: 'valueAdded',
+        target: 60,
+        label: 'Valeur ajoutée ≥ 60',
+      },
+      {
+        id: 'vpn',
+        type: 'stat',
+        stat: 'stakeholder',
+        target: 60,
+        label: 'Valeur partenariale ≥ 60',
+      },
+    ],
+    secondary: [
+      {
+        id: 'cash',
+        type: 'stat',
+        stat: 'cash',
+        target: 55,
+        label: 'Trésorerie ≥ 55',
+      },
+      {
+        id: 'legal',
+        type: 'flag',
+        flag: 'illegal',
+        invert: true,
+        label: 'Zéro scandale légal',
+      },
+      {
+        id: 'rh',
+        type: 'branch',
+        branchId: 'staffCrisis',
+        invert: true,
+        label: 'Éviter la crise RH',
+      },
+    ],
+  },
+  boxing: {
+    primary: [
+      {
+        id: 'vp',
+        type: 'stat',
+        stat: 'perceived',
+        target: 65,
+        label: 'Valeur perçue ≥ 65',
+      },
+      {
+        id: 'va',
+        type: 'stat',
+        stat: 'valueAdded',
+        target: 60,
+        label: 'Valeur ajoutée ≥ 60',
+      },
+      {
+        id: 'vpn',
+        type: 'stat',
+        stat: 'stakeholder',
+        target: 60,
+        label: 'Valeur partenariale ≥ 60',
+      },
+    ],
+    secondary: [
+      {
+        id: 'cash',
+        type: 'stat',
+        stat: 'cash',
+        target: 55,
+        label: 'Trésorerie ≥ 55',
+      },
+      {
+        id: 'fix',
+        type: 'branch',
+        branchId: 'fixFight',
+        invert: true,
+        label: 'Éviter un combat truqué',
+      },
+      {
+        id: 'doping',
+        type: 'branch',
+        branchId: 'dopingScandal',
+        invert: true,
+        label: 'Zéro dopage',
+      },
+    ],
+  },
+  football: {
+    primary: [
+      {
+        id: 'vp',
+        type: 'stat',
+        stat: 'perceived',
+        target: 65,
+        label: 'Valeur perçue ≥ 65',
+      },
+      {
+        id: 'va',
+        type: 'stat',
+        stat: 'valueAdded',
+        target: 60,
+        label: 'Valeur ajoutée ≥ 60',
+      },
+      {
+        id: 'vpn',
+        type: 'stat',
+        stat: 'stakeholder',
+        target: 60,
+        label: 'Valeur partenariale ≥ 60',
+      },
+    ],
+    secondary: [
+      {
+        id: 'cash',
+        type: 'stat',
+        stat: 'cash',
+        target: 55,
+        label: 'Trésorerie ≥ 55',
+      },
+      {
+        id: 'fix',
+        type: 'branch',
+        branchId: 'fixMatch',
+        invert: true,
+        label: 'Éviter un match truqué',
+      },
+      {
+        id: 'ultras',
+        type: 'branch',
+        branchId: 'ultraBacklash',
+        invert: true,
+        label: 'Supporters apaisés',
+      },
+    ],
+  },
+  cosmetic: {
+    primary: [
+      {
+        id: 'vp',
+        type: 'stat',
+        stat: 'perceived',
+        target: 65,
+        label: 'Valeur perçue ≥ 65',
+      },
+      {
+        id: 'va',
+        type: 'stat',
+        stat: 'valueAdded',
+        target: 60,
+        label: 'Valeur ajoutée ≥ 60',
+      },
+      {
+        id: 'vpn',
+        type: 'stat',
+        stat: 'stakeholder',
+        target: 60,
+        label: 'Valeur partenariale ≥ 60',
+      },
+    ],
+    secondary: [
+      {
+        id: 'cash',
+        type: 'stat',
+        stat: 'cash',
+        target: 55,
+        label: 'Trésorerie ≥ 55',
+      },
+      {
+        id: 'recall',
+        type: 'branch',
+        branchId: 'ingredientRecall',
+        invert: true,
+        label: 'Éviter un rappel produit',
+      },
+      {
+        id: 'influencers',
+        type: 'branch',
+        branchId: 'influencerBacklash',
+        invert: true,
+        label: 'Éviter le bad buzz influenceurs',
+      },
+    ],
+  },
+  fashion: {
+    primary: [
+      {
+        id: 'vp',
+        type: 'stat',
+        stat: 'perceived',
+        target: 65,
+        label: 'Valeur perçue ≥ 65',
+      },
+      {
+        id: 'va',
+        type: 'stat',
+        stat: 'valueAdded',
+        target: 60,
+        label: 'Valeur ajoutée ≥ 60',
+      },
+      {
+        id: 'vpn',
+        type: 'stat',
+        stat: 'stakeholder',
+        target: 60,
+        label: 'Valeur partenariale ≥ 60',
+      },
+    ],
+    secondary: [
+      {
+        id: 'cash',
+        type: 'stat',
+        stat: 'cash',
+        target: 55,
+        label: 'Trésorerie ≥ 55',
+      },
+      {
+        id: 'factory',
+        type: 'branch',
+        branchId: 'factoryScandal',
+        invert: true,
+        label: 'Éviter un scandale fournisseur',
+      },
+      {
+        id: 'plagiarism',
+        type: 'branch',
+        branchId: 'plagiarism',
+        invert: true,
+        label: 'Éviter un plagiat',
+      },
+    ],
+  },
+  art: {
+    primary: [
+      {
+        id: 'vp',
+        type: 'stat',
+        stat: 'perceived',
+        target: 65,
+        label: 'Valeur perçue ≥ 65',
+      },
+      {
+        id: 'va',
+        type: 'stat',
+        stat: 'valueAdded',
+        target: 60,
+        label: 'Valeur ajoutée ≥ 60',
+      },
+      {
+        id: 'vpn',
+        type: 'stat',
+        stat: 'stakeholder',
+        target: 60,
+        label: 'Valeur partenariale ≥ 60',
+      },
+    ],
+    secondary: [
+      {
+        id: 'cash',
+        type: 'stat',
+        stat: 'cash',
+        target: 55,
+        label: 'Trésorerie ≥ 55',
+      },
+      {
+        id: 'copyright',
+        type: 'branch',
+        branchId: 'copyrightStrike',
+        invert: true,
+        label: 'Éviter un strike',
+      },
+      {
+        id: 'burnout',
+        type: 'branch',
+        branchId: 'staffBurnout',
+        invert: true,
+        label: 'Équipe saine',
+      },
+    ],
+  },
+}
+
 const PROF_COMMENTS = [
   'Avis de ton super prof : Non sérieux, t’as cru que ça allait passer inaperçu ?',
   'Avis de ton super prof : Là tu joues avec les allumettes, tu t’étonnes de la fumée.',
@@ -4783,6 +5100,29 @@ function applyEffects(stats, effects) {
     next[key] = clamp(next[key] + delta)
   })
   return next
+}
+
+function getObjectiveState(objective, stats, flags, usedBranchIds) {
+  if (!objective) return { status: 'neutral', progress: 0 }
+  if (objective.type === 'stat') {
+    const value = stats[objective.stat] ?? 0
+    const target = objective.target ?? 0
+    const progress = target > 0 ? Math.min(100, Math.round((value / target) * 100)) : 0
+    const status =
+      value >= target ? 'ok' : value >= target - 10 ? 'warn' : 'bad'
+    return { status, progress, value, target }
+  }
+  if (objective.type === 'flag') {
+    const hasFlag = flags.has(objective.flag)
+    const achieved = objective.invert ? !hasFlag : hasFlag
+    return { status: achieved ? 'ok' : 'bad', progress: achieved ? 100 : 0 }
+  }
+  if (objective.type === 'branch') {
+    const visited = usedBranchIds.includes(objective.branchId)
+    const achieved = objective.invert ? !visited : visited
+    return { status: achieved ? 'ok' : 'bad', progress: achieved ? 100 : 0 }
+  }
+  return { status: 'neutral', progress: 0 }
 }
 
 function getOutcome(stats, history, flags) {
@@ -4960,72 +5300,154 @@ function StatBar({ label, value, tone, delta, help }) {
   )
 }
 
-function CafeIllustration() {
-  return (
-    <svg className="scene-illustration" viewBox="0 0 420 240" aria-hidden>
-      <defs>
-        <linearGradient id="cafeSky" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#f7d9b2" />
-          <stop offset="100%" stopColor="#f2b89b" />
-        </linearGradient>
-        <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="#d7f0ff" stopOpacity="0.5" />
-        </linearGradient>
-      </defs>
-      <rect width="420" height="240" rx="24" fill="url(#cafeSky)" />
-      <rect x="40" y="60" width="340" height="150" rx="20" fill="#39281d" />
-      <rect x="55" y="78" width="310" height="110" rx="16" fill="#f5efe7" />
-      <rect x="70" y="90" width="120" height="85" rx="10" fill="url(#glass)" />
-      <rect x="205" y="90" width="140" height="85" rx="10" fill="url(#glass)" />
-      <rect x="55" y="160" width="310" height="20" rx="8" fill="#c8965c" />
-      <rect x="150" y="40" width="120" height="35" rx="10" fill="#111" />
-      <text x="210" y="64" textAnchor="middle" fontSize="18" fill="#f8d8a8" fontFamily="'Bebas Neue', sans-serif">
-        STARBUCK
-      </text>
-      <circle cx="90" cy="200" r="18" fill="#b36b3c" />
-      <circle cx="330" cy="200" r="18" fill="#b36b3c" />
-      <rect x="85" y="190" width="10" height="25" rx="5" fill="#6b3c1e" />
-      <rect x="325" y="190" width="10" height="25" rx="5" fill="#6b3c1e" />
-    </svg>
-  )
-}
-
-function CharactersIllustration() {
-  return (
-    <svg className="scene-illustration" viewBox="0 0 420 240" aria-hidden>
-      <defs>
-        <linearGradient id="charBg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#f2efe9" />
-          <stop offset="100%" stopColor="#e2d6c3" />
-        </linearGradient>
-      </defs>
-      <rect width="420" height="240" rx="24" fill="url(#charBg)" />
-      <circle cx="120" cy="110" r="38" fill="#f6c9a7" />
-      <rect x="92" y="150" width="56" height="70" rx="18" fill="#6b3c1e" />
-      <circle cx="120" cy="100" r="20" fill="#1f1a16" />
-      <circle cx="240" cy="110" r="38" fill="#f2b89b" />
-      <rect x="210" y="150" width="60" height="70" rx="18" fill="#2b2b2b" />
-      <circle cx="240" cy="100" r="20" fill="#4a2c1e" />
-      <circle cx="330" cy="110" r="38" fill="#f3d2b3" />
-      <rect x="300" y="150" width="60" height="70" rx="18" fill="#8b4a2b" />
-      <circle cx="330" cy="100" r="20" fill="#1e1e1e" />
-      <text x="120" y="210" textAnchor="middle" fontSize="12" fill="#473327" fontFamily="'Space Grotesk', sans-serif">
-        Lila
-      </text>
-      <text x="240" y="210" textAnchor="middle" fontSize="12" fill="#473327" fontFamily="'Space Grotesk', sans-serif">
-        Marco
-      </text>
-      <text x="330" y="210" textAnchor="middle" fontSize="12" fill="#473327" fontFamily="'Space Grotesk', sans-serif">
-        Amina
-      </text>
-    </svg>
-  )
+function ThemeIllustration({ themeId }) {
+  switch (themeId) {
+    case 'boxing':
+      return (
+        <svg className="scene-illustration" viewBox="0 0 420 240" aria-hidden>
+          <defs>
+            <linearGradient id="ringBg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#f7e0c1" />
+              <stop offset="100%" stopColor="#f1b793" />
+            </linearGradient>
+          </defs>
+          <rect width="420" height="240" rx="24" fill="url(#ringBg)" />
+          <rect x="40" y="70" width="340" height="130" rx="16" fill="#1e1e1e" />
+          <rect x="60" y="90" width="300" height="90" rx="12" fill="#f5efe7" />
+          <rect x="60" y="110" width="300" height="6" fill="#d65b4a" />
+          <rect x="60" y="130" width="300" height="6" fill="#d65b4a" />
+          <rect x="60" y="150" width="300" height="6" fill="#d65b4a" />
+          <circle cx="150" cy="120" r="26" fill="#d65b4a" />
+          <circle cx="270" cy="120" r="26" fill="#d65b4a" />
+          <rect x="135" y="140" width="30" height="22" rx="8" fill="#b24336" />
+          <rect x="255" y="140" width="30" height="22" rx="8" fill="#b24336" />
+          <text x="210" y="60" textAnchor="middle" fontSize="18" fill="#1f1a16" fontFamily="'Bebas Neue', sans-serif">
+            BLACK CORNER
+          </text>
+        </svg>
+      )
+    case 'football':
+      return (
+        <svg className="scene-illustration" viewBox="0 0 420 240" aria-hidden>
+          <defs>
+            <linearGradient id="fieldBg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#dff4d7" />
+              <stop offset="100%" stopColor="#a9d88f" />
+            </linearGradient>
+          </defs>
+          <rect width="420" height="240" rx="24" fill="url(#fieldBg)" />
+          <rect x="40" y="60" width="340" height="140" rx="16" fill="#2f7d32" />
+          <rect x="60" y="80" width="300" height="100" rx="12" fill="#3fa44a" />
+          <rect x="200" y="80" width="2" height="100" fill="#e7f6e5" />
+          <circle cx="200" cy="130" r="20" fill="none" stroke="#e7f6e5" strokeWidth="2" />
+          <rect x="70" y="110" width="24" height="40" fill="none" stroke="#e7f6e5" strokeWidth="2" />
+          <rect x="326" y="110" width="24" height="40" fill="none" stroke="#e7f6e5" strokeWidth="2" />
+          <circle cx="320" cy="180" r="16" fill="#f2f2f2" />
+          <circle cx="320" cy="180" r="6" fill="#2f7d32" />
+          <text x="210" y="52" textAnchor="middle" fontSize="18" fill="#1f1a16" fontFamily="'Bebas Neue', sans-serif">
+            ATLAS FC
+          </text>
+        </svg>
+      )
+    case 'cosmetic':
+      return (
+        <svg className="scene-illustration" viewBox="0 0 420 240" aria-hidden>
+          <defs>
+            <linearGradient id="cosmoBg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#fce4ec" />
+              <stop offset="100%" stopColor="#f8c9da" />
+            </linearGradient>
+          </defs>
+          <rect width="420" height="240" rx="24" fill="url(#cosmoBg)" />
+          <rect x="70" y="80" width="90" height="100" rx="18" fill="#ffffff" />
+          <rect x="90" y="60" width="50" height="30" rx="12" fill="#f2b7c8" />
+          <rect x="190" y="70" width="70" height="110" rx="16" fill="#fff8fb" />
+          <rect x="205" y="50" width="40" height="24" rx="8" fill="#f09fb6" />
+          <rect x="280" y="90" width="70" height="90" rx="20" fill="#ffffff" />
+          <rect x="295" y="70" width="40" height="26" rx="10" fill="#f2b7c8" />
+          <circle cx="320" cy="170" r="18" fill="#f5b0c5" />
+          <text x="210" y="46" textAnchor="middle" fontSize="18" fill="#5a2b3a" fontFamily="'Bebas Neue', sans-serif">
+            AURA SKIN
+          </text>
+        </svg>
+      )
+    case 'fashion':
+      return (
+        <svg className="scene-illustration" viewBox="0 0 420 240" aria-hidden>
+          <defs>
+            <linearGradient id="fashionBg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#f3e7ff" />
+              <stop offset="100%" stopColor="#d7c3f7" />
+            </linearGradient>
+          </defs>
+          <rect width="420" height="240" rx="24" fill="url(#fashionBg)" />
+          <rect x="170" y="70" width="80" height="120" rx="30" fill="#f5f1ff" />
+          <rect x="185" y="50" width="50" height="30" rx="12" fill="#c4a8f2" />
+          <rect x="90" y="110" width="50" height="90" rx="18" fill="#b18be6" />
+          <rect x="280" y="110" width="60" height="90" rx="18" fill="#b18be6" />
+          <path d="M90 90 L130 90 L150 110" stroke="#5d3c88" strokeWidth="4" fill="none" />
+          <path d="M330 90 L290 90 L270 110" stroke="#5d3c88" strokeWidth="4" fill="none" />
+          <text x="210" y="46" textAnchor="middle" fontSize="18" fill="#3c2b52" fontFamily="'Bebas Neue', sans-serif">
+            ATELIER VELVET
+          </text>
+        </svg>
+      )
+    case 'art':
+      return (
+        <svg className="scene-illustration" viewBox="0 0 420 240" aria-hidden>
+          <defs>
+            <linearGradient id="mediaBg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#dff1ff" />
+              <stop offset="100%" stopColor="#b8dcff" />
+            </linearGradient>
+          </defs>
+          <rect width="420" height="240" rx="24" fill="url(#mediaBg)" />
+          <rect x="80" y="70" width="200" height="120" rx="18" fill="#1f2a44" />
+          <rect x="100" y="90" width="160" height="80" rx="10" fill="#32466d" />
+          <polygon points="165,105 200,130 165,155" fill="#f1f6ff" />
+          <rect x="290" y="90" width="40" height="80" rx="12" fill="#1f2a44" />
+          <circle cx="310" cy="80" r="18" fill="#f4b86a" />
+          <text x="210" y="46" textAnchor="middle" fontSize="18" fill="#1f2a44" fontFamily="'Bebas Neue', sans-serif">
+            PULSE LAB
+          </text>
+        </svg>
+      )
+    default:
+      return (
+        <svg className="scene-illustration" viewBox="0 0 420 240" aria-hidden>
+          <defs>
+            <linearGradient id="cafeSky" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#f7d9b2" />
+              <stop offset="100%" stopColor="#f2b89b" />
+            </linearGradient>
+            <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#d7f0ff" stopOpacity="0.5" />
+            </linearGradient>
+          </defs>
+          <rect width="420" height="240" rx="24" fill="url(#cafeSky)" />
+          <rect x="40" y="60" width="340" height="150" rx="20" fill="#39281d" />
+          <rect x="55" y="78" width="310" height="110" rx="16" fill="#f5efe7" />
+          <rect x="70" y="90" width="120" height="85" rx="10" fill="url(#glass)" />
+          <rect x="205" y="90" width="140" height="85" rx="10" fill="url(#glass)" />
+          <rect x="55" y="160" width="310" height="20" rx="8" fill="#c8965c" />
+          <rect x="150" y="40" width="120" height="35" rx="10" fill="#111" />
+          <text x="210" y="64" textAnchor="middle" fontSize="18" fill="#f8d8a8" fontFamily="'Bebas Neue', sans-serif">
+            STARBUCK
+          </text>
+          <circle cx="90" cy="200" r="18" fill="#b36b3c" />
+          <circle cx="330" cy="200" r="18" fill="#b36b3c" />
+          <rect x="85" y="190" width="10" height="25" rx="5" fill="#6b3c1e" />
+          <rect x="325" y="190" width="10" height="25" rx="5" fill="#6b3c1e" />
+        </svg>
+      )
+  }
 }
 
 function App() {
   const [screen, setScreen] = useState('home')
   const [themeId, setThemeId] = useState('cafe')
+  const [gameMode, setGameMode] = useState('classic')
   const [stepIndex, setStepIndex] = useState(0)
   const [stats, setStats] = useState(INITIAL_STATS)
   const [history, setHistory] = useState([])
@@ -5047,6 +5469,11 @@ function App() {
     () => THEMES.find((item) => item.id === themeId),
     [themeId]
   )
+
+  const objectives = useMemo(() => {
+    if (gameMode !== 'challenge') return null
+    return OBJECTIVES[themeId] || null
+  }, [gameMode, themeId])
 
   useEffect(() => {
     if (screen !== 'game' || branchState) return
@@ -5077,6 +5504,16 @@ function App() {
 
   const worstChoices = history.filter((item) => item.bad).slice(0, 3)
   const roast = ROASTS[history.length % ROASTS.length]
+  const pendingBranches = branchQueue
+    .map((id) => theme?.branches?.[id]?.label || id)
+    .filter(Boolean)
+
+  const objectiveGroups = objectives
+    ? [
+        { title: 'Objectifs principaux', items: objectives.primary || [] },
+        { title: 'Objectifs secondaires', items: objectives.secondary || [] },
+      ]
+    : []
 
   function resetGame() {
     setStats(INITIAL_STATS)
@@ -5492,6 +5929,9 @@ function App() {
             Choisis ta stratégie, encaisse les conséquences. Ici, les erreurs ne
             pardonnent pas.
           </p>
+          <div className="mode-badge">
+            Mode: {gameMode === 'challenge' ? 'Défis' : 'Classique'}
+          </div>
           <div className="topbar-actions">
             <button
               className="ghost small"
@@ -5524,6 +5964,18 @@ function App() {
                 Chaque thème reprend les mêmes mécaniques. Mais tout n’est pas
                 si simple… Rejoue jusqu’à maîtriser la logique.
               </p>
+              <div className="mode-select">
+                {GAME_MODES.map((mode) => (
+                  <button
+                    key={mode.id}
+                    className={`mode-option ${gameMode === mode.id ? 'active' : ''}`}
+                    onClick={() => setGameMode(mode.id)}
+                  >
+                    <strong>{mode.label}</strong>
+                    <span>{mode.description}</span>
+                  </button>
+                ))}
+              </div>
               <ul className="rules">
                 <li>Objectif: maîtriser la valeur perçue + la valeur ajoutée.</li>
                 <li>Tout le monde veut sa part: salariés, État, actionnaires.</li>
@@ -5531,7 +5983,7 @@ function App() {
                 <li>Chaque run peut finir en humiliation publique.</li>
               </ul>
             </div>
-            <CafeIllustration />
+            <ThemeIllustration themeId={themeId} />
           </div>
 
           <section className="theme-grid">
@@ -5578,7 +6030,7 @@ function App() {
                   ))}
                 </div>
               </div>
-              <CharactersIllustration />
+              <ThemeIllustration themeId={theme.id} />
             </div>
 
             <div className="choices">
@@ -5633,6 +6085,58 @@ function App() {
                 </ul>
               </div>
             )}
+            {pendingBranches.length > 0 && (
+              <div className="sidebar-alerts pending">
+                <h4>Voies en attente</h4>
+                <ul>
+                  {pendingBranches.map((label, index) => (
+                    <li key={`${label}-${index}`}>{label}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {objectives && (
+              <div className="objectives-panel">
+                <h4>Défis en cours</h4>
+                {objectiveGroups.map((group) => (
+                  <div key={group.title} className="objective-group">
+                    <p className="objective-title">{group.title}</p>
+                    <div className="objective-list">
+                      {group.items.map((item) => {
+                        const state = getObjectiveState(
+                          item,
+                          stats,
+                          flags,
+                          usedBranchIds
+                        )
+                        return (
+                          <div
+                            key={item.id}
+                            className={`objective-item ${state.status}`}
+                          >
+                            <div className="objective-row">
+                              <span>{item.label}</span>
+                              {typeof state.value === 'number' &&
+                                typeof state.target === 'number' && (
+                                  <span className="objective-value">
+                                    {state.value}/{state.target}
+                                  </span>
+                                )}
+                            </div>
+                            <div className="objective-bar">
+                              <div
+                                className="objective-fill"
+                                style={{ width: `${state.progress}%` }}
+                              />
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="sidebar-box">
               <h4>Rappel express</h4>
               <p>
@@ -5660,7 +6164,7 @@ function App() {
                 <span>{roast}</span>
               </div>
             </div>
-            <CafeIllustration />
+            <ThemeIllustration themeId={theme.id} />
           </section>
 
           <section className="ending-grid">
@@ -5680,6 +6184,45 @@ function App() {
                     <li key={line}>{line}</li>
                   ))}
                 </ul>
+              </article>
+            )}
+            {objectives && (
+              <article>
+                <h3>Résultat des défis</h3>
+                <div className="objective-list">
+                  {[...(objectives.primary || []), ...(objectives.secondary || [])].map(
+                    (item) => {
+                      const state = getObjectiveState(
+                        item,
+                        stats,
+                        flags,
+                        usedBranchIds
+                      )
+                      return (
+                        <div
+                          key={`end-${item.id}`}
+                          className={`objective-item ${state.status}`}
+                        >
+                          <div className="objective-row">
+                            <span>{item.label}</span>
+                            {typeof state.value === 'number' &&
+                              typeof state.target === 'number' && (
+                                <span className="objective-value">
+                                  {state.value}/{state.target}
+                                </span>
+                              )}
+                          </div>
+                          <div className="objective-bar">
+                            <div
+                              className="objective-fill"
+                              style={{ width: `${state.progress}%` }}
+                            />
+                          </div>
+                        </div>
+                      )
+                    }
+                  )}
+                </div>
               </article>
             )}
             <article>

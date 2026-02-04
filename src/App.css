@@ -69,6 +69,17 @@ h2 {
   max-width: 520px;
 }
 
+.mode-badge {
+  margin-top: 8px;
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fff0de;
+  font-size: 12px;
+  font-weight: 600;
+  color: #5a3a28;
+}
+
 .stats-panel {
   display: grid;
   gap: 10px;
@@ -213,6 +224,34 @@ h2 {
   margin: 18px 0 0;
   display: grid;
   gap: 8px;
+}
+
+.mode-select {
+  margin: 14px 0 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.mode-option {
+  border: 2px solid transparent;
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px 14px;
+  text-align: left;
+  display: grid;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(26, 16, 10, 0.12);
+}
+
+.mode-option span {
+  font-size: 13px;
+  color: #4b3b33;
+}
+
+.mode-option.active {
+  border-color: var(--coffee-700);
+  background: #fff7ed;
 }
 
 .rules li {
@@ -437,9 +476,95 @@ h2 {
   box-shadow: 0 10px 20px rgba(26, 16, 10, 0.12);
 }
 
+.sidebar-alerts.pending {
+  background: #f1e8ff;
+}
+
 .sidebar-alerts ul {
   margin-top: 8px;
   padding-left: 18px;
+}
+
+.objectives-panel {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #f8f3ed;
+  box-shadow: 0 10px 20px rgba(26, 16, 10, 0.12);
+}
+
+.objective-group {
+  margin-top: 10px;
+}
+
+.objective-title {
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #7a4a2b;
+}
+
+.objective-list {
+  display: grid;
+  gap: 8px;
+}
+
+.objective-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px 10px;
+  border: 1px solid #f0e2d3;
+  font-size: 12px;
+}
+
+.objective-item.ok {
+  border-color: rgba(30, 132, 73, 0.35);
+}
+
+.objective-item.warn {
+  border-color: rgba(243, 156, 18, 0.4);
+}
+
+.objective-item.bad {
+  border-color: rgba(192, 57, 43, 0.4);
+}
+
+.objective-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.objective-value {
+  font-weight: 600;
+  color: #5a3a28;
+}
+
+.objective-bar {
+  margin-top: 6px;
+  height: 6px;
+  background: #efe3d7;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.objective-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: #b88b5f;
+}
+
+.objective-item.ok .objective-fill {
+  background: #1e8449;
+}
+
+.objective-item.warn .objective-fill {
+  background: #f39c12;
+}
+
+.objective-item.bad .objective-fill {
+  background: #c0392b;
 }
 
 .sidebar-box {
