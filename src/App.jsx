@@ -24,7 +24,7 @@ const THEMES = [
     subtitle: 'Café premium pour lycéens pressés',
     status: 'Disponible',
     description:
-      'Tu pilotes un nouveau café “Starbuck” en centre-ville. Tout le monde attend des résultats. Les décisions sont piégées. Bonne chance.',
+      'Tu pilotes un nouveau café “Starbuck” en centre-ville. Tout le monde attend des résultats. Mais tout n’est pas si simple.',
     intro:
       'Tu reprends un café Starbuck flambant neuf. Loyer haut, staff jeune, investisseurs impatients. Objectif: créer de la valeur perçue sans flinguer la valeur ajoutée ni allumer la guerre des parties prenantes.',
     scenes: [
@@ -1489,9 +1489,8 @@ function App() {
             <div>
               <h2>Choisis ton thème</h2>
               <p>
-                Chaque thème reprend les mêmes mécaniques. Les choix sont
-                piégés, les conséquences brutales. Rejoue jusqu’à maîtriser la
-                logique.
+                Chaque thème reprend les mêmes mécaniques. Mais tout n’est pas
+                si simple… Rejoue jusqu’à maîtriser la logique.
               </p>
               <ul className="rules">
                 <li>Objectif: maîtriser la valeur perçue + la valeur ajoutée.</li>
