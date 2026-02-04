@@ -1057,11 +1057,919 @@ const THEMES = [
   },
   {
     id: 'boxing',
-    name: 'Salle de boxe',
-    subtitle: 'Abonnements, sponsors, réputation',
-    status: 'Bientôt',
-    description: 'À venir: ring, drama, sponsors, trahisons.',
-    locked: true,
+    name: 'Salle de boxe: Black Corner',
+    subtitle: 'Combats, sponsors, réputation',
+    status: 'Disponible',
+    description:
+      'Tu gères une salle avec des champions. Entre performance, éthique et pression actionnariale, tout peut déraper.',
+    intro:
+      'La salle Black Corner monte en puissance. Sponsors, élèves et investisseurs exigent des résultats. Objectif: créer de la valeur perçue sans saboter la valeur ajoutée ni déclencher un scandale.',
+    scenes: [
+      {
+        id: 'ring-briefing',
+        title: "Briefing d'ouverture",
+        tags: ['Valeur perçue', 'Positionnement'],
+        text:
+          'Ta salle attire des jeunes et des compétiteurs. Tu fixes l’identité de départ.',
+        choices: [
+          {
+            id: 'premium-coaching',
+            label:
+              'Expérience premium: coachs certifiés, suivi individualisé, nutrition.',
+            consequence:
+              'La salle devient crédible et aspirante, mais ça coûte.',
+            effects: { perceived: 14, stakeholder: 10, cash: -10, valueAdded: 4 },
+            verdict: 'Tu poses une base solide.',
+          },
+          {
+            id: 'volume-lowcost',
+            label:
+              'Abonnements low-cost + volume maximum.',
+            consequence:
+              'Beaucoup d’inscrits, mais l’image s’use vite.',
+            effects: { perceived: -10, cash: 8, stakeholder: -6 },
+            verdict: 'Tu vends du volume, pas du prestige.',
+            bad: true,
+            branchId: 'staffStrike',
+          },
+          {
+            id: 'trash-hype',
+            label:
+              'Hype par clashs et trash-talk sur les réseaux.',
+            consequence:
+              'Le buzz monte… et le risque aussi.',
+            effects: { perceived: 6, stakeholder: -6, cash: 2 },
+            verdict: 'Tu allumes la mèche.',
+            bad: true,
+            branchId: 'mediaHeat',
+          },
+          {
+            id: 'school-partner',
+            label:
+              'Partenariat lycée sportif + entraînements encadrés.',
+            consequence:
+              'Tu gagnes en crédibilité locale, croissance plus lente.',
+            effects: { perceived: 8, stakeholder: 8, cash: -2 },
+            verdict: 'Stratégie propre et stable.',
+          },
+        ],
+      },
+      {
+        id: 'pricing-brand',
+        title: 'Tarifs & image',
+        tags: ['Valeur perçue', 'Prix'],
+        text:
+          'Tu définis les offres et la promesse de marque.',
+        choices: [
+          {
+            id: 'premium-membership',
+            label:
+              'Abonnement premium + accès aux combats et sparrings privés.',
+            consequence:
+              'Image premium assumée, mais certains trouvent ça cher.',
+            effects: { perceived: 10, cash: 6, stakeholder: -2 },
+            verdict: 'Tu joues la montée en gamme.',
+          },
+          {
+            id: 'unlimited-low',
+            label: 'Illimité pas cher pour remplir la salle.',
+            consequence:
+              'Tu remplis… mais ta marge s’effondre.',
+            effects: { perceived: -6, valueAdded: -8, cash: 4 },
+            verdict: 'Court terme facile, long terme fragile.',
+            bad: true,
+          },
+          {
+            id: 'hidden-fees',
+            label: 'Tarifs bas + frais cachés (matériel, coaching).',
+            consequence:
+              'Les élèves se sentent piégés.',
+            effects: { perceived: -12, stakeholder: -6, cash: 6 },
+            verdict: 'Tu perds la confiance.',
+            bad: true,
+          },
+          {
+            id: 'shady-sponsor',
+            label:
+              'Offre sponsor agressive (boisson énergétique controversée).',
+            consequence:
+              'Tu fais du cash vite… mais l’image devient douteuse.',
+            effects: { cash: 10, perceived: -4, stakeholder: -4 },
+            verdict: 'Tu t’exposes.',
+            bad: true,
+            branchId: 'sponsorScandal',
+          },
+        ],
+      },
+      {
+        id: 'measure',
+        title: 'Mesure de la valeur perçue',
+        tags: ['Valeur perçue', 'Mesure'],
+        text:
+          'Tu veux savoir ce que les élèves pensent vraiment. Tu mesures comment ?',
+        choices: [
+          {
+            id: 'survey',
+            label: 'Enquêtes de satisfaction + retours après entraînement.',
+            consequence:
+              'Tu comprends les attentes réelles.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Approche pro.',
+          },
+          {
+            id: 'market-study',
+            label: 'Étude locale + benchmark des salles concurrentes.',
+            consequence:
+              'Tu ajustes ton positionnement avec des données.',
+            effects: { perceived: 8, valueAdded: 4, cash: -4 },
+            verdict: 'Stratégique.',
+          },
+          {
+            id: 'vibes-only',
+            label: 'Au feeling: “les stories Insta disent tout”.',
+            consequence:
+              'Le feeling ne suffit pas.',
+            effects: { perceived: -6, valueAdded: -4 },
+            verdict: 'Tu pilotes dans le brouillard.',
+            bad: true,
+            branchId: 'mediaHeat',
+          },
+        ],
+      },
+      {
+        id: 'production',
+        title: 'Facteurs de production',
+        tags: ['Travail', 'Capital'],
+        text:
+          'Tu dois arbitrer entre le staff et l’équipement.',
+        choices: [
+          {
+            id: 'train-coaches',
+            label: 'Former les coachs + primes à la performance.',
+            consequence:
+              'Qualité sportive en hausse, confiance du public.',
+            effects: { perceived: 10, stakeholder: 10, cash: -8 },
+            verdict: 'Tu investis dans l’humain.',
+          },
+          {
+            id: 'gear-upgrade',
+            label: 'Équiper la salle en matériel haut de gamme.',
+            consequence:
+              'L’image monte, mais la trésorerie souffre.',
+            effects: { perceived: 12, cash: -16, valueAdded: 4 },
+            verdict: 'Tu mises sur le capital.',
+          },
+          {
+            id: 'cut-staff',
+            label: 'Réduire les coachs et automatiser les programmes.',
+            consequence:
+              'Coûts en baisse, expérience froide.',
+            effects: { perceived: -12, stakeholder: -12, cash: 8 },
+            verdict: 'Tu sacrifies le lien humain.',
+            bad: true,
+            branchId: 'staffStrike',
+          },
+        ],
+      },
+      {
+        id: 'supply',
+        title: 'Approvisionnement & consommations intermédiaires',
+        tags: ['Valeur ajoutée', 'Fournisseurs'],
+        text:
+          'Tu choisis équipementiers et produits de récupération.',
+        choices: [
+          {
+            id: 'local-gear',
+            label: 'Matériel local fiable + suivi qualité.',
+            consequence:
+              'Image pro, mais coûts plus élevés.',
+            effects: { perceived: 8, stakeholder: 6, cash: -8, valueAdded: 4 },
+            verdict: 'Tu sécurises la qualité.',
+          },
+          {
+            id: 'cheap-gear',
+            label: 'Équipement low-cost pour maximiser la marge.',
+            consequence:
+              'Tu gagnes vite, la qualité se voit.',
+            effects: { perceived: -10, valueAdded: 6, cash: 6, stakeholder: -4 },
+            verdict: 'Risqué pour l’image.',
+            bad: true,
+            branchId: 'mediaHeat',
+          },
+          {
+            id: 'supplements',
+            label: 'Compléments “performance” peu transparents.',
+            consequence:
+              'Tu promets plus… mais tu flirtes avec le scandale.',
+            effects: { perceived: -8, cash: 6, stakeholder: -6 },
+            verdict: 'Tu joues avec le feu.',
+            bad: true,
+            branchId: 'dopingScandal',
+          },
+        ],
+      },
+      {
+        id: 'value-added',
+        title: 'Calcul de la valeur ajoutée',
+        tags: ['Valeur ajoutée', 'Calcul'],
+        text:
+          'Chiffre d’affaires annuel: 320 000 €. Consommations intermédiaires: 190 000 €. Quelle est la valeur ajoutée ?',
+        choices: [
+          {
+            id: 'va-correct',
+            label: '130 000 €',
+            consequence: 'Bonne formule: VA = CA - CI.',
+            effects: { valueAdded: 14, shareholder: 4 },
+            verdict: 'Solide.',
+          },
+          {
+            id: 'va-too-high',
+            label: '510 000 €',
+            consequence: 'Tu additionnes tout. Non.',
+            effects: { valueAdded: -12, shareholder: -4 },
+            verdict: 'Tu confonds tout.',
+            bad: true,
+          },
+          {
+            id: 'va-too-low',
+            label: '90 000 €',
+            consequence: 'Tu as oublié une partie du CA.',
+            effects: { valueAdded: -10 },
+            verdict: 'Presque… mais non.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'distribution',
+        title: 'Répartition de la valeur ajoutée',
+        tags: ['Répartition', 'Conflits'],
+        text:
+          'Ta VA est là. Tu la répartis comment ?',
+        choices: [
+          {
+            id: 'balanced',
+            label:
+              'Salaires corrects + impôts à l’heure + dividendes modérés + réinvestissement.',
+            consequence:
+              'Tout le monde grogne un peu, mais personne ne te plante.',
+            effects: { stakeholder: 12, shareholder: 6, cash: -4, valueAdded: 6 },
+            verdict: 'Équilibré.',
+          },
+          {
+            id: 'dividends-max',
+            label:
+              'Priorité aux actionnaires pour sécuriser leurs gains.',
+            consequence:
+              'Les investisseurs kiffent. Le staff serre les dents.',
+            effects: { shareholder: 18, stakeholder: -16, perceived: -6 },
+            verdict: 'Actionnarial pur.',
+            bad: true,
+            branchId: 'fixFight',
+          },
+          {
+            id: 'all-fighters',
+            label:
+              'Gros bonus pour les fighters + primes staff.',
+            consequence:
+              'L’équipe adore, les actionnaires te surveillent.',
+            effects: { stakeholder: 16, shareholder: -14, cash: -6 },
+            verdict: 'Partenariale musclée.',
+            bad: true,
+          },
+        ],
+      },
+      {
+        id: 'governance',
+        title: 'Gouvernance',
+        tags: ['Gouvernance', 'Parties prenantes'],
+        text:
+          'Dernière étape: comment tu gouvernes la salle ?',
+        choices: [
+          {
+            id: 'co-decision',
+            label: 'Comité mixte avec coachs, fighters et partenaires.',
+            consequence:
+              'L’équipe se sent respectée, confiance en hausse.',
+            effects: { stakeholder: 16, perceived: 6, shareholder: -6 },
+            verdict: 'Partenariale solide.',
+          },
+          {
+            id: 'shareholder-only',
+            label: 'Décisions 100% actionnaires.',
+            consequence:
+              'Rapide, mais froid. Tensions internes.',
+            effects: { shareholder: 14, stakeholder: -14, perceived: -6 },
+            verdict: 'Tu vas vers le conflit.',
+            bad: true,
+            branchId: 'fixFight',
+          },
+          {
+            id: 'mix',
+            label: 'Mix: objectifs financiers + feedback trimestriel.',
+            consequence:
+              'Tu limites la casse des deux côtés.',
+            effects: { shareholder: 6, stakeholder: 8, valueAdded: 4 },
+            verdict: 'Réaliste.',
+          },
+        ],
+      },
+      {
+        id: 'random-event',
+        type: 'random',
+      },
+      {
+        id: 'last-push',
+        title: 'Dernier round',
+        tags: ['Communication', 'Expérience client'],
+        text:
+          'Dernière décision avant le bilan. Tu choisis quoi ?',
+        choices: [
+          {
+            id: 'gala',
+            label: 'Gala inter-lycées + streaming encadré.',
+            consequence:
+              'Tu gagnes en visibilité propre.',
+            effects: { perceived: 10, stakeholder: 6, cash: 6 },
+            verdict: 'Bonne montée.',
+          },
+          {
+            id: 'underground',
+            label: 'Combats “underground” pour le cash.',
+            consequence:
+              'Gros cash… gros risque.',
+            effects: { cash: 12, perceived: -14, stakeholder: -12 },
+            verdict: 'Tu flirtes avec le scandale.',
+            bad: true,
+            branchId: 'mediaHeat',
+          },
+          {
+            id: 'prevention',
+            label: 'Programme santé + prévention des blessures.',
+            consequence:
+              'Image pro, confiance long terme.',
+            effects: { stakeholder: 10, perceived: 8, cash: -4 },
+            verdict: 'Stratégie propre.',
+          },
+          {
+            id: 'merch',
+            label: 'Merch agressif + prix élevés.',
+            consequence:
+              'Tu fais du cash, mais l’image se rigidifie.',
+            effects: { cash: 8, perceived: -6 },
+            verdict: 'Rentable, mais risqué.',
+          },
+        ],
+      },
+    ],
+    randomEvents: [
+      {
+        id: 'injury',
+        title: "Et là, c'est le drame : blessure grave",
+        tags: ['Sécurité', 'Valeur perçue'],
+        text:
+          'Ton champion se blesse avant un combat clé. Les billets sont vendus.',
+        choices: [
+          {
+            id: 'postpone',
+            label: 'Tu reportes le combat et rembourses partiellement.',
+            consequence:
+              'Tu perds du cash, mais tu respectes la sécurité.',
+            effects: { perceived: 8, cash: -10, stakeholder: 6 },
+            verdict: 'Tu protèges la réputation.',
+          },
+          {
+            id: 'replace',
+            label: 'Tu remplaces par un combattant moins connu.',
+            consequence:
+              'L’événement tient, mais la hype chute.',
+            effects: { perceived: -6, cash: 4, stakeholder: -2 },
+            verdict: 'Tu limites la casse.',
+          },
+          {
+            id: 'force',
+            label: 'Tu forces le combat malgré tout.',
+            consequence:
+              'Bad buzz immédiat si ça tourne mal.',
+            effects: { perceived: -14, stakeholder: -10, cash: 6 },
+            verdict: 'Tu joues avec la sécurité.',
+            bad: true,
+            branchId: 'mediaHeat',
+          },
+        ],
+      },
+      {
+        id: 'doping-test',
+        title: "Et là, c'est le drame : contrôle antidopage",
+        tags: ['Éthique', 'Réputation'],
+        text:
+          'Un contrôle surprise est annoncé après un combat.',
+        choices: [
+          {
+            id: 'cooperate',
+            label: 'Tu coopères, transparence totale.',
+            consequence:
+              'Tu sécurises l’image, même si ça inquiète.',
+            effects: { perceived: 6, stakeholder: 4 },
+            verdict: 'Tu joues clean.',
+          },
+          {
+            id: 'delay',
+            label: 'Tu demandes un report technique.',
+            consequence:
+              'Tu gagnes du temps, mais ça sent la magouille.',
+            effects: { perceived: -8, stakeholder: -6 },
+            verdict: 'Tu crées le doute.',
+            bad: true,
+            branchId: 'dopingScandal',
+          },
+          {
+            id: 'deny',
+            label: 'Tu contestes publiquement le contrôle.',
+            consequence:
+              'Les réseaux explosent.',
+            effects: { perceived: -12, stakeholder: -6 },
+            verdict: 'Tu attises le feu.',
+            bad: true,
+            branchId: 'mediaHeat',
+          },
+        ],
+      },
+      {
+        id: 'inspection',
+        title: "Et là, c'est le drame : inspection sécurité",
+        tags: ['État', 'Confiance'],
+        text:
+          'Inspection surprise: sécurité, hygiène, contrats.',
+        choices: [
+          {
+            id: 'clean',
+            label: 'Tu coopères, tout est carré.',
+            consequence:
+              'Aucune amende.',
+            effects: { stakeholder: 8, perceived: 6 },
+            verdict: 'Propre.',
+          },
+          {
+            id: 'rush-clean',
+            label: 'Tu caches vite des irrégularités.',
+            consequence:
+              'Ils voient tout. Amende.',
+            effects: { cash: -8, stakeholder: -8, perceived: -10 },
+            verdict: 'Tu t’es grillé.',
+            bad: true,
+          },
+          {
+            id: 'arrangement',
+            label: 'Tu proposes un arrangement discret.',
+            consequence:
+              'Ils te dénoncent.',
+            effects: { cash: -16, stakeholder: -18, perceived: -14 },
+            verdict: 'Illégal.',
+            bad: true,
+            flags: ['illegal'],
+          },
+        ],
+      },
+    ],
+    branches: {
+      fixFight: {
+        label: 'Combat truqué',
+        scenes: [
+          {
+            id: 'fix-offer',
+            title: "Et là, c'est le drame : proposition des actionnaires",
+            tags: ['Actionnaires', 'Éthique'],
+            text:
+              'Les actionnaires te poussent: “Fais perdre le champion. On mise gros.”',
+            choices: [
+              {
+                id: 'refuse',
+                label: 'Refuser net + rappeler les règles.',
+                consequence:
+                  'Tu protèges l’intégrité, mais tu te mets à dos les investisseurs.',
+                effects: { shareholder: -10, stakeholder: 6, perceived: 6 },
+                verdict: 'Tu tiens la ligne.',
+              },
+              {
+                id: 'accept',
+                label: 'Accepter discrètement.',
+                consequence:
+                  'Tu gagnes du cash, mais le risque explose.',
+                effects: { cash: 12, shareholder: 10, perceived: -12 },
+                verdict: 'Tu ouvres la boîte de Pandore.',
+                bad: true,
+                flags: ['illegal'],
+              },
+              {
+                id: 'compromise',
+                label: 'Combats “serré” pour éviter les soupçons.',
+                consequence:
+                  'Tu limites les traces… mais tu joues sale.',
+                effects: { cash: 6, perceived: -6, shareholder: 6 },
+                verdict: 'Tu glisses.',
+                bad: true,
+              },
+              {
+                id: 'whistle',
+                label: 'Tu alertes la fédération.',
+                consequence:
+                  'Les actionnaires paniquent, mais tu te couvres.',
+                effects: { stakeholder: 8, perceived: 4, shareholder: -12 },
+                verdict: 'Tu choisis la légalité.',
+              },
+            ],
+          },
+          {
+            id: 'fix-fallout',
+            title: 'Voie parallèle: soupçons de match truqué',
+            tags: ['Réputation', 'Risque légal'],
+            text:
+              'Les paris explosent et les médias parlent d’un combat “bizarre”.',
+            choices: [
+              {
+                id: 'audit',
+                label: 'Audit externe + transparence.',
+                consequence:
+                  'Tu limites les dégâts, mais tu perds du temps.',
+                effects: { perceived: 8, stakeholder: 4, cash: -6 },
+                verdict: 'Tu calmes l’incendie.',
+              },
+              {
+                id: 'deny',
+                label: 'Tu nies et tu attaques les médias.',
+                consequence:
+                  'Effet boomerang.',
+                effects: { perceived: -12, stakeholder: -6 },
+                verdict: 'Tu nourris le scandale.',
+                bad: true,
+              },
+              {
+                id: 'lawyer',
+                label: 'Tu passes en mode juridique.',
+                consequence:
+                  'Ça protège, mais l’image se fige.',
+                effects: { shareholder: 4, perceived: -6, stakeholder: -4 },
+                verdict: 'Froid mais cadré.',
+              },
+              {
+                id: 'payoff',
+                label: 'Tu tentes d’étouffer les rumeurs.',
+                consequence:
+                  'Ça ressort pire.',
+                effects: { perceived: -16, stakeholder: -10, cash: -8 },
+                verdict: 'Tu empirer tout.',
+                bad: true,
+                flags: ['illegal'],
+              },
+            ],
+          },
+        ],
+      },
+      mediaHeat: {
+        label: 'Bad buzz',
+        scenes: [
+          {
+            id: 'media-clip',
+            title: "Et là, c'est le drame : vidéo virale",
+            tags: ['Réputation', 'Valeur perçue'],
+            text:
+              'Une vidéo montre un sparring trop violent. Ça tourne sur TikTok.',
+            choices: [
+              {
+                id: 'explain',
+                label: 'Tu expliques les règles + cadre sécurité.',
+                consequence:
+                  'Tu réduis la polémique.',
+                effects: { perceived: 6, stakeholder: 4 },
+                verdict: 'Tu reprends la main.',
+              },
+              {
+                id: 'ignore',
+                label: 'Tu ignores.',
+                consequence:
+                  'La vidéo devient un symbole négatif.',
+                effects: { perceived: -10, stakeholder: -6 },
+                verdict: 'Tu laisses la vague grossir.',
+                bad: true,
+              },
+              {
+                id: 'attack',
+                label: 'Tu attaques la personne qui a filmé.',
+                consequence:
+                  'Effet Streisand immédiat.',
+                effects: { perceived: -14, stakeholder: -8 },
+                verdict: 'Tu empirer tout.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'media-boycott',
+            title: 'Voie parallèle: boycott local',
+            tags: ['Communication', 'Expérience client'],
+            text:
+              'Un collectif appelle au boycott de ta salle.',
+            choices: [
+              {
+                id: 'open-forum',
+                label: 'Dialogue public + mesures visibles.',
+                consequence:
+                  'Tu récupères un peu de confiance.',
+                effects: { perceived: 6, stakeholder: 6, cash: -4 },
+                verdict: 'Tu limites la casse.',
+              },
+              {
+                id: 'sponsor-event',
+                label: 'Événement sponsorisé pour détourner l’attention.',
+                consequence:
+                  'Peut marcher… ou aggraver.',
+                effects: { perceived: 2, stakeholder: -4, cash: -6 },
+                verdict: 'Ambigu.',
+                bad: true,
+              },
+              {
+                id: 'ignore-boycott',
+                label: 'Ignorer.',
+                consequence:
+                  'Le CA chute.',
+                effects: { perceived: -10, cash: -10, stakeholder: -6 },
+                verdict: 'Tu perds la bataille.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      staffStrike: {
+        label: 'Crise staff',
+        scenes: [
+          {
+            id: 'coach-revolt',
+            title: "Et là, c'est le drame : les coachs craquent",
+            tags: ['RH', 'Valeur partenariale'],
+            text:
+              'Les coachs dénoncent les heures sup et le manque de sécurité.',
+            choices: [
+              {
+                id: 'mediate',
+                label: 'Négociation + plan de charge clair.',
+                consequence:
+                  'Tu apaises le conflit.',
+                effects: { stakeholder: 10, perceived: 4, cash: -6 },
+                verdict: 'Tu répares.',
+              },
+              {
+                id: 'delay',
+                label: 'Tu temporises.',
+                consequence:
+                  'La grève se prépare.',
+                effects: { stakeholder: -10, perceived: -6 },
+                verdict: 'Tu laisses monter.',
+                bad: true,
+              },
+              {
+                id: 'replace',
+                label: 'Tu remplaces des coachs clés.',
+                consequence:
+                  'Les élèves voient la baisse de niveau.',
+                effects: { perceived: -10, stakeholder: -12, cash: 4 },
+                verdict: 'Tu perds la crédibilité.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'strike',
+            title: 'Voie parallèle: grève',
+            tags: ['Production', 'Réputation'],
+            text:
+              'Grève surprise avant un combat important.',
+            choices: [
+              {
+                id: 'cancel',
+                label: 'Annuler et négocier.',
+                consequence:
+                  'Perte de cash, mais tu sauves la relation.',
+                effects: { cash: -8, stakeholder: 8, perceived: 4 },
+                verdict: 'Tu limites la casse.',
+              },
+              {
+                id: 'force',
+                label: 'Forcer l’événement avec remplaçants.',
+                consequence:
+                  'Qualité faible, backlash immédiat.',
+                effects: { perceived: -12, stakeholder: -10 },
+                verdict: 'Ça se retourne contre toi.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      sponsorScandal: {
+        label: 'Sponsor toxique',
+        scenes: [
+          {
+            id: 'sponsor-bad',
+            title: "Et là, c'est le drame : sponsor en crise",
+            tags: ['Réputation', 'Partenaires'],
+            text:
+              'Ton sponsor est accusé de pratiques douteuses. Ton logo est partout.',
+            choices: [
+              {
+                id: 'drop-sponsor',
+                label: 'Rompre le contrat publiquement.',
+                consequence:
+                  'Tu perds du cash mais tu protèges l’image.',
+                effects: { cash: -10, perceived: 8, stakeholder: 6 },
+                verdict: 'Tu sauves la réputation.',
+              },
+              {
+                id: 'stay-quiet',
+                label: 'Rester silencieux.',
+                consequence:
+                  'Les critiques montent.',
+                effects: { perceived: -10, stakeholder: -6, cash: 4 },
+                verdict: 'Tu t’enfonces.',
+                bad: true,
+              },
+              {
+                id: 'defend',
+                label: 'Défendre publiquement le sponsor.',
+                consequence:
+                  'Tu prends la foudre avec lui.',
+                effects: { perceived: -14, stakeholder: -10 },
+                verdict: 'Tu coules avec.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'sponsor-fallout',
+            title: 'Voie parallèle: perte de partenaires',
+            tags: ['Finances', 'Réputation'],
+            text:
+              'D’autres partenaires veulent partir.',
+            choices: [
+              {
+                id: 'reassure',
+                label: 'Plan de conformité + transparence.',
+                consequence:
+                  'Tu récupères un peu de confiance.',
+                effects: { perceived: 6, stakeholder: 4, cash: -4 },
+                verdict: 'Tu stabilises.',
+              },
+              {
+                id: 'replace-fast',
+                label: 'Tu signes vite avec un autre sponsor.',
+                consequence:
+                  'Ça tient… mais ça sent l’urgence.',
+                effects: { cash: 6, perceived: -4 },
+                verdict: 'Tu colmates.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      dopingScandal: {
+        label: 'Dopage',
+        scenes: [
+          {
+            id: 'doping-leak',
+            title: "Et là, c'est le drame : soupçons de dopage",
+            tags: ['Éthique', 'Réputation'],
+            text:
+              'Une rumeur de dopage touche un de tes fighters.',
+            choices: [
+              {
+                id: 'test',
+                label: 'Tu imposes un test interne + transparence.',
+                consequence:
+                  'Tu montres une ligne claire.',
+                effects: { perceived: 6, stakeholder: 4, cash: -4 },
+                verdict: 'Tu coupes court.',
+              },
+              {
+                id: 'hide',
+                label: 'Tu minimises pour éviter le bad buzz.',
+                consequence:
+                  'La rumeur enfle.',
+                effects: { perceived: -10, stakeholder: -6 },
+                verdict: 'Tu perds le contrôle.',
+                bad: true,
+              },
+              {
+                id: 'protect',
+                label: 'Tu protèges le fighter coûte que coûte.',
+                consequence:
+                  'Si ça sort, c’est fini.',
+                effects: { perceived: -14, stakeholder: -10, cash: 2 },
+                verdict: 'Tu prends un énorme risque.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'doping-fallout',
+            title: 'Voie parallèle: sanctions',
+            tags: ['Risque légal', 'Partenaires'],
+            text:
+              'La fédération ouvre une enquête.',
+            choices: [
+              {
+                id: 'cooperate',
+                label: 'Tu coopères totalement.',
+                consequence:
+                  'Tu limites les sanctions.',
+                effects: { perceived: 6, stakeholder: 4, cash: -6 },
+                verdict: 'Tu sauves l’image.',
+              },
+              {
+                id: 'lawyer',
+                label: 'Tu te blindes juridiquement.',
+                consequence:
+                  'Ça protège mais refroidit le public.',
+                effects: { perceived: -6, shareholder: 4, stakeholder: -4 },
+                verdict: 'Froid mais efficace.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      spiral: {
+        label: 'Spirale de crise',
+        scenes: [
+          {
+            id: 'spiral-overflow',
+            title: "Et là, c'est le drame : accumulation d’erreurs",
+            tags: ['Gouvernance', 'Crise'],
+            text:
+              'Trois choix discutables d’affilée. Les tensions explosent.',
+            choices: [
+              {
+                id: 'turnaround',
+                label:
+                  'Plan de redressement express + audit externe.',
+                consequence:
+                  'Tu reprends un peu la main.',
+                effects: { stakeholder: 6, perceived: 4, cash: -8 },
+                verdict: 'Tu limites la casse.',
+              },
+              {
+                id: 'scapegoat',
+                label:
+                  'Tu désignes un responsable interne.',
+                consequence:
+                  'Confiance détruite.',
+                effects: { stakeholder: -10, perceived: -8, shareholder: 4 },
+                verdict: 'Tu sacrifies quelqu’un.',
+                bad: true,
+              },
+              {
+                id: 'delay',
+                label: 'Tu temporises.',
+                consequence:
+                  'La crise s’envenime.',
+                effects: { perceived: -12, stakeholder: -12 },
+                verdict: 'Tu laisses le chaos s’installer.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'spiral-prudhommes',
+            title: 'Voie parallèle: prud’hommes',
+            tags: ['RH', 'Réputation'],
+            text:
+              'Un groupe de salariés lance une procédure aux prud’hommes.',
+            choices: [
+              {
+                id: 'conciliation',
+                label:
+                  'Conciliation + réforme interne.',
+                consequence:
+                  'Tu limites les dégâts.',
+                effects: { stakeholder: 8, perceived: 6, cash: -10 },
+                verdict: 'Tu assumes.',
+              },
+              {
+                id: 'legal-fight',
+                label: 'Bataille juridique totale.',
+                consequence:
+                  'Image dégradée.',
+                effects: { shareholder: 6, stakeholder: -10, perceived: -8 },
+                verdict: 'Tu gagnes légalement, tu perds socialement.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+    },
+    locked: false,
   },
   {
     id: 'football',
@@ -1552,6 +2460,36 @@ function App() {
       return {
         label: 'FOURNISSEUR',
         message: 'Des clients remarquent un goût différent. Les doutes montent.',
+      }
+    }
+    if (choice?.branchId === 'fixFight') {
+      return {
+        label: 'PARIS',
+        message: 'Les bookmakers parlent d’un “combat étrange”.',
+      }
+    }
+    if (choice?.branchId === 'mediaHeat') {
+      return {
+        label: 'RÉSEAUX',
+        message: 'Un clash tourne mal. Les vidéos circulent.',
+      }
+    }
+    if (choice?.branchId === 'staffStrike') {
+      return {
+        label: 'INTERNE',
+        message: 'Les coachs parlent de grève.',
+      }
+    }
+    if (choice?.branchId === 'sponsorScandal') {
+      return {
+        label: 'SPONSOR',
+        message: 'Ton sponsor est dans la tourmente. Ça va rejaillir.',
+      }
+    }
+    if (choice?.branchId === 'dopingScandal') {
+      return {
+        label: 'ANTI-DOPAGE',
+        message: 'Des rumeurs de dopage circulent autour de la salle.',
       }
     }
     if (choice?.branchId === 'brandBacklash') {
