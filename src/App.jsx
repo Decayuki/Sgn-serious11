@@ -37,7 +37,8 @@ const THEMES = [
         choices: [
           {
             id: 'premium-experience',
-            label: 'Ambiance premium: baristas formés, playlists, latte art, déco soignée.',
+            label:
+              'Expérience travaillée: formation baristas, playlists choisies, latte art, déco soignée.',
             consequence:
               'Tu poses un niveau d’exigence. Les clients sentent la qualité… mais le cash part vite.',
             effects: { perceived: 18, cash: -12, valueAdded: 6 },
@@ -45,7 +46,8 @@ const THEMES = [
           },
           {
             id: 'discount-mode',
-            label: 'Mode prix bas: boissons standardisées, déco minimale, rotation rapide.',
+            label:
+              'Positionnement prix accessible: standardisation des boissons, déco minimale, rotation rapide.',
             consequence:
               'Le prix attire du monde mais tout le monde te compare au kebab du coin.',
             effects: { perceived: -12, cash: 6, stakeholder: -4 },
@@ -54,7 +56,8 @@ const THEMES = [
           },
           {
             id: 'fake-hype',
-            label: 'Tu crées un faux buzz Insta + fausses reviews pour lancer la hype.',
+            label:
+              'Lancement digital agressif: micro-campagnes Insta + amplification d’avis.',
             consequence:
               'Ça attire au début… mais tu joues avec le feu.',
             effects: { perceived: 10, stakeholder: -8, cash: -4 },
@@ -72,7 +75,8 @@ const THEMES = [
         choices: [
           {
             id: 'premium-price',
-            label: 'Prix premium + storytelling “ingrédients éthiques, baristas experts”.',
+            label:
+              'Prix premium + storytelling “ingrédients éthiques, baristas experts”.',
             consequence:
               'Tu renforces l’image haut de gamme. Certains râlent, mais la marque assume.',
             effects: { perceived: 14, cash: 8, stakeholder: -2 },
@@ -80,7 +84,8 @@ const THEMES = [
           },
           {
             id: 'price-war',
-            label: 'Prix cassés pour tuer la concurrence, promos tout le mois.',
+            label:
+              'Stratégie prix d’appel agressive + promos massives pour gagner du volume.',
             consequence:
               'Tu vends beaucoup… mais ta marge fond comme un frappé au soleil.',
             effects: { perceived: -10, cash: -8, valueAdded: -10 },
@@ -89,7 +94,8 @@ const THEMES = [
           },
           {
             id: 'stealth-increase',
-            label: 'Tu augmentes les prix discrètement sans le dire.',
+            label:
+              'Recalibrage tarifaire progressif, sans communication spécifique.',
             consequence:
               'Les clients se sentent pigeonnés. Les avis tombent.',
             effects: { perceived: -14, cash: 4, stakeholder: -6 },
@@ -107,7 +113,7 @@ const THEMES = [
         choices: [
           {
             id: 'survey',
-            label: 'Enquêtes de satisfaction + analyse des réclamations.',
+            label: 'Satisfaction clients + analyse des retours.',
             consequence:
               'Tu comprends ce que les clients ressentent vraiment.',
             effects: { perceived: 6, stakeholder: 4 },
@@ -115,7 +121,7 @@ const THEMES = [
           },
           {
             id: 'market-study',
-            label: 'Étude de marché locale + tests de prix.',
+            label: 'Étude locale + tests de prix sur un panel.',
             consequence:
               'Tu ajustes ton offre avec des données solides.',
             effects: { perceived: 8, valueAdded: 4, cash: -4 },
@@ -123,7 +129,7 @@ const THEMES = [
           },
           {
             id: 'vibes-only',
-            label: 'Au feeling: “si ça marche sur TikTok, c’est bon”.',
+            label: 'Pilotage intuitif + observation des tendances TikTok.',
             consequence:
               'Le feeling ne paie pas les factures.',
             effects: { perceived: -6, valueAdded: -4 },
@@ -141,7 +147,7 @@ const THEMES = [
         choices: [
           {
             id: 'train-staff',
-            label: 'Former les baristas + primes de qualité.',
+            label: 'Renforcer les compétences baristas + primes qualité.',
             consequence:
               'La qualité grimpe, le service devient vraiment premium.',
             effects: { perceived: 10, stakeholder: 10, cash: -8 },
@@ -149,7 +155,8 @@ const THEMES = [
           },
           {
             id: 'super-machines',
-            label: 'Acheter des machines ultra-premium, même si ça plombe le budget.',
+            label:
+              'Investir dans des machines très haut de gamme, quitte à réduire la marge.',
             consequence:
               'Les boissons sont top mais la trésorerie souffre.',
             effects: { perceived: 12, cash: -18, valueAdded: 4 },
@@ -157,7 +164,8 @@ const THEMES = [
           },
           {
             id: 'cheap-staff',
-            label: 'Réduire les heures du staff et automatiser à mort.',
+            label:
+              'Réorganisation: automatiser certaines tâches et réduire les heures.',
             consequence:
               'Moins de coûts, mais l’expérience client devient froide.',
             effects: { perceived: -12, stakeholder: -12, cash: 8 },
@@ -175,7 +183,7 @@ const THEMES = [
         choices: [
           {
             id: 'fair-trade',
-            label: 'Fournisseurs locaux + café équitable (plus cher).',
+            label: 'Fournisseurs locaux + café équitable (coût plus élevé).',
             consequence:
               'Coût plus élevé, mais image forte et clients fidèles.',
             effects: { perceived: 12, valueAdded: 6, cash: -10, stakeholder: 6 },
@@ -183,7 +191,7 @@ const THEMES = [
           },
           {
             id: 'cheap-import',
-            label: 'Import low-cost, marge maximale, qualité moyenne.',
+            label: 'Approvisionnement international à coût optimisé.',
             consequence:
               'La marge grimpe, mais les habitués sentent la baisse.',
             effects: { perceived: -10, valueAdded: 6, cash: 8, stakeholder: -6 },
@@ -192,7 +200,8 @@ const THEMES = [
           },
           {
             id: 'mix-hide',
-            label: 'Tu mixes bon et mauvais cafés sans le dire.',
+            label:
+              'Blend interne pour équilibrer coûts et qualité, sans communication détaillée.',
             consequence:
               'Tu crois être malin. Les palais des clients aussi.',
             effects: { perceived: -14, valueAdded: 4, stakeholder: -8 },
@@ -243,7 +252,8 @@ const THEMES = [
         choices: [
           {
             id: 'balanced',
-            label: 'Salaires décents + impôts ok + dividendes modérés + réinvestissement.',
+            label:
+              'Salaires corrects + impôts à l’heure + dividendes modérés + réinvestissement.',
             consequence:
               'Tout le monde grogne un peu, mais personne ne te plante.',
             effects: { stakeholder: 12, shareholder: 6, cash: -4, valueAdded: 6 },
@@ -251,7 +261,8 @@ const THEMES = [
           },
           {
             id: 'dividends-max',
-            label: 'Dividendes max pour rassurer les investisseurs, salaires gelés.',
+            label:
+              'Priorité aux actionnaires pour consolider la confiance financière.',
             consequence:
               'Les actionnaires kiffent. Les employés te détestent.',
             effects: { shareholder: 18, stakeholder: -16, perceived: -6 },
@@ -261,7 +272,8 @@ const THEMES = [
           },
           {
             id: 'all-staff',
-            label: 'Tout pour les salariés + avantages, zéro dividendes.',
+            label:
+              'Redistribution renforcée vers les salariés et avantages internes.',
             consequence:
               'Le staff adore, mais les investisseurs veulent te virer.',
             effects: { stakeholder: 16, shareholder: -18, cash: -6 },
@@ -280,7 +292,8 @@ const THEMES = [
         choices: [
           {
             id: 'co-decision',
-            label: 'Tu crées un comité avec baristas + fournisseurs + clients fidèles.',
+            label:
+              'Comité mixte avec baristas, fournisseurs et clients fidèles.',
             consequence:
               'Les salariés se sentent respectés. La confiance monte.',
             effects: { stakeholder: 16, perceived: 6, shareholder: -6 },
@@ -288,7 +301,7 @@ const THEMES = [
           },
           {
             id: 'shareholder-only',
-            label: 'Les actionnaires décident, point.',
+            label: 'Pilotage centré conseil actionnarial + reporting strict.',
             consequence:
               'Rapide, mais froid. Les autres acteurs se braquent.',
             effects: { shareholder: 14, stakeholder: -14, perceived: -6 },
@@ -318,7 +331,8 @@ const THEMES = [
         choices: [
           {
             id: 'csr',
-            label: 'Programme anti-gaspi + dons locaux + communication transparente.',
+            label:
+              'Programme anti-gaspi + actions locales + communication transparente.',
             consequence:
               'Ta marque gagne en respect. Les clients reviennent.',
             effects: { perceived: 12, stakeholder: 10, cash: -6 },
@@ -326,7 +340,7 @@ const THEMES = [
           },
           {
             id: 'influencer',
-            label: 'Budget pub énorme sur des influenceurs “hype”.',
+            label: 'Campagne influenceurs à forte portée.',
             consequence:
               'Tu fais le buzz… si la qualité suit. Sinon, bad buzz.',
             effects: ({ flags }) => ({
@@ -337,7 +351,8 @@ const THEMES = [
           },
           {
             id: 'cut-costs',
-            label: 'Tu coupes encore dans les coûts: staff, nettoyage, sécurité.',
+            label:
+              'Optimisation des coûts: effectifs réduits + procédures allégées.',
             consequence:
               'La marge monte… et la colère aussi.',
             effects: { cash: 10, stakeholder: -14, perceived: -8 },
@@ -350,14 +365,14 @@ const THEMES = [
     randomEvents: [
       {
         id: 'tiktok',
-        title: 'Event aléatoire: TikTok te démonte',
+        title: 'Event aléatoire: TikTok et réputation',
         tags: ['Réputation', 'Valeur perçue'],
         text:
           'Une vidéo TikTok accuse ton café de tricher sur les ingrédients. 150k vues en 2h. Tu réagis comment ?',
         choices: [
           {
             id: 'transparent',
-            label: 'Live vidéo: tu montres la cuisine + factures fournisseurs.',
+            label: 'Live vidéo: transparence cuisine + preuves fournisseurs.',
             consequence:
               'Tu éteins l’incendie. Les clients respectent la transparence.',
             effects: ({ flags }) => ({
@@ -368,7 +383,7 @@ const THEMES = [
           },
           {
             id: 'ignore',
-            label: 'Tu ignores: “ça va passer”.',
+            label: 'Tu temporises et attends que ça retombe.',
             consequence:
               'Le bad buzz grossit. Les avis s’écroulent.',
             effects: { perceived: -16, stakeholder: -6 },
@@ -377,7 +392,7 @@ const THEMES = [
           },
           {
             id: 'attack',
-            label: 'Tu menaces la créatrice de la vidéo.',
+            label: 'Tu réponds par voie légale et demandes un retrait.',
             consequence:
               'Elle répond avec une vidéo encore pire. Effet Streisand.',
             effects: { perceived: -20, stakeholder: -8 },
@@ -395,7 +410,7 @@ const THEMES = [
         choices: [
           {
             id: 'adjust-price',
-            label: 'Tu ajustes légèrement les prix + tu expliques la hausse.',
+            label: 'Ajustement tarifaire limité + explication publique.',
             consequence:
               'Tu protèges la marge sans perdre tout le monde.',
             effects: { cash: 6, perceived: -4, valueAdded: 6 },
@@ -403,7 +418,7 @@ const THEMES = [
           },
           {
             id: 'eat-margin',
-            label: 'Tu absorbes la hausse pour ne pas décevoir.',
+            label: 'Tu absorbes la hausse pour préserver l’expérience client.',
             consequence:
               'Les clients sont contents, mais ta valeur ajoutée dégringole.',
             effects: { valueAdded: -12, cash: -10, perceived: 6 },
@@ -411,7 +426,7 @@ const THEMES = [
           },
           {
             id: 'cheap-switch',
-            label: 'Tu switches sur du café low-cost sans prévenir.',
+            label: 'Tu passes sur un blend plus économique sans changement visible.',
             consequence:
               'Tu perds la qualité, les clients le sentent direct.',
             effects: { perceived: -16, valueAdded: 4, stakeholder: -6 },
@@ -430,7 +445,7 @@ const THEMES = [
         choices: [
           {
             id: 'clean',
-            label: 'Tu coopères, tout est nickel.',
+            label: 'Tu coopères et tu montres tous les process.',
             consequence:
               'Aucune amende. L’équipe est fière.',
             effects: { stakeholder: 8, perceived: 6 },
@@ -438,7 +453,7 @@ const THEMES = [
           },
           {
             id: 'rush-clean',
-            label: 'Tu caches vite des trucs avant qu’ils entrent.',
+            label: 'Tu fais un nettoyage express avant leur passage.',
             consequence:
               'Ils voient tout. Amende + mauvaise presse.',
             effects: { cash: -8, stakeholder: -8, perceived: -10 },
@@ -447,7 +462,7 @@ const THEMES = [
           },
           {
             id: 'bribe',
-            label: 'Tu proposes un “arrangement”.',
+            label: 'Tu cherches un accord informel pour éviter un rapport.',
             consequence:
               'Ils te dénoncent. Fin du game.',
             effects: { cash: -16, stakeholder: -18, perceived: -14 },
