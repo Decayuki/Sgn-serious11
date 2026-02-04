@@ -360,6 +360,28 @@ h2 {
   gap: 20px;
 }
 
+.alert-banner {
+  grid-column: 1 / -1;
+  background: #ffe3e0;
+  border: 1px solid #f5b7b1;
+  border-radius: 18px;
+  padding: 12px 16px;
+  box-shadow: 0 10px 20px rgba(26, 16, 10, 0.12);
+}
+
+.alert-banner-title {
+  font-weight: 700;
+  color: #922b21;
+  margin-bottom: 6px;
+}
+
+.alert-banner ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #6b2a22;
+  font-size: 13px;
+}
+
 .scene {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 24px;

@@ -5507,6 +5507,7 @@ function App() {
   const pendingBranches = branchQueue
     .map((id) => theme?.branches?.[id]?.label || id)
     .filter(Boolean)
+  const alerts = getAlerts()
 
   const objectiveGroups = objectives
     ? [
@@ -6013,6 +6014,16 @@ function App() {
 
       {screen === 'game' && stepToRender && (
         <main className="game">
+          {alerts.length > 0 && (
+            <div className="alert-banner">
+              <div className="alert-banner-title">Alertes terrain</div>
+              <ul>
+                {alerts.map((alert) => (
+                  <li key={alert}>{alert}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <section className="scene">
             <div className="scene-header">
               <div>
@@ -6075,16 +6086,6 @@ function App() {
           <aside className="sidebar">
             <h3>Briefing</h3>
             <p>{theme.intro}</p>
-            {getAlerts().length > 0 && (
-              <div className="sidebar-alerts">
-                <h4>Alertes terrain</h4>
-                <ul>
-                  {getAlerts().map((alert) => (
-                    <li key={alert}>{alert}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
             {pendingBranches.length > 0 && (
               <div className="sidebar-alerts pending">
                 <h4>Voies en attente</h4>
