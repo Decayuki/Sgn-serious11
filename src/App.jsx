@@ -6372,7 +6372,6 @@ function App() {
                 <li>Objectif: maîtriser la valeur perçue + la valeur ajoutée.</li>
                 <li>Tout le monde veut sa part: salariés, État, actionnaires.</li>
                 <li>Certains choix ouvrent une voie parallèle à gérer.</li>
-                <li>Chaque run peut finir en humiliation publique.</li>
               </ul>
             </div>
             <ThemeIllustration themeId={themeId} />
