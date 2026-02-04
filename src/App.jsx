@@ -269,6 +269,7 @@ const THEMES = [
             verdict: 'Actionnarial pur. Risque de conflit.',
             bad: true,
             flags: ['staff-angry'],
+            branchId: 'staffCrisis',
           },
           {
             id: 'all-staff',
@@ -307,6 +308,7 @@ const THEMES = [
             effects: { shareholder: 14, stakeholder: -14, perceived: -6 },
             verdict: 'Tu vas vers le conflit.',
             bad: true,
+            branchId: 'staffCrisis',
           },
           {
             id: 'mix',
@@ -365,7 +367,7 @@ const THEMES = [
     randomEvents: [
       {
         id: 'tiktok',
-        title: 'Event aléatoire: TikTok et réputation',
+        title: "Et là, c'est le drame : TikTok et réputation",
         tags: ['Réputation', 'Valeur perçue'],
         text:
           'Une vidéo TikTok accuse ton café de tricher sur les ingrédients. 150k vues en 2h. Tu réagis comment ?',
@@ -403,7 +405,7 @@ const THEMES = [
       },
       {
         id: 'bean-price',
-        title: 'Event aléatoire: explosion du prix du café',
+        title: "Et là, c'est le drame : explosion du prix du café",
         tags: ['Valeur ajoutée', 'Coûts'],
         text:
           'Le prix du café brut explose. Tes coûts montent de 20%. Que fais-tu ?',
@@ -438,7 +440,7 @@ const THEMES = [
       },
       {
         id: 'inspection',
-        title: 'Event aléatoire: inspection surprise',
+        title: "Et là, c'est le drame : inspection surprise",
         tags: ['État', 'Confiance'],
         text:
           'Inspection hygiène et travail. Ils débarquent sans prévenir.',
@@ -473,6 +475,120 @@ const THEMES = [
         ],
       },
     ],
+    branches: {
+      staffCrisis: {
+        label: 'Crise RH',
+        scenes: [
+          {
+            id: 'staff-complaint',
+            title: "Et là, c'est le drame : plainte interne",
+            tags: ['Crise RH', 'Valeur partenariale'],
+            text:
+              'En pleine réunion, Amina lâche : “C’en est trop. Le responsable m’a mis une main aux fesses, sérieusement ?!” L’équipe se fige.',
+            choices: [
+              {
+                id: 'external-investigation',
+                label:
+                  'Procédure externe + mise à pied conservatoire, communication interne cadrée.',
+                consequence:
+                  'Tu protèges l’équipe, mais ça coûte et ça inquiète.',
+                effects: {
+                  stakeholder: 14,
+                  perceived: 6,
+                  cash: -8,
+                  shareholder: -4,
+                },
+                verdict: 'Tu prends la crise au sérieux.',
+              },
+              {
+                id: 'internal-quiet',
+                label:
+                  'Gestion interne confidentielle + rappel immédiat des règles.',
+                consequence:
+                  'Tu gagnes du temps, mais tu prends un risque légal.',
+                effects: { stakeholder: -10, perceived: -8, cash: 2 },
+                verdict: 'Tu joues l’équilibriste.',
+                bad: true,
+                flags: ['coverup'],
+              },
+              {
+                id: 'exit-deal',
+                label:
+                  'Accord de séparation rapide pour “protéger tout le monde”.',
+                consequence:
+                  'Tu règles vite, mais ça laisse un goût amer.',
+                effects: { stakeholder: -6, perceived: -6, cash: -4 },
+                verdict: 'Tu étouffes plutôt que régler.',
+                bad: true,
+                flags: ['coverup'],
+              },
+              {
+                id: 'deny',
+                label:
+                  'Tu repousses la discussion: “on en reparle plus tard”.',
+                consequence:
+                  'Le staff explose. La confiance tombe.',
+                effects: { stakeholder: -14, perceived: -10 },
+                verdict: 'Tu perds le contrôle social.',
+                bad: true,
+                flags: ['coverup'],
+              },
+            ],
+          },
+          {
+            id: 'staff-fallout',
+            title: 'Voie parallèle: onde de choc',
+            tags: ['Réputation', 'Gouvernance'],
+            text:
+              'La rumeur sort. Un média local t’appelle, le staff parle de grève. Tu gères comment ?',
+            choices: [
+              {
+                id: 'open-comms',
+                label:
+                  'Communication transparente + accompagnement de la victime.',
+                consequence:
+                  'Tu limites le bad buzz et sécurises l’équipe.',
+                effects: ({ flags }) => ({
+                  stakeholder: flags.has('coverup') ? -4 : 10,
+                  perceived: flags.has('coverup') ? -6 : 8,
+                  cash: -6,
+                }),
+                verdict: 'Tu reconstruis un peu de confiance.',
+              },
+              {
+                id: 'defensive',
+                label: 'Communiqué juridique sec, sans détail.',
+                consequence:
+                  'Tu protèges légalement, mais tu parais froid.',
+                effects: { stakeholder: -8, perceived: -6, shareholder: 4 },
+                verdict: 'Tu blindes, mais tu perds l’humain.',
+                bad: true,
+              },
+              {
+                id: 'silence',
+                label: 'Silence radio et focus business.',
+                consequence:
+                  'Les réseaux interprètent, la crise grossit.',
+                effects: { perceived: -12, stakeholder: -10 },
+                verdict: 'Tu laisses le vide se remplir.',
+                bad: true,
+              },
+              {
+                id: 'pressure',
+                label:
+                  'Tu fais pression pour éviter une plainte officielle.',
+                consequence:
+                  'Backfire immédiat. Le drame sort partout.',
+                effects: { perceived: -18, stakeholder: -16, shareholder: -6 },
+                verdict: 'C’est l’explosion.',
+                bad: true,
+                flags: ['illegal'],
+              },
+            ],
+          },
+        ],
+      },
+    },
   },
   {
     id: 'cosmetic',
@@ -713,6 +829,8 @@ function App() {
   const [result, setResult] = useState(null)
   const [flags, setFlags] = useState(new Set())
   const [activeEvent, setActiveEvent] = useState(null)
+  const [branchState, setBranchState] = useState(null)
+  const [branchQueued, setBranchQueued] = useState(null)
 
   const theme = useMemo(
     () => THEMES.find((item) => item.id === themeId),
@@ -720,16 +838,19 @@ function App() {
   )
 
   useEffect(() => {
-    if (screen !== 'game') return
+    if (screen !== 'game' || branchState) return
     const step = theme?.scenes?.[stepIndex]
     if (step?.type === 'random' && !activeEvent) {
       setActiveEvent(pickRandom(theme.randomEvents))
     }
-  }, [screen, stepIndex, theme, activeEvent])
+  }, [screen, stepIndex, theme, activeEvent, branchState])
 
-  const currentStep = theme?.scenes?.[stepIndex]
+  const isBranch = Boolean(branchState)
+  const currentStep = isBranch
+    ? branchState?.scenes?.[branchState.index]
+    : theme?.scenes?.[stepIndex]
   const stepToRender =
-    currentStep?.type === 'random' ? activeEvent : currentStep
+    !isBranch && currentStep?.type === 'random' ? activeEvent : currentStep
 
   const ending = useMemo(
     () => (screen === 'end' ? getOutcome(stats, history, flags) : null),
@@ -745,6 +866,8 @@ function App() {
     setResult(null)
     setFlags(new Set())
     setActiveEvent(null)
+    setBranchState(null)
+    setBranchQueued(null)
     setStepIndex(0)
     setScreen('game')
   }
@@ -756,6 +879,8 @@ function App() {
     setResult(null)
     setFlags(new Set())
     setActiveEvent(null)
+    setBranchState(null)
+    setBranchQueued(null)
     setStepIndex(0)
     setScreen('game')
   }
@@ -783,6 +908,9 @@ function App() {
         return next
       })
     }
+    if (choice.branchId) {
+      setBranchQueued(choice.branchId)
+    }
     setResult({
       title: choice.verdict,
       text: choice.consequence,
@@ -790,9 +918,8 @@ function App() {
     })
   }
 
-  function handleContinue() {
-    setResult(null)
-    if (currentStep?.type === 'random') {
+  function advanceMain() {
+    if (theme?.scenes?.[stepIndex]?.type === 'random') {
       setActiveEvent(null)
     }
     const nextIndex = stepIndex + 1
@@ -801,6 +928,36 @@ function App() {
     } else {
       setStepIndex(nextIndex)
     }
+  }
+
+  function handleContinue() {
+    setResult(null)
+
+    if (branchQueued && !branchState) {
+      const branch = theme?.branches?.[branchQueued]
+      if (branch?.scenes?.length) {
+        setBranchState({
+          id: branchQueued,
+          label: branch.label,
+          scenes: branch.scenes,
+          index: 0,
+        })
+      }
+      setBranchQueued(null)
+      return
+    }
+
+    if (branchState) {
+      if (branchState.index < branchState.scenes.length - 1) {
+        setBranchState((prev) => ({ ...prev, index: prev.index + 1 }))
+      } else {
+        setBranchState(null)
+        advanceMain()
+      }
+      return
+    }
+
+    advanceMain()
   }
 
   if (!theme) return null
@@ -841,6 +998,7 @@ function App() {
               <ul className="rules">
                 <li>Objectif: maîtriser la valeur perçue + la valeur ajoutée.</li>
                 <li>Tout le monde veut sa part: salariés, État, actionnaires.</li>
+                <li>Certains choix ouvrent une voie parallèle à gérer.</li>
                 <li>Chaque run peut finir en humiliation publique.</li>
               </ul>
             </div>
@@ -880,13 +1038,16 @@ function App() {
                 <p className="eyebrow">{theme.name}</p>
                 <h2>{stepToRender.title || 'Événement'}</h2>
                 <p className="scene-text">{stepToRender.text}</p>
-                {stepToRender.tags && (
-                  <div className="tags">
-                    {stepToRender.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-                )}
+                <div className="tags">
+                  {branchState?.label && (
+                    <span className="branch-tag">
+                      Voie parallèle: {branchState.label}
+                    </span>
+                  )}
+                  {stepToRender.tags?.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
               </div>
               <CharactersIllustration />
             </div>

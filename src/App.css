@@ -284,6 +284,11 @@ h2 {
   font-size: 12px;
 }
 
+.tags .branch-tag {
+  background: var(--coffee-700);
+  color: #fff4e6;
+}
+
 .choices {
   display: grid;
   gap: 12px;
