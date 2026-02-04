@@ -63,6 +63,7 @@ const THEMES = [
             effects: { perceived: 10, stakeholder: -8, cash: -4 },
             verdict: 'Faux positif. Tu as ouvert la porte au drama.',
             flags: ['fake-reviews'],
+            branchId: 'brandBacklash',
           },
         ],
       },
@@ -197,6 +198,7 @@ const THEMES = [
             effects: { perceived: -10, valueAdded: 6, cash: 8, stakeholder: -6 },
             verdict: 'Court terme gagnant, long terme dangereux.',
             bad: true,
+            branchId: 'supplierBetrayal',
           },
           {
             id: 'mix-hide',
@@ -208,6 +210,7 @@ const THEMES = [
             verdict: 'Faux semblant. Ça explose en bouche… et en avis.',
             bad: true,
             flags: ['quality-lie'],
+            branchId: 'supplierBetrayal',
           },
         ],
       },
@@ -281,6 +284,7 @@ const THEMES = [
             verdict: 'Partenariale à 100%. Tu allumes les actionnaires.',
             bad: true,
             flags: ['investor-angry'],
+            branchId: 'investorCoup',
           },
         ],
       },
@@ -400,6 +404,7 @@ const THEMES = [
             effects: { perceived: -20, stakeholder: -8 },
             verdict: 'Éclaté. Tu lances un boomerang.',
             bad: true,
+            branchId: 'brandBacklash',
           },
         ],
       },
@@ -435,6 +440,7 @@ const THEMES = [
             verdict: 'Trahison. La valeur perçue s’écrase.',
             bad: true,
             flags: ['quality-lie'],
+            branchId: 'supplierBetrayal',
           },
         ],
       },
@@ -583,6 +589,286 @@ const THEMES = [
                 verdict: 'C’est l’explosion.',
                 bad: true,
                 flags: ['illegal'],
+              },
+            ],
+          },
+        ],
+      },
+      brandBacklash: {
+        label: 'Bad buzz',
+        scenes: [
+          {
+            id: 'backlash-leak',
+            title: "Et là, c'est le drame : leak public",
+            tags: ['Réputation', 'Valeur perçue'],
+            text:
+              'Un thread explose: captures d’avis “amplifiés” et messages internes. Les élèves partagent tout.',
+            choices: [
+              {
+                id: 'public-apology',
+                label:
+                  'Excuses publiques + audit externe + correction immédiate.',
+                consequence:
+                  'Tu prends cher, mais tu montres que tu assumes.',
+                effects: { perceived: 8, stakeholder: 10, cash: -10 },
+                verdict: 'Tu nettoies devant tout le monde.',
+              },
+              {
+                id: 'blame-intern',
+                label:
+                  'Tu mets tout sur le dos d’un stagiaire et tu “coupe la tête”.',
+                consequence:
+                  'Les gens voient la manip. La colère monte.',
+                effects: { perceived: -14, stakeholder: -12, shareholder: 4 },
+                verdict: 'Tu sacrifies un pion. Mauvais signal.',
+                bad: true,
+              },
+              {
+                id: 'buy-silence',
+                label:
+                  'Tu tentes d’acheter le silence des témoins clés.',
+                consequence:
+                  'Ça ressort. Effet boomerang violent.',
+                effects: { perceived: -18, stakeholder: -16, cash: -12 },
+                verdict: 'Coup bas. Tout le monde te déteste.',
+                bad: true,
+                flags: ['illegal'],
+              },
+              {
+                id: 'spin',
+                label: 'Tu retournes l’histoire en mode “marketing créatif”.',
+                consequence:
+                  'Tu peux limiter la casse… ou te ridiculiser.',
+                effects: { perceived: -8, stakeholder: -6, cash: 2 },
+                verdict: 'Tu fais le malin. Risqué.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'backlash-boycott',
+            title: 'Voie parallèle: boycott étudiant',
+            tags: ['Communication', 'Expérience client'],
+            text:
+              'Le BDE appelle au boycott. Tu dois réagir vite.',
+            choices: [
+              {
+                id: 'open-forum',
+                label: 'Table ronde ouverte + actions visibles dès la semaine.',
+                consequence:
+                  'Tu reprends un peu la main sur la perception.',
+                effects: { perceived: 8, stakeholder: 8, cash: -4 },
+                verdict: 'Tu regagnes du terrain.',
+              },
+              {
+                id: 'sponsor-event',
+                label: 'Sponsoriser un événement pour calmer les tensions.',
+                consequence:
+                  'Ça peut marcher… ou passer pour de la corruption.',
+                effects: { perceived: 2, stakeholder: -4, cash: -6 },
+                verdict: 'Ambigu. Pas super propre.',
+                bad: true,
+              },
+              {
+                id: 'ignore-boycott',
+                label: 'Ignorer. “Ils reviendront”.',
+                consequence:
+                  'Ils ne reviennent pas. Le chiffre tombe.',
+                effects: { perceived: -12, cash: -10, stakeholder: -6 },
+                verdict: 'Tu perds la guerre d’image.',
+                bad: true,
+              },
+              {
+                id: 'counter-attack',
+                label: 'Contre-attaque en pub agressive.',
+                consequence:
+                  'Tu chauffes la foule. Mauvais move.',
+                effects: { perceived: -14, stakeholder: -10, cash: -6 },
+                verdict: 'Tu nourris le bad buzz.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
+      supplierBetrayal: {
+        label: 'Fournisseur toxique',
+        scenes: [
+          {
+            id: 'supplier-lot',
+            title: "Et là, c'est le drame : lot défectueux",
+            tags: ['Valeur ajoutée', 'Qualité'],
+            text:
+              'Un lot de café arrive défectueux. Si tu le sers, personne ne dira rien… mais la qualité s’effondre.',
+            choices: [
+              {
+                id: 'recall',
+                label: 'Tu retires le lot + remboursement clients.',
+                consequence:
+                  'Ça coûte, mais tu protèges l’image.',
+                effects: { perceived: 10, cash: -12, stakeholder: 6 },
+                verdict: 'Tu protèges la valeur perçue.',
+              },
+              {
+                id: 'blend-hide',
+                label: 'Tu le blends discrètement avec un lot correct.',
+                consequence:
+                  'Les habitués sentent la baisse.',
+                effects: { perceived: -12, valueAdded: 4, stakeholder: -6 },
+                verdict: 'Tu perds la confiance.',
+                bad: true,
+              },
+              {
+                id: 'serve-anyway',
+                label: 'Tu sers quand même pour éviter la perte.',
+                consequence:
+                  'Les avis tombent, la réputation suit.',
+                effects: { perceived: -16, cash: 4, stakeholder: -8 },
+                verdict: 'Court terme toxique.',
+                bad: true,
+              },
+              {
+                id: 'sue-supplier',
+                label: 'Tu bloques le paiement et menaces de procédure.',
+                consequence:
+                  'Le fournisseur coupe les livraisons.',
+                effects: { cash: -6, valueAdded: -6, stakeholder: -4 },
+                verdict: 'Tu déclenches une guerre.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'supplier-fallout',
+            title: 'Voie parallèle: rupture d’approvisionnement',
+            tags: ['Fournisseurs', 'Valeur partenariale'],
+            text:
+              'Le fournisseur menace de te blacklist. Tu dois sécuriser la chaîne.',
+            choices: [
+              {
+                id: 'local-switch',
+                label: 'Basculer sur un fournisseur local fiable.',
+                consequence:
+                  'Coût plus élevé, mais stabilité retrouvée.',
+                effects: { perceived: 6, stakeholder: 8, cash: -8 },
+                verdict: 'Tu reconstruis la confiance.',
+              },
+              {
+                id: 'long-contract',
+                label: 'Signer un contrat long terme pour geler les prix.',
+                consequence:
+                  'Tu sécurises, mais tu t’enfermes.',
+                effects: { cash: -4, valueAdded: 6, stakeholder: -2 },
+                verdict: 'Pragmatique, mais rigide.',
+              },
+              {
+                id: 'shadow-supply',
+                label: 'Passer par un circuit “off” pour tenir.',
+                consequence:
+                  'Risque légal et réputationnel immédiat.',
+                effects: { perceived: -14, stakeholder: -12, cash: 4 },
+                verdict: 'Tu joues sale.',
+                bad: true,
+                flags: ['illegal'],
+              },
+              {
+                id: 'close-menu',
+                label: 'Tu réduis la carte pour tenir les stocks.',
+                consequence:
+                  'Moins de choix, moins d’enthousiasme client.',
+                effects: { perceived: -6, cash: -4, valueAdded: 4 },
+                verdict: 'Tu limites la casse.',
+              },
+            ],
+          },
+        ],
+      },
+      investorCoup: {
+        label: 'Coup des investisseurs',
+        scenes: [
+          {
+            id: 'investor-meeting',
+            title: "Et là, c'est le drame : les investisseurs débarquent",
+            tags: ['Valeur actionnariale', 'Gouvernance'],
+            text:
+              'Les investisseurs convoquent un meeting. Ils veulent un retour immédiat ou ta tête.',
+            choices: [
+              {
+                id: 'data-plan',
+                label: 'Plan chiffré + roadmap claire + objectifs réalistes.',
+                consequence:
+                  'Tu regagnes un peu de crédibilité.',
+                effects: { shareholder: 10, valueAdded: 6, cash: -4 },
+                verdict: 'Tu reprends la main.',
+              },
+              {
+                id: 'promise-cuts',
+                label: 'Tu promets des coupes salariales pour rassurer.',
+                consequence:
+                  'Les investisseurs aiment. Le staff te déteste.',
+                effects: { shareholder: 12, stakeholder: -12, perceived: -6 },
+                verdict: 'Tu vends l’équipe.',
+                bad: true,
+              },
+              {
+                id: 'accept-dilution',
+                label: 'Tu acceptes une dilution pour gagner du temps.',
+                consequence:
+                  'Tu sauves l’entreprise, mais tu perds le contrôle.',
+                effects: { shareholder: 4, cash: 8, perceived: -2 },
+                verdict: 'Tu sacrifies ton pouvoir.',
+              },
+              {
+                id: 'bluff',
+                label: 'Tu bluffes sur des résultats à venir.',
+                consequence:
+                  'S’ils découvrent le mensonge, c’est fini.',
+                effects: { shareholder: -8, perceived: -6 },
+                verdict: 'Tu joues la roulette.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'investor-vote',
+            title: 'Voie parallèle: vote décisif',
+            tags: ['Actionnaires', 'Partenaires'],
+            text:
+              'Un vote interne se prépare. Tu peux influencer le résultat.',
+            choices: [
+              {
+                id: 'open-books',
+                label: 'Tu ouvres les comptes aux salariés pour aligner tout le monde.',
+                consequence:
+                  'Tu renforces la confiance interne, mais les investisseurs tiquent.',
+                effects: { stakeholder: 10, shareholder: -6, perceived: 4 },
+                verdict: 'Tu gagnes les équipes.',
+              },
+              {
+                id: 'side-deals',
+                label: 'Tu négocies en privé pour sauver ta place.',
+                consequence:
+                  'Tu peux survivre… en trahissant des gens.',
+                effects: { shareholder: 6, stakeholder: -8, perceived: -4 },
+                verdict: 'Tu survies, mais ça laisse des traces.',
+                bad: true,
+              },
+              {
+                id: 'step-aside',
+                label: 'Tu proposes de te retirer contre un plan propre.',
+                consequence:
+                  'Tu sauves l’entreprise, pas ton ego.',
+                effects: { stakeholder: 8, shareholder: 8, perceived: 2 },
+                verdict: 'Décision mature.',
+              },
+              {
+                id: 'threaten',
+                label: 'Tu menaces de partir et de tout révéler.',
+                consequence:
+                  'Tension extrême. Tout peut exploser.',
+                effects: { stakeholder: -10, shareholder: -10, perceived: -6 },
+                verdict: 'Tu mets le feu.',
+                bad: true,
               },
             ],
           },
@@ -830,7 +1116,7 @@ function App() {
   const [flags, setFlags] = useState(new Set())
   const [activeEvent, setActiveEvent] = useState(null)
   const [branchState, setBranchState] = useState(null)
-  const [branchQueued, setBranchQueued] = useState(null)
+  const [branchQueue, setBranchQueue] = useState([])
 
   const theme = useMemo(
     () => THEMES.find((item) => item.id === themeId),
@@ -867,7 +1153,7 @@ function App() {
     setFlags(new Set())
     setActiveEvent(null)
     setBranchState(null)
-    setBranchQueued(null)
+    setBranchQueue([])
     setStepIndex(0)
     setScreen('game')
   }
@@ -880,7 +1166,7 @@ function App() {
     setFlags(new Set())
     setActiveEvent(null)
     setBranchState(null)
-    setBranchQueued(null)
+    setBranchQueue([])
     setStepIndex(0)
     setScreen('game')
   }
@@ -909,7 +1195,16 @@ function App() {
       })
     }
     if (choice.branchId) {
-      setBranchQueued(choice.branchId)
+      setBranchQueue((prev) => {
+        const next = [...prev]
+        const branchIds = Array.isArray(choice.branchId)
+          ? choice.branchId
+          : [choice.branchId]
+        branchIds.forEach((id) => {
+          if (!next.includes(id)) next.push(id)
+        })
+        return next
+      })
     }
     setResult({
       title: choice.verdict,
@@ -933,17 +1228,18 @@ function App() {
   function handleContinue() {
     setResult(null)
 
-    if (branchQueued && !branchState) {
-      const branch = theme?.branches?.[branchQueued]
+    if (branchQueue.length > 0 && !branchState) {
+      const nextBranchId = branchQueue[0]
+      const branch = theme?.branches?.[nextBranchId]
       if (branch?.scenes?.length) {
         setBranchState({
-          id: branchQueued,
+          id: nextBranchId,
           label: branch.label,
           scenes: branch.scenes,
           index: 0,
         })
       }
-      setBranchQueued(null)
+      setBranchQueue((prev) => prev.slice(1))
       return
     }
 
