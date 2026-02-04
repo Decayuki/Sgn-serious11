@@ -53,6 +53,7 @@ const THEMES = [
             effects: { perceived: -12, cash: 6, stakeholder: -4 },
             verdict: 'Cheap vibes. La valeur perçue s’effondre.',
             bad: true,
+            branchId: 'brandBacklash',
           },
           {
             id: 'fake-hype',
@@ -102,6 +103,7 @@ const THEMES = [
             effects: { perceived: -10, cash: -8, valueAdded: -10 },
             verdict: 'Piège classique. Tu détruis ta valeur ajoutée.',
             bad: true,
+            branchId: 'supplierBetrayal',
           },
           {
             id: 'stealth-increase',
@@ -156,6 +158,7 @@ const THEMES = [
             effects: { perceived: -6, valueAdded: -4 },
             verdict: 'Éclaté au sol. Tu pilotes à l’aveugle.',
             bad: true,
+            branchId: 'brandBacklash',
           },
         ],
       },
@@ -192,6 +195,7 @@ const THEMES = [
             effects: { perceived: -12, stakeholder: -12, cash: 8 },
             verdict: 'Tu sacrifies l’humain. Les clients le sentent.',
             bad: true,
+            branchId: 'staffCrisis',
           },
         ],
       },
@@ -646,7 +650,7 @@ const THEMES = [
             title: "Et là, c'est le drame : leak public",
             tags: ['Réputation', 'Valeur perçue'],
             text:
-              'Un thread explose: captures d’avis “amplifiés” et messages internes. Les élèves partagent tout.',
+              'Le hashtag #StarbuckGate explose: captures d’avis “amplifiés” et messages internes. Le lycée partage tout.',
             choices: [
               {
                 id: 'public-apology',
@@ -694,7 +698,7 @@ const THEMES = [
             title: 'Voie parallèle: boycott étudiant',
             tags: ['Communication', 'Expérience client'],
             text:
-              'Le BDE appelle au boycott. Tu dois réagir vite.',
+              'Le BDE appelle au boycott total. Ton CA plonge en 48h.',
             choices: [
               {
                 id: 'open-forum',
@@ -743,7 +747,7 @@ const THEMES = [
             title: "Et là, c'est le drame : lot défectueux",
             tags: ['Valeur ajoutée', 'Qualité'],
             text:
-              'Un lot de café arrive défectueux. Si tu le sers, personne ne dira rien… mais la qualité s’effondre.',
+              'Un lot de café arrive défectueux. Si tu le sers, personne ne dira rien… mais la qualité s’écrase.',
             choices: [
               {
                 id: 'recall',
@@ -787,7 +791,7 @@ const THEMES = [
             title: 'Voie parallèle: rupture d’approvisionnement',
             tags: ['Fournisseurs', 'Valeur partenariale'],
             text:
-              'Le fournisseur menace de te blacklist. Tu dois sécuriser la chaîne.',
+              'Le fournisseur menace de te blacklist. Sans stock, tu fermes le comptoir.',
             choices: [
               {
                 id: 'local-switch',
@@ -1083,7 +1087,15 @@ const EPILOGUES_POS = [
   'Un investisseur te propose un deal, mais cette fois à TES conditions.',
 ]
 
-const BAD_THRESHOLD = 3
+const BAD_THRESHOLD = 2
+
+const PROF_COMMENTS = [
+  'Avis de ton super prof : Non sérieux, t’as cru que ça allait passer inaperçu ?',
+  'Avis de ton super prof : Là tu joues avec les allumettes, tu t’étonnes de la fumée.',
+  'Avis de ton super prof : C’est pas une stratégie, c’est un speedrun vers le crash.',
+  'Avis de ton super prof : T’as confondu court terme et suicide commercial.',
+  'Avis de ton super prof : Tu vois les chiffres rouges ? C’est pas un décor.',
+]
 
 function clamp(value) {
   return Math.max(0, Math.min(100, value))
@@ -1126,9 +1138,36 @@ function getOutcome(stats, history, flags) {
     ? 'Procédure pénale en vue. Les investisseurs prennent la fuite.'
     : null
 
+  const crashReasons = []
+  if (stats.cash < 25) {
+    crashReasons.push(
+      `Trésorerie trop basse (${stats.cash}). Les loyers ne passent plus et les fournisseurs coupent.`
+    )
+  }
+  if (stats.perceived < 25) {
+    crashReasons.push(
+      `Valeur perçue au plus bas (${stats.perceived}). Les clients désertent.`
+    )
+  }
+  if (stats.stakeholder < 25) {
+    crashReasons.push(
+      `Parties prenantes en rupture (${stats.stakeholder}). L’équipe lâche.`
+    )
+  }
+  if (stats.valueAdded < 25) {
+    crashReasons.push(
+      `Valeur ajoutée trop faible (${stats.valueAdded}). Plus de marge de manœuvre.`
+    )
+  }
+  if (stats.shareholder < 25) {
+    crashReasons.push(
+      `Actionnaires en panique (${stats.shareholder}). Ils exigent ta tête.`
+    )
+  }
+
   if (catastrophe) {
     const consequences = [
-      'Le gérant finit SDF, le café est repris par un concurrent.',
+      'Le café ferme, le bailleur récupère les clés.',
       'Les salariés te lâchent et racontent tout sur les réseaux.',
       'Les actionnaires te traînent au tribunal pour “gestion éclatée”.',
       epilogueNeg,
@@ -1140,6 +1179,7 @@ function getOutcome(stats, history, flags) {
       title: 'Fin de partie: descente aux enfers',
       summary:
         'Tu as perdu le contrôle. Le café s’effondre, les acteurs te lâchent, la valeur perçue est morte.',
+      reasons: crashReasons,
       consequences,
       score,
     }
@@ -1158,6 +1198,7 @@ function getOutcome(stats, history, flags) {
       title: 'Fin de partie: ruine lente',
       summary:
         'Tu survis un peu, mais tout le monde t’en veut. Tu n’as ni valeur perçue solide, ni vraie valeur ajoutée.',
+      reasons: crashReasons,
       consequences,
       score,
     }
@@ -1175,6 +1216,7 @@ function getOutcome(stats, history, flags) {
       title: 'Fin de partie: fragile mais vivant',
       summary:
         'Tu ne t’effondres pas, mais tu es à deux erreurs du crash. La valeur partenariale reste instable.',
+      reasons: crashReasons,
       consequences,
       score,
     }
@@ -1191,6 +1233,7 @@ function getOutcome(stats, history, flags) {
       title: 'Fin de partie: tu tiens la barre',
       summary:
         'Tu as trouvé un équilibre acceptable. Tu peux te stabiliser, mais rien n’est gagné.',
+      reasons: crashReasons,
       consequences,
       score,
     }
@@ -1206,6 +1249,7 @@ function getOutcome(stats, history, flags) {
     title: 'Happy end (rare)',
     summary:
       'Tu as maximisé la valeur perçue, la valeur ajoutée et la gouvernance. Les parties prenantes te respectent.',
+    reasons: [],
     consequences,
     score,
   }
@@ -1215,12 +1259,19 @@ function pickRandom(list) {
   return list[Math.floor(Math.random() * list.length)]
 }
 
-function StatBar({ label, value, tone }) {
+function StatBar({ label, value, tone, delta }) {
   return (
     <div className={`stat stat-${tone}`}>
       <div className="stat-label">
         <span>{label}</span>
-        <strong>{value}</strong>
+        <div className="stat-value">
+          <strong>{value}</strong>
+          {typeof delta === 'number' && delta !== 0 && (
+            <span className={`delta ${delta > 0 ? 'pos' : 'neg'}`}>
+              {delta > 0 ? `+${delta}` : delta}
+            </span>
+          )}
+        </div>
       </div>
       <div className="stat-track">
         <div className="stat-fill" style={{ width: `${value}%` }} />
@@ -1303,6 +1354,9 @@ function App() {
   const [activeEvent, setActiveEvent] = useState(null)
   const [branchState, setBranchState] = useState(null)
   const [branchQueue, setBranchQueue] = useState([])
+  const [lastEffects, setLastEffects] = useState(null)
+  const [lastNews, setLastNews] = useState(null)
+  const [shake, setShake] = useState(false)
 
   const theme = useMemo(
     () => THEMES.find((item) => item.id === themeId),
@@ -1340,6 +1394,9 @@ function App() {
     setActiveEvent(null)
     setBranchState(null)
     setBranchQueue([])
+    setLastEffects(null)
+    setLastNews(null)
+    setShake(false)
     setStepIndex(0)
     setScreen('game')
   }
@@ -1353,8 +1410,59 @@ function App() {
     setActiveEvent(null)
     setBranchState(null)
     setBranchQueue([])
+    setLastEffects(null)
+    setLastNews(null)
+    setShake(false)
     setStepIndex(0)
     setScreen('game')
+  }
+
+  function buildNewsFlash(effects, choice) {
+    if (!effects) return null
+    const negative = Object.entries(effects).filter(([, value]) => value < 0)
+    if (negative.length === 0 && !choice?.bad) return null
+    if (effects.perceived <= -8) {
+      return 'Drame au café: “Starbuck Orion perd son aura, les clients fuient.”'
+    }
+    if (effects.stakeholder <= -8) {
+      return 'RS en feu: “Ambiance toxique et staff à bout.”'
+    }
+    if (effects.cash <= -8) {
+      return 'La banque appelle: “Votre trésorerie décroche dangereusement.”'
+    }
+    if (effects.valueAdded <= -8) {
+      return 'Le comptable alerte: “La valeur ajoutée ne couvre plus les charges.”'
+    }
+    if (choice?.branchId) {
+      return 'Un drame se prépare en coulisse. Ça va sortir très vite.'
+    }
+    return 'Des rumeurs circulent. L’image du café commence à se fissurer.'
+  }
+
+  function getAlerts() {
+    const alerts = []
+    if (stats.cash <= 20) {
+      alerts.push(
+        `Alerte trésorerie (${stats.cash}): paiements en retard, risque de fermeture.`
+      )
+    }
+    if (stats.perceived <= 20) {
+      alerts.push(
+        `Alerte réputation (${stats.perceived}): clients perdus, bouche-à-oreille négatif.`
+      )
+    }
+    if (stats.stakeholder <= 20) {
+      alerts.push(`Alerte sociale (${stats.stakeholder}): l’équipe ne suit plus.`)
+    }
+    if (stats.valueAdded <= 20) {
+      alerts.push(`Alerte VA (${stats.valueAdded}): marge insuffisante.`)
+    }
+    if (stats.shareholder <= 20) {
+      alerts.push(
+        `Alerte actionnaires (${stats.shareholder}): pressions pour changer la direction.`
+      )
+    }
+    return alerts
   }
 
   function handleChoice(choice) {
@@ -1372,6 +1480,17 @@ function App() {
       nextBadCount >= BAD_THRESHOLD && !flags.has('spiral-triggered')
 
     setStats((prev) => applyEffects(prev, computedEffects))
+    setLastEffects(computedEffects || null)
+    setLastNews(buildNewsFlash(computedEffects, choice))
+    if (computedEffects) {
+      const hasNegative = Object.values(computedEffects).some(
+        (value) => value < 0
+      )
+      if (hasNegative) {
+        setShake(true)
+        setTimeout(() => setShake(false), 420)
+      }
+    }
     setHistory((prev) => [
       ...prev,
       {
@@ -1429,6 +1548,7 @@ function App() {
 
   function handleContinue() {
     setResult(null)
+    setLastNews(null)
 
     if (branchQueue.length > 0 && !branchState) {
       const nextBranchId = branchQueue[0]
@@ -1461,7 +1581,7 @@ function App() {
   if (!theme) return null
 
   return (
-    <div className="app">
+    <div className={`app ${shake ? 'shake' : ''}`}>
       <header className="topbar">
         <div>
           <p className="eyebrow">Serious Game SGN – Chapitres 11 & 12</p>
@@ -1478,6 +1598,7 @@ function App() {
               label={meta.label}
               value={stats[key]}
               tone={meta.tone}
+              delta={lastEffects?.[key]}
             />
           ))}
         </div>
@@ -1575,6 +1696,7 @@ function App() {
                       </span>
                     ))}
                   </div>
+                  {lastNews && <div className="newsflash">{lastNews}</div>}
                 </div>
                 <button className="primary" onClick={handleContinue}>
                   Continuer
@@ -1585,6 +1707,16 @@ function App() {
           <aside className="sidebar">
             <h3>Briefing</h3>
             <p>{theme.intro}</p>
+            {getAlerts().length > 0 && (
+              <div className="sidebar-alerts">
+                <h4>Alertes terrain</h4>
+                <ul>
+                  {getAlerts().map((alert) => (
+                    <li key={alert}>{alert}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div className="sidebar-box">
               <h4>Rappel express</h4>
               <p>
@@ -1624,6 +1756,16 @@ function App() {
                 ))}
               </ul>
             </article>
+            {ending.reasons?.length > 0 && (
+              <article>
+                <h3>Pourquoi ça a crashé</h3>
+                <ul>
+                  {ending.reasons.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </article>
+            )}
             <article>
               <h3>Choix éclatés</h3>
               {worstChoices.length === 0 ? (
@@ -1632,7 +1774,12 @@ function App() {
                 <ul>
                   {worstChoices.map((item, index) => (
                     <li key={`${item.label}-${index}`}>
-                      {item.verdict} — {item.label}
+                      <div>
+                        {item.verdict} — {item.label}
+                      </div>
+                      <div className="prof-comment">
+                        {PROF_COMMENTS[index % PROF_COMMENTS.length]}
+                      </div>
                     </li>
                   ))}
                 </ul>

@@ -89,6 +89,29 @@ h2 {
   margin-bottom: 6px;
 }
 
+.stat-value {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.delta {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.delta.pos {
+  background: rgba(30, 132, 73, 0.15);
+  color: #1e8449;
+}
+
+.delta.neg {
+  background: rgba(192, 57, 43, 0.15);
+  color: #c0392b;
+}
+
 .stat-track {
   height: 8px;
   border-radius: 999px;
@@ -321,11 +344,52 @@ h2 {
   font-size: 12px;
 }
 
+.newsflash {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #ffe3e0;
+  border: 1px solid #f5b7b1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #922b21;
+  position: relative;
+  overflow: hidden;
+  animation: pop 0.25s ease;
+}
+
+.newsflash::before {
+  content: 'LA PRESSE EN PARLE';
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: #c0392b;
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: 999px;
+}
+
 .sidebar {
   background: rgba(255, 255, 255, 0.85);
   border-radius: 24px;
   padding: 20px;
   box-shadow: var(--shadow);
+}
+
+.sidebar-alerts {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #ffe9d6;
+  font-size: 13px;
+  box-shadow: 0 10px 20px rgba(26, 16, 10, 0.12);
+}
+
+.sidebar-alerts ul {
+  margin-top: 8px;
+  padding-left: 18px;
 }
 
 .sidebar-box {
@@ -369,6 +433,49 @@ h2 {
   margin: 10px 0 0;
   padding-left: 18px;
   line-height: 1.5;
+}
+
+.prof-comment {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #6b3c1e;
+  font-weight: 600;
+}
+
+.shake {
+  animation: shake 0.35s ease;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.98);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .ending-actions {
