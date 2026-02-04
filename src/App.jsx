@@ -1436,21 +1436,39 @@ function App() {
     if (!shouldShow || !cooldownOk) return null
 
     if (effects.perceived <= -10 || nextStats?.perceived <= 20) {
-      return 'Drame au café: “Starbuck Orion perd son aura, les clients fuient.”'
+      return {
+        label: 'RÉSEAUX',
+        message: 'RS en feu: “Starbuck Orion perd son aura, les clients fuient.”',
+      }
     }
     if (effects.stakeholder <= -10 || nextStats?.stakeholder <= 20) {
-      return 'RS en feu: “Ambiance toxique et staff à bout.”'
+      return {
+        label: 'INTERNE',
+        message: 'Le staff craque: “Ambiance toxique et équipe à bout.”',
+      }
     }
     if (effects.cash <= -10 || nextStats?.cash <= 20) {
-      return 'La banque appelle: “Votre trésorerie décroche dangereusement.”'
+      return {
+        label: 'BANQUE',
+        message: 'La banque vous appelle.',
+      }
     }
     if (effects.valueAdded <= -10 || nextStats?.valueAdded <= 20) {
-      return 'Le comptable alerte: “La valeur ajoutée ne couvre plus les charges.”'
+      return {
+        label: 'COMPTA',
+        message: 'Le comptable vous alerte: la valeur ajoutée ne couvre plus les charges.',
+      }
     }
     if (choice?.branchId) {
-      return 'Un drame se prépare en coulisse. Ça va sortir très vite.'
+      return {
+        label: 'RUMEUR',
+        message: 'Un drame se prépare en coulisse. Ça va sortir très vite.',
+      }
     }
-    return 'Des rumeurs circulent. L’image du café commence à se fissurer.'
+    return {
+      label: 'RUMEURS',
+      message: 'Des rumeurs circulent. L’image du café commence à se fissurer.',
+    }
   }
 
   function getAlerts() {
@@ -1721,7 +1739,12 @@ function App() {
                       </span>
                     ))}
                   </div>
-                  {lastNews && <div className="newsflash">{lastNews}</div>}
+                  {lastNews && (
+                    <div className="newsflash">
+                      <span className="newsflash-label">{lastNews.label}</span>
+                      {lastNews.message}
+                    </div>
+                  )}
                 </div>
                 <button className="primary" onClick={handleContinue}>
                   Continuer

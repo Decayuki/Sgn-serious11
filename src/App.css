@@ -356,12 +356,12 @@ h2 {
   position: relative;
   overflow: hidden;
   animation: pop 0.25s ease;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
 }
 
-.newsflash::before {
-  content: 'LA PRESSE EN PARLE';
-  display: inline-block;
-  margin-right: 8px;
+.newsflash-label {
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -369,6 +369,7 @@ h2 {
   color: #fff;
   padding: 3px 6px;
   border-radius: 999px;
+  white-space: nowrap;
 }
 
 .sidebar {
