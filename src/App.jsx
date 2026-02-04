@@ -4680,19 +4680,407 @@ const ROASTS = [
   'Tu as créé de la valeur… pour tes concurrents.',
 ]
 
-const EPILOGUES_NEG = [
-  'Le manager finit aux prud’hommes, dossier public et réputation cramée.',
-  'Amina et Lila quittent le café et montent un projet concurrent.',
-  'Le staff se met en couple… avec tes concurrents. Humiliation totale.',
-  'Le bailleur récupère les clés, fin de l’aventure.',
-]
+const EPILOGUES_BY_THEME = {
+  cafe: {
+    neg: [
+      'Le manager finit aux prud’hommes, dossier public et réputation cramée.',
+      'Amina et Lila quittent le café et montent un projet concurrent.',
+      'Marco balance les coulisses sur TikTok. L’image se fissure.',
+      'Un ancien partenaire te réclame des pénalités.',
+    ],
+    pos: [
+      'Lila et Marco se mettent en couple, l’équipe retrouve de la stabilité.',
+      'Le café devient un repère local, tu ouvres un second point.',
+      'Les fournisseurs te recommandent à d’autres enseignes.',
+      'Un investisseur te propose un deal, mais cette fois à TES conditions.',
+    ],
+  },
+  boxing: {
+    neg: [
+      'Le coach principal claque la porte et part chez un concurrent.',
+      'Un salarié t’attaque aux prud’hommes: vestiaires toxiques.',
+      'Ton champion refuse de boxer et expose les magouilles.',
+      'La mairie retire l’aide et la salle perd ses créneaux.',
+    ],
+    pos: [
+      'Deux coachs deviennent un duo star, ambiance reboostée.',
+      'Ton champion signe un gros sponsor grâce à ta gestion.',
+      'La fédé te valide comme centre d’excellence.',
+      'Un ancien pro investit dans la salle.',
+    ],
+  },
+  football: {
+    neg: [
+      'L’entraîneur te lâche pour un club rival.',
+      'Le vestiaire explose: ton capitaine démissionne.',
+      'Procédure prud’hommes après un licenciement raté.',
+      'Ta star part chez l’ennemi… et marque contre toi.',
+    ],
+    pos: [
+      'Le vestiaire se soude, le coach prolonge.',
+      'Un jeune formé au club devient la nouvelle star.',
+      'La ville renouvelle son soutien.',
+      'Un sponsor majeur signe pour 3 saisons.',
+    ],
+  },
+  cosmetics: {
+    neg: [
+      'Ta cofondatrice part et emporte le labo.',
+      'Un influenceur expose les failles, bad buzz massif.',
+      'Un fournisseur te lâche au pire moment.',
+      'Un procès pour promesses trompeuses démarre.',
+    ],
+    pos: [
+      'Une influenceuse te défend et relance la marque.',
+      'Une enseigne nationale référence la gamme.',
+      'L’équipe R&D sort une innovation remarquée.',
+      'Les clientes deviennent de vraies ambassadrices.',
+    ],
+  },
+  fashion: {
+    neg: [
+      'La styliste star part chez un concurrent.',
+      'Ton atelier se met en grève et parle aux médias.',
+      'Un scandale “plagiat” fait le tour des RS.',
+      'Un investisseur te retire sa ligne de crédit.',
+    ],
+    pos: [
+      'Ton défilé crée un buzz positif.',
+      'Un concept store hype commande une capsule.',
+      'Le sourcing éthique te donne une vraie légitimité.',
+      'Une collab inattendue relance les ventes.',
+    ],
+  },
+  media: {
+    neg: [
+      'L’animateur vedette signe chez un concurrent.',
+      'Ton équipe fait grève, production stoppée.',
+      'Une plainte pour droits d’auteur tombe.',
+      'La plateforme coupe ton contrat.',
+    ],
+    pos: [
+      'Une chronique devient virale, audience boostée.',
+      'Un sponsor premium arrive.',
+      'La rédaction se stabilise et produit mieux.',
+      'Un partenariat média te propulse.',
+    ],
+  },
+}
 
-const EPILOGUES_POS = [
-  'Lila et Marco se mettent en couple, l’équipe retrouve de la stabilité.',
-  'Le café devient un repère local, tu ouvres un second point.',
-  'Les fournisseurs te recommandent à d’autres enseignes.',
-  'Un investisseur te propose un deal, mais cette fois à TES conditions.',
-]
+const OUTCOME_TEMPLATES = {
+  cafe: {
+    catastrophe: {
+      title: 'Fin de partie: fermeture brutale',
+      summary:
+        'Trésorerie asphyxiée, réputation cramée. Le café tombe en quelques semaines.',
+      consequences: [
+        'Le bailleur récupère les clés, fin du bail.',
+        'Les clients désertent et les avis négatifs explosent.',
+        'Les investisseurs gèlent les fonds et exigent un audit.',
+      ],
+    },
+    fail: {
+      title: 'Fin de partie: chute lente',
+      summary:
+        'Tu tiens debout, mais tu passes tes journées à boucher des trous.',
+      consequences: [
+        'Tu revends du matériel pour respirer.',
+        'Le staff te lâche, la qualité se dégrade.',
+        'La banque serre la vis à chaque mois.',
+      ],
+    },
+    survive: {
+      title: 'Fin de partie: survie tendue',
+      summary:
+        'Tu gardes le café ouvert, mais tout reste instable.',
+      consequences: [
+        'Tu réduis les horaires pour tenir la trésorerie.',
+        'Les fournisseurs demandent des garanties.',
+        'L’équipe reste, mais sans conviction.',
+      ],
+    },
+    good: {
+      title: 'Fin de partie: équilibre fragile',
+      summary:
+        'Tu as évité le crash. La valeur perçue tient, mais rien n’est acquis.',
+      consequences: [
+        'Les clients reviennent, mais ils surveillent tes faux pas.',
+        'Les actionnaires veulent plus vite, plus fort.',
+        'Tu peux respirer, pas te relâcher.',
+      ],
+    },
+    master: {
+      title: 'Happy end (rare)',
+      summary:
+        'Le café devient une référence locale, l’équipe te suit et la valeur créée est solide.',
+      consequences: [
+        'Tu ouvres un second point, cette fois maîtrisé.',
+        'La marque est respectée, même par la concurrence.',
+        'Les finances sont stables et le staff te soutient.',
+      ],
+    },
+  },
+  boxing: {
+    catastrophe: {
+      title: 'Fin de partie: K.-O. administratif',
+      summary:
+        'Scandales + cash à sec. La salle se fait suspendre.',
+      consequences: [
+        'La fédération coupe les licences et bloque les combats.',
+        'Les sponsors se retirent d’un coup.',
+        'La mairie récupère les créneaux et la salle se vide.',
+      ],
+    },
+    fail: {
+      title: 'Fin de partie: ring maudit',
+      summary:
+        'Tu survis, mais la crédibilité est en miettes.',
+      consequences: [
+        'Les parents retirent les jeunes, licences en chute.',
+        'Les combats sont annulés faute d’opposants crédibles.',
+        'Le staff te remet chaque décision en question.',
+      ],
+    },
+    survive: {
+      title: 'Fin de partie: sur la corde',
+      summary:
+        'Tu évites la fermeture, mais la salle est sous tension permanente.',
+      consequences: [
+        'Tu réduis les horaires et les primes d’entraînement.',
+        'Ton champion hésite à rester.',
+        'Les sponsors attendent un signal fort.',
+      ],
+    },
+    good: {
+      title: 'Fin de partie: tu restes champion',
+      summary:
+        'La salle tient, les combats reviennent. Mais la fédé te surveille.',
+      consequences: [
+        'La réputation remonte, lentement.',
+        'Le vestiaire respire enfin.',
+        'Tu dois prouver que la salle est clean.',
+      ],
+    },
+    master: {
+      title: 'Happy end (rare)',
+      summary:
+        'La salle devient une référence, talents et sponsors affluent.',
+      consequences: [
+        'Ton champion décroche un gros combat médiatisé.',
+        'Tu ouvres une seconde antenne.',
+        'La fédé te cite en exemple.',
+      ],
+    },
+  },
+  football: {
+    catastrophe: {
+      title: 'Fin de partie: relégation express',
+      summary:
+        'Crise sportive + finances en vrac. Le club s’effondre.',
+      consequences: [
+        'La DNCG sanctionne le club et bloque le mercato.',
+        'Les supporters boycottent les matches.',
+        'Tu vends les meilleurs joueurs dans l’urgence.',
+      ],
+    },
+    fail: {
+      title: 'Fin de partie: saison noire',
+      summary:
+        'Tu finis la saison en survie. L’ambiance est toxique.',
+      consequences: [
+        'Les sponsors réduisent leurs apports.',
+        'Les joueurs clés demandent leur départ.',
+        'Le coach est sous pression permanente.',
+      ],
+    },
+    survive: {
+      title: 'Fin de partie: maintien arraché',
+      summary:
+        'Tu évites la chute, mais tout est sur un fil.',
+      consequences: [
+        'Tu dois vendre un joueur pour payer les salaires.',
+        'Les ultras restent méfiants.',
+        'Les actionnaires veulent un plan concret.',
+      ],
+    },
+    good: {
+      title: 'Fin de partie: stabilité courte',
+      summary:
+        'Le club tient la route, mais la marge de manœuvre reste faible.',
+      consequences: [
+        'La formation commence à rapporter.',
+        'Le vestiaire respecte la direction.',
+        'Tu dois encore sécuriser la trésorerie.',
+      ],
+    },
+    master: {
+      title: 'Happy end (rare)',
+      summary:
+        'Le club monte en puissance. Sport et finances se renforcent.',
+      consequences: [
+        'Qualification en coupe, ambiance électrique (dans le bon sens).',
+        'Un sponsor majeur signe un contrat long.',
+        'Les talents restent au club.',
+      ],
+    },
+  },
+  cosmetics: {
+    catastrophe: {
+      title: 'Fin de partie: rappel produit',
+      summary:
+        'La confiance s’écroule. Tu perds le contrôle de la marque.',
+      consequences: [
+        'Rappel massif et déréférencement en boutique.',
+        'La DGCCRF ouvre une enquête.',
+        'Les influenceuses coupent tout lien.',
+      ],
+    },
+    fail: {
+      title: 'Fin de partie: marque abîmée',
+      summary:
+        'Tu vends encore, mais l’image est fissurée.',
+      consequences: [
+        'Tu brades pour écouler les stocks.',
+        'Les marges fondent, les investisseurs doutent.',
+        'Les clientes se tournent vers des alternatives.',
+      ],
+    },
+    survive: {
+      title: 'Fin de partie: survie en rayon',
+      summary:
+        'La marque tient, mais tout est fragile.',
+      consequences: [
+        'Tu repousses les lancements pour économiser.',
+        'Les fournisseurs exigent des paiements plus rapides.',
+        'L’équipe R&D tourne au ralenti.',
+      ],
+    },
+    good: {
+      title: 'Fin de partie: crédible mais fragile',
+      summary:
+        'Tu tiens une base solide, mais la concurrence te guette.',
+      consequences: [
+        'Une gamme plaît, une autre patine.',
+        'Les revendeurs restent, mais veulent plus de preuves.',
+        'Les actionnaires demandent un plan de croissance.',
+      ],
+    },
+    master: {
+      title: 'Happy end (rare)',
+      summary:
+        'La marque devient désirée. Valeur perçue et valeur ajoutée au top.',
+      consequences: [
+        'Un produit devient best-seller.',
+        'Les influenceuses parlent de toi sans être payées.',
+        'Tu peux investir dans une nouvelle ligne.',
+      ],
+    },
+  },
+  fashion: {
+    catastrophe: {
+      title: 'Fin de partie: défilé annulé',
+      summary:
+        'Scandale + trésorerie à sec. La maison chute.',
+      consequences: [
+        'Le showroom ferme, commandes annulées.',
+        'Les clients pros te blacklistent.',
+        'La banque coupe la ligne de crédit.',
+      ],
+    },
+    fail: {
+      title: 'Fin de partie: collection ratée',
+      summary:
+        'Tu survis, mais la crédibilité mode est entamée.',
+      consequences: [
+        'Stocks invendus et retours massifs.',
+        'La presse te classe “marque sans identité”.',
+        'Les ateliers demandent des garanties.',
+      ],
+    },
+    survive: {
+      title: 'Fin de partie: atelier sous tension',
+      summary:
+        'Tu tiens, mais c’est fragile et coûteux.',
+      consequences: [
+        'Tu brades une partie des pièces.',
+        'Les délais explosent, les clients attendent.',
+        'Le staff créatif doute du cap.',
+      ],
+    },
+    good: {
+      title: 'Fin de partie: crédible mais pas iconique',
+      summary:
+        'Tu stabilises la marque, sans créer le choc attendu.',
+      consequences: [
+        'Une capsule marche, une autre non.',
+        'Les boutiques restent prudentes.',
+        'Tu dois renforcer ta signature.',
+      ],
+    },
+    master: {
+      title: 'Happy end (rare)',
+      summary:
+        'La maison monte. Tu deviens une référence émergente.',
+      consequences: [
+        'Défilé complet et commandes solides.',
+        'Les médias mode parlent de toi en bien.',
+        'Tu lances une ligne secondaire rentable.',
+      ],
+    },
+  },
+  media: {
+    catastrophe: {
+      title: 'Fin de partie: signal coupé',
+      summary:
+        'Audience en chute libre. Le format est stoppé.',
+      consequences: [
+        'La plateforme met fin au contrat.',
+        'Les annonceurs te lâchent.',
+        'La rédaction se disloque.',
+      ],
+    },
+    fail: {
+      title: 'Fin de partie: audience en chute',
+      summary:
+        'Tu restes à l’antenne, mais plus personne ne regarde.',
+      consequences: [
+        'Les budgets sont coupés.',
+        'Les talents partent sur d’autres projets.',
+        'La réputation média se dégrade.',
+      ],
+    },
+    survive: {
+      title: 'Fin de partie: émission sous perfusion',
+      summary:
+        'Tu tiens grâce à des deals courts. Rien n’est stable.',
+      consequences: [
+        'Tu réduis la production.',
+        'Les annonceurs négocient au rabais.',
+        'La team créa est au bord du burn-out.',
+      ],
+    },
+    good: {
+      title: 'Fin de partie: traction fragile',
+      summary:
+        'Le format trouve son public, mais la concurrence te colle.',
+      consequences: [
+        'Les audiences montent doucement.',
+        'Un sponsor arrive, mais demande des garanties.',
+        'Tu dois accélérer sans casser l’équipe.',
+      ],
+    },
+    master: {
+      title: 'Happy end (rare)',
+      summary:
+        'Le format devient culte. Valeur perçue et revenus explosent.',
+      consequences: [
+        'Les audiences sont solides et fidèles.',
+        'Les partenaires veulent prolonger.',
+        'Tu lances un spin-off rentable.',
+      ],
+    },
+  },
+}
 
 const BAD_THRESHOLD = 2
 const FORCE_BRANCH_AFTER = 3
@@ -5125,7 +5513,7 @@ function getObjectiveState(objective, stats, flags, usedBranchIds) {
   return { status: 'neutral', progress: 0 }
 }
 
-function getOutcome(stats, history, flags) {
+function getOutcome(stats, history, flags, themeId) {
   const score = Math.round(
     stats.perceived * 0.2 +
       stats.valueAdded * 0.2 +
@@ -5141,9 +5529,13 @@ function getOutcome(stats, history, flags) {
     stats.perceived < 25 ||
     stats.stakeholder < 25
 
-  const baseIndex = (score + history.length) % EPILOGUES_NEG.length
-  const epilogueNeg = EPILOGUES_NEG[baseIndex]
-  const epiloguePos = EPILOGUES_POS[baseIndex % EPILOGUES_POS.length]
+  const themeKey = themeId && OUTCOME_TEMPLATES[themeId] ? themeId : 'cafe'
+  const epilogues =
+    EPILOGUES_BY_THEME[themeKey] || EPILOGUES_BY_THEME.cafe
+  const baseIndex = (score + history.length) % epilogues.neg.length
+  const epilogueNeg = epilogues.neg[baseIndex]
+  const epiloguePos = epilogues.pos[baseIndex % epilogues.pos.length]
+  const template = OUTCOME_TEMPLATES[themeKey] || OUTCOME_TEMPLATES.cafe
 
   const legalNote = flags.has('coverup')
     ? 'Le dossier RH finit aux prud’hommes et les médias s’en mêlent.'
@@ -5182,18 +5574,17 @@ function getOutcome(stats, history, flags) {
 
   if (catastrophe) {
     const consequences = [
-      'Le café ferme, le bailleur récupère les clés.',
-      'Les salariés te lâchent et racontent tout sur les réseaux.',
-      'Les actionnaires te traînent au tribunal pour “gestion éclatée”.',
+      ...(template.catastrophe?.consequences || []),
       epilogueNeg,
       legalNote,
       illegalNote,
     ].filter(Boolean)
     return {
       grade: 'Catastrophe',
-      title: 'Fin de partie: descente aux enfers',
+      title: template.catastrophe?.title || 'Fin de partie: descente aux enfers',
       summary:
-        'Tu as perdu le contrôle. Le café s’effondre, les acteurs te lâchent, la valeur perçue est morte.',
+        template.catastrophe?.summary ||
+        'Tu as perdu le contrôle. L’organisation s’effondre, les acteurs te lâchent, la valeur perçue est morte.',
       reasons: crashReasons,
       consequences,
       score,
@@ -5202,16 +5593,16 @@ function getOutcome(stats, history, flags) {
 
   if (score < 55) {
     const consequences = [
-      'Tu perds ton appartement et tu retournes vivre chez ta tante.',
-      'Le staff te boycotte, les clients fuient, les factures s’accumulent.',
+      ...(template.fail?.consequences || []),
       epilogueNeg,
       legalNote,
       illegalNote,
     ].filter(Boolean)
     return {
       grade: 'Échec dur',
-      title: 'Fin de partie: ruine lente',
+      title: template.fail?.title || 'Fin de partie: ruine lente',
       summary:
+        template.fail?.summary ||
         'Tu survis un peu, mais tout le monde t’en veut. Tu n’as ni valeur perçue solide, ni vraie valeur ajoutée.',
       reasons: crashReasons,
       consequences,
@@ -5221,15 +5612,15 @@ function getOutcome(stats, history, flags) {
 
   if (score < 70) {
     const consequences = [
-      'Les actionnaires te surveillent comme un stagiaire en retard.',
-      'Le staff est tiède: ils restent, mais sans passion.',
+      ...(template.survive?.consequences || []),
       epiloguePos,
       legalNote,
     ].filter(Boolean)
     return {
       grade: 'Survie',
-      title: 'Fin de partie: fragile mais vivant',
+      title: template.survive?.title || 'Fin de partie: fragile mais vivant',
       summary:
+        template.survive?.summary ||
         'Tu ne t’effondres pas, mais tu es à deux erreurs du crash. La valeur partenariale reste instable.',
       reasons: crashReasons,
       consequences,
@@ -5239,14 +5630,14 @@ function getOutcome(stats, history, flags) {
 
   if (score < 85) {
     const consequences = [
-      'Les clients respectent ton café, mais te jugent au prochain faux pas.',
-      'Les investisseurs sont ok, mais veulent plus.',
+      ...(template.good?.consequences || []),
       epiloguePos,
     ].filter(Boolean)
     return {
       grade: 'Bien joué (mais pas safe)',
-      title: 'Fin de partie: tu tiens la barre',
+      title: template.good?.title || 'Fin de partie: tu tiens la barre',
       summary:
+        template.good?.summary ||
         'Tu as trouvé un équilibre acceptable. Tu peux te stabiliser, mais rien n’est gagné.',
       reasons: crashReasons,
       consequences,
@@ -5255,14 +5646,14 @@ function getOutcome(stats, history, flags) {
   }
 
   const consequences = [
-    'Le café devient une référence locale, tu ouvres un deuxième spot.',
-    'Ton équipe est fidèle, les actionnaires investissent davantage.',
+    ...(template.master?.consequences || []),
     epiloguePos,
   ].filter(Boolean)
   return {
     grade: 'Master',
-    title: 'Happy end (rare)',
+    title: template.master?.title || 'Happy end (rare)',
     summary:
+      template.master?.summary ||
       'Tu as maximisé la valeur perçue, la valeur ajoutée et la gouvernance. Les parties prenantes te respectent.',
     reasons: [],
     consequences,
@@ -5498,8 +5889,8 @@ function App() {
     !isBranch && currentStep?.type === 'random' ? activeEvent : currentStep
 
   const ending = useMemo(
-    () => (screen === 'end' ? getOutcome(stats, history, flags) : null),
-    [screen, stats, history, flags]
+    () => (screen === 'end' ? getOutcome(stats, history, flags, themeId) : null),
+    [screen, stats, history, flags, themeId]
   )
 
   const worstChoices = history.filter((item) => item.bad).slice(0, 3)
