@@ -65,6 +65,16 @@ const THEMES = [
             flags: ['fake-reviews'],
             branchId: 'brandBacklash',
           },
+          {
+            id: 'co-branding',
+            label:
+              'Co-branding avec une grande chaîne locale pour gagner vite en visibilité.',
+            consequence:
+              'Le trafic monte, mais l’identité du café s’écrase.',
+            effects: { perceived: -6, cash: 8, stakeholder: -4, shareholder: 4 },
+            verdict: 'Visibilité oui, identité non.',
+            bad: true,
+          },
         ],
       },
       {
@@ -101,6 +111,16 @@ const THEMES = [
               'Les clients se sentent pigeonnés. Les avis tombent.',
             effects: { perceived: -14, cash: 4, stakeholder: -6 },
             verdict: 'Trahison perçue. Ça pique.',
+            bad: true,
+          },
+          {
+            id: 'subscription',
+            label:
+              'Abonnement mensuel “boissons illimitées” sur créneaux creux.',
+            consequence:
+              'Tu sécurises un flux… mais ta marge devient fragile.',
+            effects: { perceived: 4, cash: 6, valueAdded: -8 },
+            verdict: 'Séduisant, mais dangereux pour la VA.',
             bad: true,
           },
         ],
@@ -286,6 +306,17 @@ const THEMES = [
             flags: ['investor-angry'],
             branchId: 'investorCoup',
           },
+          {
+            id: 'fiscal-optim',
+            label:
+              'Optimisation fiscale agressive pour libérer plus de cash.',
+            consequence:
+              'Tu gagnes du cash… et tu attires l’attention.',
+            effects: { cash: 10, shareholder: 6, stakeholder: -8 },
+            verdict: 'Court terme brillant, long terme risqué.',
+            bad: true,
+            flags: ['illegal'],
+          },
         ],
       },
       {
@@ -364,6 +395,19 @@ const THEMES = [
             effects: { cash: 10, stakeholder: -14, perceived: -8 },
             verdict: 'Tu creuses ta tombe.',
             bad: true,
+          },
+          {
+            id: 'ambassadors',
+            label:
+              'Programme ambassadeurs étudiants + micro-commissions.',
+            consequence:
+              'Ça peut faire décoller… ou exposer les failles.',
+            effects: ({ flags }) => ({
+              perceived: flags.has('quality-lie') ? -12 : 6,
+              stakeholder: flags.has('quality-lie') ? -6 : 4,
+              cash: -4,
+            }),
+            verdict: 'Effet levier… ou feu d’artifice.',
           },
         ],
       },
@@ -874,6 +918,105 @@ const THEMES = [
           },
         ],
       },
+      spiral: {
+        label: 'Spirale de crise',
+        scenes: [
+          {
+            id: 'spiral-overflow',
+            title: "Et là, c'est le drame : accumulation d’erreurs",
+            tags: ['Gouvernance', 'Crise'],
+            text:
+              'Trois choix discutables d’affilée. Les tensions explosent, tout le monde cherche un responsable.',
+            choices: [
+              {
+                id: 'turnaround',
+                label:
+                  'Plan de redressement express + audit externe immédiat.',
+                consequence:
+                  'Tu reprends un peu la main, mais ça coûte.',
+                effects: { stakeholder: 6, perceived: 4, cash: -8 },
+                verdict: 'Tu tentes de limiter la casse.',
+              },
+              {
+                id: 'scapegoat',
+                label:
+                  'Tu désignes un responsable interne pour calmer la foule.',
+                consequence:
+                  'Ça apaise sur le moment, mais détruit la confiance.',
+                effects: { stakeholder: -10, perceived: -8, shareholder: 4 },
+                verdict: 'Tu sacrifies quelqu’un.',
+                bad: true,
+              },
+              {
+                id: 'delay',
+                label: 'Tu temporises en espérant que ça se tasse.',
+                consequence:
+                  'La crise s’envenime. Les rumeurs partent.',
+                effects: { perceived: -12, stakeholder: -12 },
+                verdict: 'Tu laisses le chaos s’installer.',
+                bad: true,
+              },
+              {
+                id: 'private-deal',
+                label:
+                  'Tu passes des accords discrets avec quelques leaders internes.',
+                consequence:
+                  'Tu sauves ta place, mais tu divises l’équipe.',
+                effects: { stakeholder: -6, shareholder: 4, perceived: -4 },
+                verdict: 'Solution de court terme.',
+                bad: true,
+              },
+            ],
+          },
+          {
+            id: 'spiral-prudhommes',
+            title: 'Voie parallèle: prud’hommes',
+            tags: ['RH', 'Réputation'],
+            text:
+              'Un groupe de salariés lance une procédure aux prud’hommes. Tu dois répondre.',
+            choices: [
+              {
+                id: 'conciliation',
+                label:
+                  'Conciliation rapide + compensations claires + réforme interne.',
+                consequence:
+                  'Tu limites les dégâts et reconstruis un cadre.',
+                effects: { stakeholder: 8, perceived: 6, cash: -10 },
+                verdict: 'Tu assumes et tu répares.',
+              },
+              {
+                id: 'legal-fight',
+                label: 'Bataille juridique totale.',
+                consequence:
+                  'Tu peux gagner… mais la marque se dégrade.',
+                effects: { shareholder: 6, stakeholder: -10, perceived: -8 },
+                verdict: 'Tu gagnes la guerre, tu perds l’image.',
+                bad: true,
+              },
+              {
+                id: 'settle-quiet',
+                label:
+                  'Accords discrets avec clause de confidentialité.',
+                consequence:
+                  'Le risque baisse, mais la confiance tombe.',
+                effects: { stakeholder: -8, perceived: -6, cash: -6 },
+                verdict: 'Tu étouffes le feu.',
+                bad: true,
+                flags: ['coverup'],
+              },
+              {
+                id: 'deny-claims',
+                label: 'Tu nies tout et tu attaques publiquement.',
+                consequence:
+                  'Retour de flamme immédiat.',
+                effects: { perceived: -14, stakeholder: -12 },
+                verdict: 'Tu perds l’opinion.',
+                bad: true,
+              },
+            ],
+          },
+        ],
+      },
     },
   },
   {
@@ -926,6 +1069,22 @@ const ROASTS = [
   'Tu as créé de la valeur… pour tes concurrents.',
 ]
 
+const EPILOGUES_NEG = [
+  'Le manager finit aux prud’hommes, dossier public et réputation cramée.',
+  'Amina et Lila quittent le café et montent un projet concurrent.',
+  'Le staff se met en couple… avec tes concurrents. Humiliation totale.',
+  'Le bailleur récupère les clés, fin de l’aventure.',
+]
+
+const EPILOGUES_POS = [
+  'Lila et Marco se mettent en couple, l’équipe retrouve de la stabilité.',
+  'Le café devient un repère local, tu ouvres un second point.',
+  'Les fournisseurs te recommandent à d’autres enseignes.',
+  'Un investisseur te propose un deal, mais cette fois à TES conditions.',
+]
+
+const BAD_THRESHOLD = 3
+
 function clamp(value) {
   return Math.max(0, Math.min(100, value))
 }
@@ -955,72 +1114,99 @@ function getOutcome(stats, history, flags) {
     stats.perceived < 25 ||
     stats.stakeholder < 25
 
+  const baseIndex = (score + history.length) % EPILOGUES_NEG.length
+  const epilogueNeg = EPILOGUES_NEG[baseIndex]
+  const epiloguePos = EPILOGUES_POS[baseIndex % EPILOGUES_POS.length]
+
+  const legalNote = flags.has('coverup')
+    ? 'Le dossier RH finit aux prud’hommes et les médias s’en mêlent.'
+    : null
+
+  const illegalNote = flags.has('illegal')
+    ? 'Procédure pénale en vue. Les investisseurs prennent la fuite.'
+    : null
+
   if (catastrophe) {
+    const consequences = [
+      'Le gérant finit SDF, le café est repris par un concurrent.',
+      'Les salariés te lâchent et racontent tout sur les réseaux.',
+      'Les actionnaires te traînent au tribunal pour “gestion éclatée”.',
+      epilogueNeg,
+      legalNote,
+      illegalNote,
+    ].filter(Boolean)
     return {
       grade: 'Catastrophe',
       title: 'Fin de partie: descente aux enfers',
       summary:
         'Tu as perdu le contrôle. Le café s’effondre, les acteurs te lâchent, la valeur perçue est morte.',
-      consequences: [
-        'Le gérant finit SDF, le café est repris par un concurrent.',
-        'Les salariés te lâchent et racontent tout sur les réseaux.',
-        'Les actionnaires te traînent au tribunal pour “gestion éclatée”.',
-      ],
+      consequences,
       score,
     }
   }
 
   if (score < 55) {
+    const consequences = [
+      'Tu perds ton appartement et tu retournes vivre chez ta tante.',
+      'Le staff te boycotte, les clients fuient, les factures s’accumulent.',
+      epilogueNeg,
+      legalNote,
+      illegalNote,
+    ].filter(Boolean)
     return {
       grade: 'Échec dur',
       title: 'Fin de partie: ruine lente',
       summary:
         'Tu survis un peu, mais tout le monde t’en veut. Tu n’as ni valeur perçue solide, ni vraie valeur ajoutée.',
-      consequences: [
-        'Tu perds ton appartement et tu retournes vivre chez ta tante.',
-        'Le staff te boycotte, les clients fuient, les factures s’accumulent.',
-      ],
+      consequences,
       score,
     }
   }
 
   if (score < 70) {
+    const consequences = [
+      'Les actionnaires te surveillent comme un stagiaire en retard.',
+      'Le staff est tiède: ils restent, mais sans passion.',
+      epiloguePos,
+      legalNote,
+    ].filter(Boolean)
     return {
       grade: 'Survie',
       title: 'Fin de partie: fragile mais vivant',
       summary:
         'Tu ne t’effondres pas, mais tu es à deux erreurs du crash. La valeur partenariale reste instable.',
-      consequences: [
-        'Les actionnaires te surveillent comme un stagiaire en retard.',
-        'Le staff est tiède: ils restent, mais sans passion.',
-      ],
+      consequences,
       score,
     }
   }
 
   if (score < 85) {
+    const consequences = [
+      'Les clients respectent ton café, mais te jugent au prochain faux pas.',
+      'Les investisseurs sont ok, mais veulent plus.',
+      epiloguePos,
+    ].filter(Boolean)
     return {
       grade: 'Bien joué (mais pas safe)',
       title: 'Fin de partie: tu tiens la barre',
       summary:
         'Tu as trouvé un équilibre acceptable. Tu peux te stabiliser, mais rien n’est gagné.',
-      consequences: [
-        'Les clients respectent ton café, mais te jugent au prochain faux pas.',
-        'Les investisseurs sont ok, mais veulent plus.',
-      ],
+      consequences,
       score,
     }
   }
 
+  const consequences = [
+    'Le café devient une référence locale, tu ouvres un deuxième spot.',
+    'Ton équipe est fidèle, les actionnaires investissent davantage.',
+    epiloguePos,
+  ].filter(Boolean)
   return {
     grade: 'Master',
     title: 'Happy end (rare)',
     summary:
       'Tu as maximisé la valeur perçue, la valeur ajoutée et la gouvernance. Les parties prenantes te respectent.',
-    consequences: [
-      'Le café devient une référence locale, tu ouvres un deuxième spot.',
-      'Ton équipe est fidèle, les actionnaires investissent davantage.',
-    ],
+    consequences,
     score,
   }
 }
@@ -1177,6 +1363,14 @@ function App() {
         ? choice.effects({ stats, flags })
         : choice.effects
 
+    const badCount = history.reduce(
+      (sum, item) => sum + (item.bad ? 1 : 0),
+      0
+    )
+    const nextBadCount = badCount + (choice.bad ? 1 : 0)
+    const shouldTriggerSpiral =
+      nextBadCount >= BAD_THRESHOLD && !flags.has('spiral-triggered')
+
     setStats((prev) => applyEffects(prev, computedEffects))
     setHistory((prev) => [
       ...prev,
@@ -1187,10 +1381,12 @@ function App() {
         bad: choice.bad,
       },
     ])
-    if (choice.flags) {
+    const flagsToAdd = new Set(choice.flags || [])
+    if (shouldTriggerSpiral) flagsToAdd.add('spiral-triggered')
+    if (flagsToAdd.size > 0) {
       setFlags((prev) => {
         const next = new Set(prev)
-        choice.flags.forEach((flag) => next.add(flag))
+        flagsToAdd.forEach((flag) => next.add(flag))
         return next
       })
     }
@@ -1204,6 +1400,12 @@ function App() {
           if (!next.includes(id)) next.push(id)
         })
         return next
+      })
+    }
+    if (shouldTriggerSpiral) {
+      setBranchQueue((prev) => {
+        if (prev.includes('spiral')) return prev
+        return [...prev, 'spiral']
       })
     }
     setResult({
