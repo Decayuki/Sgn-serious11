@@ -16,3 +16,6 @@ Original prompt: Livrer SGN11 jouable sur six scénarios, GAME_SCORE StudyNote, 
 - Gates finales : 19/19 tests, lint et build OK. Couverture moteur 100 % lignes / 96,61 % branches ; persistance 100 % / 93,02 %.
 - Fallow brut exit 1 (12 alertes, 9 clones), puis avec V8 exit 1 (4 alertes héritées/UI et 9 clones du catalogue). 0 import/cycle/dead-code. Pas de gate maquillée en vert.
 - Scan secrets : aucun candidat sur 16 fichiers hors lock. Données pédagogiques et grades extraits inchangés (hors nettoyage d'un espace final).
+
+- Code livré et push confirmé : dd6fe933f83b49f403224b1f84e0e4e9a1069b71. GitHub : 0 checks, 0 déploiement pour le SHA, status pending avec liste vide. Preview non prouvée (CLI sans auth).
+- Reste : retour QA visuelle Hive au serveur local, déploiement Preview sg11 avec accès Vercel, intégration/récompense atomique StudyNote dans un lot séparé. Serveur local laissé actif pour Hive.
