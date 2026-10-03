@@ -1,0 +1,203 @@
+{
+  "version": "3.31.0",
+  "verdict": "fail",
+  "summary": {
+    "dead_code_issues": 0,
+    "dead_code_has_errors": false,
+    "complexity_findings": 4,
+    "max_cyclomatic": 49,
+    "duplication_clone_groups": 9
+  },
+  "gate_outcomes": {
+    "audit-verdict": {
+      "status": "fail",
+      "enforced": true
+    }
+  },
+  "complexity": [
+    {
+      "path": "src/gameData.js",
+      "name": "getOutcome",
+      "line": 5513,
+      "cyclomatic": 49,
+      "cognitive": 31,
+      "exceeded": "all",
+      "crap": 60.1,
+      "coverage_tier": "high",
+      "coverage_source": "istanbul"
+    },
+    {
+      "path": "src/App.jsx",
+      "name": "App",
+      "line": 193,
+      "cyclomatic": 37,
+      "cognitive": 38,
+      "exceeded": "all",
+      "crap": 1406.0,
+      "coverage_tier": "none",
+      "coverage_source": "estimated"
+    },
+    {
+      "path": "src/gameData.js",
+      "name": "getObjectiveState",
+      "line": 5490,
+      "cyclomatic": 16,
+      "cognitive": 25,
+      "exceeded": "cognitive_crap",
+      "crap": 272.0,
+      "coverage_tier": "none",
+      "coverage_source": "istanbul"
+    },
+    {
+      "path": "src/App.jsx",
+      "name": "ThemeIllustration",
+      "line": 34,
+      "cyclomatic": 7,
+      "cognitive": 1,
+      "exceeded": "crap",
+      "crap": 56.0,
+      "coverage_tier": "none",
+      "coverage_source": "estimated"
+    }
+  ],
+  "duplication_locations": [
+    [
+      [
+        "src/gameData.js",
+        5179,
+        5212
+      ],
+      [
+        "src/gameData.js",
+        5227,
+        5260
+      ],
+      [
+        "src/gameData.js",
+        5275,
+        5308
+      ],
+      [
+        "src/gameData.js",
+        5323,
+        5356
+      ],
+      [
+        "src/gameData.js",
+        5371,
+        5404
+      ],
+      [
+        "src/gameData.js",
+        5419,
+        5452
+      ]
+    ],
+    [
+      [
+        "src/gameData.js",
+        2074,
+        2101
+      ],
+      [
+        "src/gameData.js",
+        3145,
+        3172
+      ],
+      [
+        "src/gameData.js",
+        3793,
+        3820
+      ]
+    ],
+    [
+      [
+        "src/gameData.js",
+        1703,
+        1730
+      ],
+      [
+        "src/gameData.js",
+        4063,
+        4090
+      ],
+      [
+        "src/gameData.js",
+        4608,
+        4635
+      ]
+    ],
+    [
+      [
+        "src/gameData.js",
+        1736,
+        1783
+      ],
+      [
+        "src/gameData.js",
+        3536,
+        3584
+      ]
+    ],
+    [
+      [
+        "src/gameData.js",
+        1291,
+        1324
+      ],
+      [
+        "src/gameData.js",
+        4329,
+        4362
+      ]
+    ],
+    [
+      [
+        "src/gameData.js",
+        1514,
+        1779
+      ],
+      [
+        "src/gameData.js",
+        2399,
+        2866
+      ]
+    ],
+    [
+      [
+        "src/gameData.js",
+        4092,
+        4124
+      ],
+      [
+        "src/gameData.js",
+        4637,
+        4669
+      ]
+    ],
+    [
+      [
+        "src/gameData.js",
+        3487,
+        3517
+      ],
+      [
+        "src/gameData.js",
+        3976,
+        4006
+      ]
+    ],
+    [
+      [
+        "src/gameData.js",
+        5227,
+        5262
+      ],
+      [
+        "src/gameData.js",
+        5275,
+        5310
+      ]
+    ]
+  ]
+}

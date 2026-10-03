@@ -781,3 +781,31 @@ h2 {
     padding: 18px;
   }
 }
+
+.resume-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 20px;
+  background: #e3f5e9;
+}
+.income-note { font-size: 14px; color: #28543b; }
+.storage-warning { padding: 12px; background: #ffe9d6; border-radius: 12px; }
+.topbar-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+button:focus-visible { outline: 3px solid #28617a; outline-offset: 3px; }
+
+@media (max-width: 640px) {
+  .hero, .ending-card, .theme-grid, .ending-grid { grid-template-columns: minmax(0, 1fr); }
+  .scene, .hero, .ending-card { padding: 18px; }
+  .stats-panel { min-width: 0; }
+  .topbar > div, .scene, .sidebar { min-width: 0; }
+  .primary, .ghost, .choice { min-height: 44px; }
+  .scene-illustration { max-height: 170px; object-fit: contain; }
+  .stat-info::after { left: 0; transform: none; width: 180px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

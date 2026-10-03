@@ -1,0 +1,243 @@
+[
+  {
+    "theme": "cafe",
+    "runs": 1000,
+    "minScore": 81,
+    "maxScore": 91,
+    "minCash": 58,
+    "failures": 0,
+    "branches": [
+      "brandBacklash",
+      "supplierBetrayal",
+      "investorCoup",
+      "spiral",
+      "staffCrisis"
+    ],
+    "events": [
+      "tiktok",
+      "inspection",
+      "bean-price"
+    ],
+    "combinations": 30,
+    "reference": {
+      "seed": 42,
+      "choices": [
+        "briefing:premium-experience",
+        "pricing-brand:premium-price",
+        "measure:survey",
+        "production:train-staff",
+        "backlash-leak:public-apology",
+        "backlash-boycott:open-forum",
+        "supply:fair-trade",
+        "value-added:va-correct",
+        "distribution:balanced",
+        "governance:co-decision",
+        "tiktok:transparent",
+        "inspection:clean",
+        "last-push:csr"
+      ]
+    }
+  },
+  {
+    "theme": "cosmetic",
+    "runs": 1000,
+    "minScore": 81,
+    "maxScore": 90,
+    "minCash": 55,
+    "failures": 0,
+    "branches": [
+      "ingredientRecall",
+      "staffCrisis",
+      "investorCoup",
+      "spiral",
+      "influencerBacklash"
+    ],
+    "events": [
+      "influencer-clip",
+      "inspection",
+      "batch-recall"
+    ],
+    "combinations": 30,
+    "reference": {
+      "seed": 42,
+      "choices": [
+        "brand-briefing:clean-premium",
+        "pricing-brand:premium-price",
+        "measure:survey",
+        "production:lab-invest",
+        "recall-start:recall",
+        "regulator:cooperate",
+        "supply:certified",
+        "value-added:va-correct",
+        "distribution:balanced",
+        "governance:co-decision",
+        "influencer-clip:explain",
+        "inspection:clean",
+        "last-push:limited-drop"
+      ]
+    }
+  },
+  {
+    "theme": "boxing",
+    "runs": 1000,
+    "minScore": 78,
+    "maxScore": 88,
+    "minCash": 48,
+    "failures": 0,
+    "branches": [
+      "mediaHeat",
+      "sponsorScandal",
+      "staffStrike",
+      "dopingScandal",
+      "spiral",
+      "fixFight"
+    ],
+    "events": [
+      "viral-clip",
+      "doping-test",
+      "injury",
+      "inspection",
+      "sponsor-leak",
+      "betting-spike"
+    ],
+    "combinations": 180,
+    "reference": {
+      "seed": 42,
+      "choices": [
+        "ring-briefing:premium-coaching",
+        "pricing-brand:premium-membership",
+        "matchmaking:fair-card",
+        "measure:survey",
+        "media-clip:explain",
+        "media-boycott:open-forum",
+        "production:train-coaches",
+        "supply:local-gear",
+        "value-added:va-correct",
+        "distribution:balanced",
+        "governance:co-decision",
+        "injury:postpone",
+        "sponsor-leak:drop",
+        "sponsor-bad:drop-sponsor",
+        "sponsor-fallout:reassure",
+        "last-push:gala"
+      ]
+    }
+  },
+  {
+    "theme": "football",
+    "runs": 1000,
+    "minScore": 83,
+    "maxScore": 87,
+    "minCash": 85,
+    "failures": 0,
+    "branches": [
+      "ultraBacklash",
+      "sponsorScandal",
+      "dopingScandal",
+      "spiral",
+      "fixMatch"
+    ],
+    "events": [
+      "injury",
+      "doping-test",
+      "betting-spike",
+      "referee"
+    ],
+    "combinations": 60,
+    "reference": {
+      "seed": 42,
+      "choices": [
+        "season-briefing:community",
+        "pricing-brand:premium-seats",
+        "measure:survey",
+        "transfer:balanced-team",
+        "ultra-clash:dialogue",
+        "production:coaching",
+        "supply:reliable-gear",
+        "value-added:va-correct",
+        "distribution:balanced",
+        "governance:co-decision",
+        "injury:rest",
+        "betting-spike:report",
+        "last-push:derby"
+      ]
+    }
+  },
+  {
+    "theme": "art",
+    "runs": 1000,
+    "minScore": 80,
+    "maxScore": 87,
+    "minCash": 60,
+    "failures": 0,
+    "branches": [
+      "copyrightStrike",
+      "sponsorScandal",
+      "staffBurnout",
+      "investorCoup",
+      "spiral"
+    ],
+    "events": [
+      "copyright-strike",
+      "algo-change",
+      "sponsor-leak"
+    ],
+    "combinations": 30,
+    "reference": {
+      "seed": 42,
+      "choices": [
+        "studio-briefing:quality-first",
+        "pricing-brand:subscription",
+        "measure:survey",
+        "production:team-invest",
+        "strike:clean",
+        "supply:licensed",
+        "value-added:va-correct",
+        "distribution:balanced",
+        "governance:co-decision",
+        "copyright-strike:remove",
+        "algo-change:adapt",
+        "last-push:live-event"
+      ]
+    }
+  },
+  {
+    "theme": "fashion",
+    "runs": 1000,
+    "minScore": 81,
+    "maxScore": 87,
+    "minCash": 60,
+    "failures": 0,
+    "branches": [
+      "plagiarism",
+      "factoryScandal",
+      "influencerFallout",
+      "investorCoup",
+      "spiral"
+    ],
+    "events": [
+      "factory-leak",
+      "trend-shift",
+      "plagiarism-claim"
+    ],
+    "combinations": 30,
+    "reference": {
+      "seed": 42,
+      "choices": [
+        "fashion-briefing:premium-capsule",
+        "pricing-brand:premium-price",
+        "measure:survey",
+        "production:atelier",
+        "plagiarism-crisis:settle",
+        "supply:ethical-fabric",
+        "value-added:va-correct",
+        "distribution:balanced",
+        "governance:co-decision",
+        "factory-leak:drop",
+        "factory-crisis:audit",
+        "trend-shift:adapt",
+        "last-push:limited-drop"
+      ]
+    }
+  }
+]
