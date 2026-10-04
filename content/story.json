@@ -1,0 +1,1954 @@
+{
+  "meta": {
+    "title": "SGN11 · Créer de la valeur",
+    "kicker": "Serious game SGN – Chapitres 11 & 12",
+    "subtitle": "Valeur perçue, ajoutée, partenariale",
+    "description": "Six traversées continues : chaque décision se prend dans le décor, chaque conséquence s’y inscrit.",
+    "note": "Mise en scène inspirée de SenseNova sn-motion-html (MIT) : une scène fixe, une caméra pilotée par le défilement, des connecteurs entre les lieux. Mode sans vidéo : la caméra se déplace dans des plans fixes.",
+    "style": "cinematic",
+    "connectorSpan": {
+      "pan": 0.45,
+      "dive": 0.95
+    }
+  },
+  "acts": [
+    {
+      "id": "seuil",
+      "eyebrow": "Acte I",
+      "label": "Le seuil",
+      "focus": "Positionnement & valeur perçue",
+      "scenes": [
+        "briefing",
+        "brand-briefing",
+        "ring-briefing",
+        "season-briefing",
+        "studio-briefing",
+        "fashion-briefing",
+        "pricing-brand"
+      ]
+    },
+    {
+      "id": "salle",
+      "eyebrow": "Acte II",
+      "label": "Face aux clients",
+      "focus": "Mesurer la valeur perçue",
+      "scenes": [
+        "measure",
+        "matchmaking",
+        "transfer"
+      ]
+    },
+    {
+      "id": "coulisses",
+      "eyebrow": "Acte III",
+      "label": "Les coulisses",
+      "focus": "Facteurs de production & consommations intermédiaires",
+      "scenes": [
+        "production",
+        "supply"
+      ]
+    },
+    {
+      "id": "bureau",
+      "eyebrow": "Acte IV",
+      "label": "Les comptes",
+      "focus": "Valeur ajoutée, répartition, gouvernance",
+      "scenes": [
+        "value-added",
+        "distribution",
+        "governance"
+      ]
+    },
+    {
+      "id": "crise",
+      "eyebrow": "Hors-piste",
+      "label": "Et là, c’est le drame",
+      "focus": "Événements & voies parallèles",
+      "scenes": []
+    },
+    {
+      "id": "finale",
+      "eyebrow": "Acte V",
+      "label": "Le dernier choix",
+      "focus": "Bilan",
+      "scenes": [
+        "last-push"
+      ]
+    }
+  ],
+  "fallbackAct": "crise",
+  "worlds": {
+    "cafe": {
+      "ui": "folio",
+      "tagline": "Un café premium face au lycée : faire sentir la valeur avant de la compter.",
+      "palette": {
+        "night": "#1d120c",
+        "ink": "#fbf1e4",
+        "muted": "#e3cdb3",
+        "accent": "#7fe0b3",
+        "accent2": "#f4c97a",
+        "danger": "#ff7a59"
+      },
+      "fonts": {
+        "display": "'Fraunces', Georgia, serif",
+        "body": "'Space Grotesk', system-ui, sans-serif"
+      },
+      "locations": {
+        "seuil": {
+          "asset": "cafe/seuil",
+          "label": "La terrasse",
+          "copyPosition": "right",
+          "frames": [
+            [
+              30,
+              50,
+              1.04
+            ],
+            [
+              22,
+              44,
+              1.16
+            ],
+            [
+              36,
+              60,
+              1.12
+            ],
+            [
+              18,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            14,
+            46
+          ],
+          "spots": [
+            [
+              16,
+              64
+            ],
+            [
+              28,
+              30
+            ],
+            [
+              36,
+              74
+            ],
+            [
+              24,
+              48
+            ]
+          ]
+        },
+        "salle": {
+          "asset": "cafe/salle",
+          "label": "Le comptoir",
+          "copyPosition": "left",
+          "frames": [
+            [
+              64,
+              46,
+              1.04
+            ],
+            [
+              72,
+              44,
+              1.16
+            ],
+            [
+              60,
+              56,
+              1.12
+            ],
+            [
+              80,
+              48,
+              1.2
+            ]
+          ],
+          "exit": [
+            62,
+            38
+          ],
+          "spots": [
+            [
+              58,
+              38
+            ],
+            [
+              72,
+              44
+            ],
+            [
+              88,
+              48
+            ],
+            [
+              56,
+              68
+            ]
+          ]
+        },
+        "coulisses": {
+          "asset": "cafe/coulisses",
+          "label": "La réserve",
+          "copyPosition": "right",
+          "frames": [
+            [
+              44,
+              46,
+              1.04
+            ],
+            [
+              36,
+              58,
+              1.14
+            ],
+            [
+              56,
+              36,
+              1.16
+            ],
+            [
+              28,
+              50,
+              1.2
+            ]
+          ],
+          "exit": [
+            82,
+            36
+          ],
+          "spots": [
+            [
+              32,
+              62
+            ],
+            [
+              58,
+              32
+            ],
+            [
+              10,
+              56
+            ],
+            [
+              80,
+              36
+            ]
+          ]
+        },
+        "bureau": {
+          "asset": "cafe/bureau",
+          "label": "Le bureau",
+          "copyPosition": "right",
+          "frames": [
+            [
+              36,
+              52,
+              1.04
+            ],
+            [
+              44,
+              44,
+              1.16
+            ],
+            [
+              30,
+              60,
+              1.12
+            ],
+            [
+              52,
+              40,
+              1.2
+            ]
+          ],
+          "exit": [
+            78,
+            58
+          ],
+          "spots": [
+            [
+              54,
+              48
+            ],
+            [
+              40,
+              22
+            ],
+            [
+              36,
+              58
+            ],
+            [
+              76,
+              62
+            ]
+          ]
+        },
+        "crise": {
+          "asset": "cafe/crise",
+          "label": "Soir de crise",
+          "copyPosition": "bottom",
+          "frames": [
+            [
+              52,
+              36,
+              1.06
+            ],
+            [
+              70,
+              38,
+              1.16
+            ],
+            [
+              30,
+              40,
+              1.14
+            ],
+            [
+              52,
+              30,
+              1.22
+            ]
+          ],
+          "exit": [
+            44,
+            40
+          ],
+          "spots": [
+            [
+              14,
+              40
+            ],
+            [
+              52,
+              48
+            ],
+            [
+              80,
+              40
+            ],
+            [
+              34,
+              38
+            ]
+          ]
+        },
+        "finale": {
+          "asset": "cafe/finale",
+          "label": "Le toit",
+          "copyPosition": "center",
+          "frames": [
+            [
+              50,
+              40,
+              1.03
+            ],
+            [
+              64,
+              30,
+              1.12
+            ],
+            [
+              40,
+              50,
+              1.18
+            ],
+            [
+              50,
+              36,
+              1.08
+            ]
+          ],
+          "exit": [
+            72,
+            22
+          ],
+          "spots": [
+            [
+              72,
+              22
+            ],
+            [
+              40,
+              62
+            ],
+            [
+              86,
+              64
+            ],
+            [
+              22,
+              40
+            ]
+          ]
+        }
+      }
+    },
+    "cosmetic": {
+      "ui": "caption",
+      "tagline": "Une jeune marque de soin : la confiance se formule, le prix se justifie.",
+      "palette": {
+        "night": "#24161c",
+        "ink": "#fff6f8",
+        "muted": "#f0d4dc",
+        "accent": "#f6a9c0",
+        "accent2": "#b9d8c2",
+        "danger": "#ff6b7d"
+      },
+      "fonts": {
+        "display": "'DM Serif Display', Georgia, serif",
+        "body": "'Space Grotesk', system-ui, sans-serif"
+      },
+      "locations": {
+        "seuil": {
+          "asset": "cosmetic/seuil",
+          "label": "La vitrine",
+          "copyPosition": "right",
+          "frames": [
+            [
+              38,
+              48,
+              1.04
+            ],
+            [
+              32,
+              44,
+              1.16
+            ],
+            [
+              42,
+              56,
+              1.12
+            ],
+            [
+              28,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            36,
+            46
+          ],
+          "spots": [
+            [
+              26,
+              40
+            ],
+            [
+              38,
+              32
+            ],
+            [
+              46,
+              50
+            ],
+            [
+              32,
+              60
+            ]
+          ]
+        },
+        "salle": {
+          "asset": "cosmetic/salle",
+          "label": "Le comptoir beauté",
+          "copyPosition": "left",
+          "frames": [
+            [
+              62,
+              48,
+              1.04
+            ],
+            [
+              68,
+              44,
+              1.16
+            ],
+            [
+              58,
+              56,
+              1.12
+            ],
+            [
+              72,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            64,
+            46
+          ],
+          "spots": [
+            [
+              58,
+              40
+            ],
+            [
+              70,
+              34
+            ],
+            [
+              78,
+              52
+            ],
+            [
+              64,
+              60
+            ]
+          ]
+        },
+        "coulisses": {
+          "asset": "cosmetic/coulisses",
+          "label": "Le laboratoire",
+          "copyPosition": "right",
+          "frames": [
+            [
+              38,
+              48,
+              1.04
+            ],
+            [
+              32,
+              44,
+              1.16
+            ],
+            [
+              42,
+              56,
+              1.12
+            ],
+            [
+              28,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            36,
+            46
+          ],
+          "spots": [
+            [
+              26,
+              40
+            ],
+            [
+              38,
+              32
+            ],
+            [
+              46,
+              50
+            ],
+            [
+              32,
+              60
+            ]
+          ]
+        },
+        "bureau": {
+          "asset": "cosmetic/bureau",
+          "label": "Le studio de marque",
+          "copyPosition": "left",
+          "frames": [
+            [
+              62,
+              48,
+              1.04
+            ],
+            [
+              68,
+              44,
+              1.16
+            ],
+            [
+              58,
+              56,
+              1.12
+            ],
+            [
+              72,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            64,
+            46
+          ],
+          "spots": [
+            [
+              58,
+              40
+            ],
+            [
+              70,
+              34
+            ],
+            [
+              78,
+              52
+            ],
+            [
+              64,
+              60
+            ]
+          ]
+        },
+        "crise": {
+          "asset": "cosmetic/crise",
+          "label": "Alerte produit",
+          "copyPosition": "bottom",
+          "frames": [
+            [
+              50,
+              36,
+              1.06
+            ],
+            [
+              42,
+              32,
+              1.16
+            ],
+            [
+              58,
+              38,
+              1.14
+            ],
+            [
+              50,
+              30,
+              1.24
+            ]
+          ],
+          "exit": [
+            50,
+            34
+          ],
+          "spots": [
+            [
+              30,
+              28
+            ],
+            [
+              46,
+              22
+            ],
+            [
+              62,
+              28
+            ],
+            [
+              76,
+              36
+            ]
+          ]
+        },
+        "finale": {
+          "asset": "cosmetic/finale",
+          "label": "Le jardin d’hiver",
+          "copyPosition": "center",
+          "frames": [
+            [
+              50,
+              42,
+              1.03
+            ],
+            [
+              50,
+              38,
+              1.12
+            ],
+            [
+              50,
+              46,
+              1.2
+            ],
+            [
+              50,
+              40,
+              1.08
+            ]
+          ],
+          "exit": [
+            50,
+            40
+          ],
+          "spots": [
+            [
+              34,
+              34
+            ],
+            [
+              50,
+              26
+            ],
+            [
+              66,
+              34
+            ],
+            [
+              50,
+              46
+            ]
+          ]
+        }
+      }
+    },
+    "boxing": {
+      "ui": "graphic",
+      "tagline": "Une salle qui monte : la réputation se gagne round après round.",
+      "palette": {
+        "night": "#0b0909",
+        "ink": "#f6efe8",
+        "muted": "#cbbfb4",
+        "accent": "#e8322f",
+        "accent2": "#f5b041",
+        "danger": "#ff4d3d"
+      },
+      "fonts": {
+        "display": "'Bebas Neue', Impact, sans-serif",
+        "body": "'Space Grotesk', system-ui, sans-serif"
+      },
+      "locations": {
+        "seuil": {
+          "asset": "boxing/seuil",
+          "label": "L’entrée",
+          "copyPosition": "right",
+          "frames": [
+            [
+              38,
+              48,
+              1.04
+            ],
+            [
+              32,
+              44,
+              1.16
+            ],
+            [
+              42,
+              56,
+              1.12
+            ],
+            [
+              28,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            36,
+            46
+          ],
+          "spots": [
+            [
+              26,
+              40
+            ],
+            [
+              38,
+              32
+            ],
+            [
+              46,
+              50
+            ],
+            [
+              32,
+              60
+            ]
+          ]
+        },
+        "salle": {
+          "asset": "boxing/salle",
+          "label": "Le ring",
+          "copyPosition": "left",
+          "frames": [
+            [
+              62,
+              48,
+              1.04
+            ],
+            [
+              68,
+              44,
+              1.16
+            ],
+            [
+              58,
+              56,
+              1.12
+            ],
+            [
+              72,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            64,
+            46
+          ],
+          "spots": [
+            [
+              58,
+              40
+            ],
+            [
+              70,
+              34
+            ],
+            [
+              78,
+              52
+            ],
+            [
+              64,
+              60
+            ]
+          ]
+        },
+        "coulisses": {
+          "asset": "boxing/coulisses",
+          "label": "Le vestiaire",
+          "copyPosition": "right",
+          "frames": [
+            [
+              38,
+              48,
+              1.04
+            ],
+            [
+              32,
+              44,
+              1.16
+            ],
+            [
+              42,
+              56,
+              1.12
+            ],
+            [
+              28,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            36,
+            46
+          ],
+          "spots": [
+            [
+              26,
+              40
+            ],
+            [
+              38,
+              32
+            ],
+            [
+              46,
+              50
+            ],
+            [
+              32,
+              60
+            ]
+          ]
+        },
+        "bureau": {
+          "asset": "boxing/bureau",
+          "label": "Le bureau du promoteur",
+          "copyPosition": "left",
+          "frames": [
+            [
+              62,
+              48,
+              1.04
+            ],
+            [
+              68,
+              44,
+              1.16
+            ],
+            [
+              58,
+              56,
+              1.12
+            ],
+            [
+              72,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            64,
+            46
+          ],
+          "spots": [
+            [
+              58,
+              40
+            ],
+            [
+              70,
+              34
+            ],
+            [
+              78,
+              52
+            ],
+            [
+              64,
+              60
+            ]
+          ]
+        },
+        "crise": {
+          "asset": "boxing/crise",
+          "label": "La nuit des rumeurs",
+          "copyPosition": "bottom",
+          "frames": [
+            [
+              50,
+              36,
+              1.06
+            ],
+            [
+              42,
+              32,
+              1.16
+            ],
+            [
+              58,
+              38,
+              1.14
+            ],
+            [
+              50,
+              30,
+              1.24
+            ]
+          ],
+          "exit": [
+            50,
+            34
+          ],
+          "spots": [
+            [
+              30,
+              28
+            ],
+            [
+              46,
+              22
+            ],
+            [
+              62,
+              28
+            ],
+            [
+              76,
+              36
+            ]
+          ]
+        },
+        "finale": {
+          "asset": "boxing/finale",
+          "label": "Le grand soir",
+          "copyPosition": "center",
+          "frames": [
+            [
+              50,
+              42,
+              1.03
+            ],
+            [
+              50,
+              38,
+              1.12
+            ],
+            [
+              50,
+              46,
+              1.2
+            ],
+            [
+              50,
+              40,
+              1.08
+            ]
+          ],
+          "exit": [
+            50,
+            40
+          ],
+          "spots": [
+            [
+              34,
+              34
+            ],
+            [
+              50,
+              26
+            ],
+            [
+              66,
+              34
+            ],
+            [
+              50,
+              46
+            ]
+          ]
+        }
+      }
+    },
+    "football": {
+      "ui": "graphic",
+      "tagline": "Un club qui joue sa montée : supporters, joueurs et actionnaires sur le même terrain.",
+      "palette": {
+        "night": "#06140f",
+        "ink": "#f2f7f2",
+        "muted": "#c4d6c9",
+        "accent": "#f2c14e",
+        "accent2": "#5aa9ff",
+        "danger": "#ff5d5d"
+      },
+      "fonts": {
+        "display": "'Oswald', Impact, sans-serif",
+        "body": "'Space Grotesk', system-ui, sans-serif"
+      },
+      "locations": {
+        "seuil": {
+          "asset": "football/seuil",
+          "label": "Le parvis",
+          "copyPosition": "right",
+          "frames": [
+            [
+              38,
+              48,
+              1.04
+            ],
+            [
+              32,
+              44,
+              1.16
+            ],
+            [
+              42,
+              56,
+              1.12
+            ],
+            [
+              28,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            36,
+            46
+          ],
+          "spots": [
+            [
+              26,
+              40
+            ],
+            [
+              38,
+              32
+            ],
+            [
+              46,
+              50
+            ],
+            [
+              32,
+              60
+            ]
+          ]
+        },
+        "salle": {
+          "asset": "football/salle",
+          "label": "Les tribunes",
+          "copyPosition": "left",
+          "frames": [
+            [
+              62,
+              48,
+              1.04
+            ],
+            [
+              68,
+              44,
+              1.16
+            ],
+            [
+              58,
+              56,
+              1.12
+            ],
+            [
+              72,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            64,
+            46
+          ],
+          "spots": [
+            [
+              58,
+              40
+            ],
+            [
+              70,
+              34
+            ],
+            [
+              78,
+              52
+            ],
+            [
+              64,
+              60
+            ]
+          ]
+        },
+        "coulisses": {
+          "asset": "football/coulisses",
+          "label": "Le centre d’entraînement",
+          "copyPosition": "right",
+          "frames": [
+            [
+              38,
+              48,
+              1.04
+            ],
+            [
+              32,
+              44,
+              1.16
+            ],
+            [
+              42,
+              56,
+              1.12
+            ],
+            [
+              28,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            36,
+            46
+          ],
+          "spots": [
+            [
+              26,
+              40
+            ],
+            [
+              38,
+              32
+            ],
+            [
+              46,
+              50
+            ],
+            [
+              32,
+              60
+            ]
+          ]
+        },
+        "bureau": {
+          "asset": "football/bureau",
+          "label": "Le bureau du président",
+          "copyPosition": "left",
+          "frames": [
+            [
+              62,
+              48,
+              1.04
+            ],
+            [
+              68,
+              44,
+              1.16
+            ],
+            [
+              58,
+              56,
+              1.12
+            ],
+            [
+              72,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            64,
+            46
+          ],
+          "spots": [
+            [
+              58,
+              40
+            ],
+            [
+              70,
+              34
+            ],
+            [
+              78,
+              52
+            ],
+            [
+              64,
+              60
+            ]
+          ]
+        },
+        "crise": {
+          "asset": "football/crise",
+          "label": "Soirs d’orage",
+          "copyPosition": "bottom",
+          "frames": [
+            [
+              50,
+              36,
+              1.06
+            ],
+            [
+              42,
+              32,
+              1.16
+            ],
+            [
+              58,
+              38,
+              1.14
+            ],
+            [
+              50,
+              30,
+              1.24
+            ]
+          ],
+          "exit": [
+            50,
+            34
+          ],
+          "spots": [
+            [
+              30,
+              28
+            ],
+            [
+              46,
+              22
+            ],
+            [
+              62,
+              28
+            ],
+            [
+              76,
+              36
+            ]
+          ]
+        },
+        "finale": {
+          "asset": "football/finale",
+          "label": "Le dernier match",
+          "copyPosition": "center",
+          "frames": [
+            [
+              50,
+              42,
+              1.03
+            ],
+            [
+              50,
+              38,
+              1.12
+            ],
+            [
+              50,
+              46,
+              1.2
+            ],
+            [
+              50,
+              40,
+              1.08
+            ]
+          ],
+          "exit": [
+            50,
+            40
+          ],
+          "spots": [
+            [
+              34,
+              34
+            ],
+            [
+              50,
+              26
+            ],
+            [
+              66,
+              34
+            ],
+            [
+              50,
+              46
+            ]
+          ]
+        }
+      }
+    },
+    "art": {
+      "ui": "caption",
+      "tagline": "Un studio de création : l’audience se gagne vite, la confiance se perd plus vite.",
+      "palette": {
+        "night": "#0c0a1f",
+        "ink": "#f1efff",
+        "muted": "#c9c3f0",
+        "accent": "#4ff0ff",
+        "accent2": "#b26bff",
+        "danger": "#ff4fa3"
+      },
+      "fonts": {
+        "display": "'Space Mono', ui-monospace, monospace",
+        "body": "'Space Grotesk', system-ui, sans-serif"
+      },
+      "locations": {
+        "seuil": {
+          "asset": "art/seuil",
+          "label": "Le quartier",
+          "copyPosition": "right",
+          "frames": [
+            [
+              38,
+              48,
+              1.04
+            ],
+            [
+              32,
+              44,
+              1.16
+            ],
+            [
+              42,
+              56,
+              1.12
+            ],
+            [
+              28,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            36,
+            46
+          ],
+          "spots": [
+            [
+              26,
+              40
+            ],
+            [
+              38,
+              32
+            ],
+            [
+              46,
+              50
+            ],
+            [
+              32,
+              60
+            ]
+          ]
+        },
+        "salle": {
+          "asset": "art/salle",
+          "label": "Le plateau",
+          "copyPosition": "left",
+          "frames": [
+            [
+              62,
+              48,
+              1.04
+            ],
+            [
+              68,
+              44,
+              1.16
+            ],
+            [
+              58,
+              56,
+              1.12
+            ],
+            [
+              72,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            64,
+            46
+          ],
+          "spots": [
+            [
+              58,
+              40
+            ],
+            [
+              70,
+              34
+            ],
+            [
+              78,
+              52
+            ],
+            [
+              64,
+              60
+            ]
+          ]
+        },
+        "coulisses": {
+          "asset": "art/coulisses",
+          "label": "La régie",
+          "copyPosition": "right",
+          "frames": [
+            [
+              38,
+              48,
+              1.04
+            ],
+            [
+              32,
+              44,
+              1.16
+            ],
+            [
+              42,
+              56,
+              1.12
+            ],
+            [
+              28,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            36,
+            46
+          ],
+          "spots": [
+            [
+              26,
+              40
+            ],
+            [
+              38,
+              32
+            ],
+            [
+              46,
+              50
+            ],
+            [
+              32,
+              60
+            ]
+          ]
+        },
+        "bureau": {
+          "asset": "art/bureau",
+          "label": "La salle de stratégie",
+          "copyPosition": "left",
+          "frames": [
+            [
+              62,
+              48,
+              1.04
+            ],
+            [
+              68,
+              44,
+              1.16
+            ],
+            [
+              58,
+              56,
+              1.12
+            ],
+            [
+              72,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            64,
+            46
+          ],
+          "spots": [
+            [
+              58,
+              40
+            ],
+            [
+              70,
+              34
+            ],
+            [
+              78,
+              52
+            ],
+            [
+              64,
+              60
+            ]
+          ]
+        },
+        "crise": {
+          "asset": "art/crise",
+          "label": "Le bad buzz",
+          "copyPosition": "bottom",
+          "frames": [
+            [
+              50,
+              36,
+              1.06
+            ],
+            [
+              42,
+              32,
+              1.16
+            ],
+            [
+              58,
+              38,
+              1.14
+            ],
+            [
+              50,
+              30,
+              1.24
+            ]
+          ],
+          "exit": [
+            50,
+            34
+          ],
+          "spots": [
+            [
+              30,
+              28
+            ],
+            [
+              46,
+              22
+            ],
+            [
+              62,
+              28
+            ],
+            [
+              76,
+              36
+            ]
+          ]
+        },
+        "finale": {
+          "asset": "art/finale",
+          "label": "Le live",
+          "copyPosition": "center",
+          "frames": [
+            [
+              50,
+              42,
+              1.03
+            ],
+            [
+              50,
+              38,
+              1.12
+            ],
+            [
+              50,
+              46,
+              1.2
+            ],
+            [
+              50,
+              40,
+              1.08
+            ]
+          ],
+          "exit": [
+            50,
+            40
+          ],
+          "spots": [
+            [
+              34,
+              34
+            ],
+            [
+              50,
+              26
+            ],
+            [
+              66,
+              34
+            ],
+            [
+              50,
+              46
+            ]
+          ]
+        }
+      }
+    },
+    "fashion": {
+      "ui": "folio",
+      "tagline": "Une maison de mode parisienne : le désir se coud, la marge se négocie.",
+      "palette": {
+        "night": "#1a0910",
+        "ink": "#fbf3ea",
+        "muted": "#e9d3c3",
+        "accent": "#e9c58b",
+        "accent2": "#c2475f",
+        "danger": "#ff6a6a"
+      },
+      "fonts": {
+        "display": "'Playfair Display', Georgia, serif",
+        "body": "'Space Grotesk', system-ui, sans-serif"
+      },
+      "locations": {
+        "seuil": {
+          "asset": "fashion/seuil",
+          "label": "La boutique",
+          "copyPosition": "right",
+          "frames": [
+            [
+              38,
+              48,
+              1.04
+            ],
+            [
+              32,
+              44,
+              1.16
+            ],
+            [
+              42,
+              56,
+              1.12
+            ],
+            [
+              28,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            36,
+            46
+          ],
+          "spots": [
+            [
+              26,
+              40
+            ],
+            [
+              38,
+              32
+            ],
+            [
+              46,
+              50
+            ],
+            [
+              32,
+              60
+            ]
+          ]
+        },
+        "salle": {
+          "asset": "fashion/salle",
+          "label": "Le salon",
+          "copyPosition": "left",
+          "frames": [
+            [
+              62,
+              48,
+              1.04
+            ],
+            [
+              68,
+              44,
+              1.16
+            ],
+            [
+              58,
+              56,
+              1.12
+            ],
+            [
+              72,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            64,
+            46
+          ],
+          "spots": [
+            [
+              58,
+              40
+            ],
+            [
+              70,
+              34
+            ],
+            [
+              78,
+              52
+            ],
+            [
+              64,
+              60
+            ]
+          ]
+        },
+        "coulisses": {
+          "asset": "fashion/coulisses",
+          "label": "L’atelier",
+          "copyPosition": "right",
+          "frames": [
+            [
+              38,
+              48,
+              1.04
+            ],
+            [
+              32,
+              44,
+              1.16
+            ],
+            [
+              42,
+              56,
+              1.12
+            ],
+            [
+              28,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            36,
+            46
+          ],
+          "spots": [
+            [
+              26,
+              40
+            ],
+            [
+              38,
+              32
+            ],
+            [
+              46,
+              50
+            ],
+            [
+              32,
+              60
+            ]
+          ]
+        },
+        "bureau": {
+          "asset": "fashion/bureau",
+          "label": "Le studio de création",
+          "copyPosition": "left",
+          "frames": [
+            [
+              62,
+              48,
+              1.04
+            ],
+            [
+              68,
+              44,
+              1.16
+            ],
+            [
+              58,
+              56,
+              1.12
+            ],
+            [
+              72,
+              52,
+              1.22
+            ]
+          ],
+          "exit": [
+            64,
+            46
+          ],
+          "spots": [
+            [
+              58,
+              40
+            ],
+            [
+              70,
+              34
+            ],
+            [
+              78,
+              52
+            ],
+            [
+              64,
+              60
+            ]
+          ]
+        },
+        "crise": {
+          "asset": "fashion/crise",
+          "label": "Le scandale",
+          "copyPosition": "bottom",
+          "frames": [
+            [
+              50,
+              36,
+              1.06
+            ],
+            [
+              42,
+              32,
+              1.16
+            ],
+            [
+              58,
+              38,
+              1.14
+            ],
+            [
+              50,
+              30,
+              1.24
+            ]
+          ],
+          "exit": [
+            50,
+            34
+          ],
+          "spots": [
+            [
+              30,
+              28
+            ],
+            [
+              46,
+              22
+            ],
+            [
+              62,
+              28
+            ],
+            [
+              76,
+              36
+            ]
+          ]
+        },
+        "finale": {
+          "asset": "fashion/finale",
+          "label": "Le défilé",
+          "copyPosition": "center",
+          "frames": [
+            [
+              50,
+              42,
+              1.03
+            ],
+            [
+              50,
+              38,
+              1.12
+            ],
+            [
+              50,
+              46,
+              1.2
+            ],
+            [
+              50,
+              40,
+              1.08
+            ]
+          ],
+          "exit": [
+            50,
+            40
+          ],
+          "spots": [
+            [
+              34,
+              34
+            ],
+            [
+              50,
+              26
+            ],
+            [
+              66,
+              34
+            ],
+            [
+              50,
+              46
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

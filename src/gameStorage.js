@@ -36,12 +36,18 @@ export function saveGame(game, storage) {
   try { storage().setItem(SAVE_KEY, serializeGame(game)); return true } catch { return false }
 }
 
+// Product rule (Marc, 2026-10-04): a lost run must not clear StudyNote's reward
+// threshold. A Catastrophe ending reports 0; the screen keeps the detailed score.
+export function reportedScore(outcome) {
+  return outcome.grade === 'Catastrophe' ? 0 : outcome.score
+}
+
 const sentInDocument = new Set()
 export function emitScoreOnce(game, parent, self, storage) {
   if (game.screen !== 'end' || parent === self || sentInDocument.has(game.runId)) return false
   const key = `sgn11:score:${game.runId}`
   try { if (storage().getItem(key) === 'sent') return false } catch { /* storage can be blocked in an iframe */ }
-  const { score } = getOutcome(game.stats, game.history, game.flags, game.themeId)
+  const score = reportedScore(getOutcome(game.stats, game.history, game.flags, game.themeId))
   // GameEmbed contract has no ACK. Mark before send to prefer at-most-once over
   // retries; the host remains responsible for atomic reward idempotency.
   sentInDocument.add(game.runId)

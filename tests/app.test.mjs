@@ -94,3 +94,24 @@ test('React UI: invalid save, theme selection, pause and inaccessible storage', 
   globalThis.localStorage = storage
   await unmount()
 })
+
+test('React UI story mode: one fixed stage, stations per decision, failed still falls back', async () => {
+  localStorage.clear()
+  await mount()
+  await click(document.querySelector('[data-theme="cafe"]'))
+  assert.equal(document.querySelectorAll('.stage [data-layer]').length, 6)
+  assert.equal(document.querySelectorAll('.station--prologue').length, 1)
+  assert.equal(document.querySelectorAll('.station--decision.is-live').length, 1)
+  const still = document.querySelector('.shot[data-layer="seuil"] img')
+  assert.ok(still, 'generated still is rendered')
+  await act(async () => still.dispatchEvent(new window.Event('error')))
+  assert.equal(document.querySelector('.shot[data-layer="seuil"]').dataset.media, 'fallback')
+  await click(document.querySelector('[data-choice]'))
+  await click(button('Continuer'))
+  assert.equal(document.querySelectorAll('.station--decision').length, 2)
+  assert.equal(document.querySelectorAll('[data-choice]').length, currentChoiceCount())
+  assert.equal(document.querySelectorAll('.connector').length, 2)
+  await unmount()
+})
+
+function currentChoiceCount() { return state().choices.length }

@@ -2,6 +2,8 @@
 
 Serious game React/Vite : Café Orion, Aura Skin, Black Corner, Atlas FC, Pulse Lab et Atelier Velvet. Modes Classique et Défis, événements et crises, cinq jauges et bilan pédagogique.
 
+Chaque partie est une traversée continue pilotée par le défilement (principes SenseNova `sn-motion-html`, sans vidéo) : une scène fixe, une caméra qui cadre chaque décision puis plonge d'un lieu à l'autre, des choix posés dans le décor. Démo pilote : Café Orion. Détails : [refonte SenseNova](docs/qa/L11-REWORK-SENSENOVA.md).
+
 ```sh
 npm ci
 npm run dev -- --host 127.0.0.1
@@ -24,7 +26,7 @@ Une partie locale par navigateur/origine, automatiquement enregistrée après ch
 
 ## StudyNote
 
-Dans une iframe, le bilan émet `window.parent.postMessage({ type: 'GAME_SCORE', score }, '*')`, score entier 0–100, conformément au contrat GameEmbed existant. Aucun appel à une API de production n'est effectué par le jeu. À la racine, il n'émet rien.
+Dans une iframe, le bilan émet `window.parent.postMessage({ type: 'GAME_SCORE', score }, '*')`, score entier 0–100, conformément au contrat GameEmbed existant. Une fin **Catastrophe** émet `score: 0` (une partie perdue ne doit pas franchir le seuil de récompense) ; l'écran garde le score détaillé. Aucun appel à une API de production n'est effectué par le jeu. À la racine, il n'émet rien.
 
 Une émission par partie : garde en mémoire, marqueur local persistant et verrou inter-onglets Web Locks lorsqu'il est disponible. Revoir un bilan ne réémet pas ; rejouer crée une nouvelle identité. Sans stockage, la déduplication se limite au document courant. Il n'existe pas d'accusé de réception dans le contrat : « message émis » ne prouve pas « récompense accordée ». Le parent doit vérifier l'origine ; l'unicité atomique des récompenses, l'accès élève et la vérification du score appartiennent au serveur StudyNote.
 
@@ -33,8 +35,11 @@ Une émission par partie : garde en mémoire, marqueur local persistant et verro
 - `src/gameData.js` : scénarios, effets, objectifs, lexique et grades existants.
 - `src/gameEngine.js` : transitions pures, recettes et tirages déterministes, partagés entre UI et simulation.
 - `src/gameStorage.js` : rejeu validé, persistance et émission du score.
-- `src/App.jsx`, `src/App.css` : interface React, identité café/crème, illustration café SVG et adaptation mobile.
+- `content/story.json` : mise en scène (actes, mondes, presets d'interface, palettes, cadrages caméra, positions du texte).
+- `content/assets.json` : dictionnaire unique des visuels (id → fichier `public/scenes/…`, prompt GPT exact, dimensions, poids cible). Régénérer : `node scripts/generate-assets.mjs --only cafe/salle --force`.
+- `src/story/` : parcours rejoué depuis le moteur (`journey.js`), caméra pure (`camera.js`), défilement (`useScrollCamera.js`), scène fixe et repli procédural (`Stage.jsx`), stations (`Stations.jsx`).
+- `src/App.jsx`, `src/App.css` : orchestration, HUD, carnet, lexique ; presets folio/caption/graphic, mobile 375 px, `prefers-reduced-motion`.
 - `tests/` : tests Node et DOM React (ces derniers ne remplacent pas une recette écran).
-- `scripts/simulate.mjs`, `scripts/qa-browser.mjs` : preuves reproductibles.
+- `scripts/simulate.mjs`, `scripts/qa-browser.mjs` : preuves reproductibles (la recette navigateur couvre 6 scénarios × 1280/375, le mouvement complet, le média manquant et la Catastrophe).
 
 État de livraison et limites : [rapport L11](docs/qa/L11-SGN11-V2.md).
