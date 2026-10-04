@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "node --test tests/*.test.mjs",
     "simulate": "node scripts/simulate.mjs",
-    "test:browser": "node scripts/qa-browser.mjs"
+    "test:browser": "node scripts/qa-browser.mjs",
+    "balance": "node scripts/balance-report.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
